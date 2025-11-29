@@ -1,0 +1,202 @@
+import { useState } from "react";
+import { ProfileForm } from "../components/ProfileForm";
+
+export const Dashboard = () => {
+  const [activeTab, setActiveTab] = useState("profile");
+
+  return (
+    <div className="relative min-h-screen overflow-hidden py-12">
+      {/* Background gradients */}
+      <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
+      <div className="absolute top-0 left-1/3 h-96 w-96 rounded-full bg-xrpBlue/10 blur-3xl" />
+
+      <div className="relative mx-auto max-w-5xl px-4">
+        {/* Header */}
+        <div className="mb-8">
+          <h1 className="text-3xl font-bold">Dashboard créateur</h1>
+          <p className="mt-2 text-white/60">
+            Configure ta page xrpTip, ton adresse XRP, tes liens sociaux et suis tes tips reçus.
+          </p>
+        </div>
+
+        {/* Tabs */}
+        <div className="mb-8 flex flex-wrap gap-2 border-b border-white/10">
+          <button
+            onClick={() => setActiveTab("profile")}
+            className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${
+              activeTab === "profile"
+                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+                : "text-white/60 hover:bg-white/5 hover:text-white"
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+              Profil
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("stats")}
+            className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${
+              activeTab === "stats"
+                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+                : "text-white/60 hover:bg-white/5 hover:text-white"
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+              </svg>
+              Statistiques
+            </span>
+          </button>
+          <button
+            onClick={() => setActiveTab("settings")}
+            className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${
+              activeTab === "settings"
+                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+                : "text-white/60 hover:bg-white/5 hover:text-white"
+            }`}
+          >
+            <span className="flex items-center gap-2">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              Paramètres
+            </span>
+          </button>
+        </div>
+
+        {/* Tab Content */}
+        {activeTab === "profile" && (
+          <div className="space-y-6">
+            {/* Profile Form Card */}
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
+              <div className="border-b border-white/5 bg-gradient-to-r from-xrpBlue/10 to-cyan-500/10 px-6 py-4">
+                <h2 className="flex items-center gap-2 text-lg font-semibold">
+                  <svg className="h-5 w-5 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  </svg>
+                  Configuration du profil
+                </h2>
+                <p className="mt-1 text-sm text-white/60">
+                  Remplis les informations de ton profil créateur
+                </p>
+              </div>
+              <div className="p-6">
+                <ProfileForm />
+              </div>
+            </div>
+
+            {/* Preview Card */}
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
+              <div className="border-b border-white/5 bg-gradient-to-r from-purple-500/10 to-pink-500/10 px-6 py-4">
+                <h2 className="flex items-center gap-2 text-lg font-semibold">
+                  <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Aperçu de ta page
+                </h2>
+              </div>
+              <div className="p-6">
+                <p className="text-sm text-white/60 mb-4">
+                  Ta page publique sera visible à l'adresse :
+                </p>
+                <div className="rounded-xl border border-xrpBlue/30 bg-xrpBlue/10 px-4 py-3">
+                  <code className="text-sm text-xrpBlue">
+                    https://xrptip.com/u/username
+                  </code>
+                </div>
+                <p className="mt-4 text-xs text-white/50">
+                  💡 Sauvegarde ton profil pour voir l'aperçu en temps réel
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "stats" && (
+          <div className="space-y-6">
+            {/* Stats Grid */}
+            <div className="grid gap-6 sm:grid-cols-3">
+              <div className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg backdrop-blur-xl transition-all hover:border-xrpBlue/30 hover:shadow-xl">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-sm text-white/60">Tips reçus</p>
+                  <div className="rounded-lg bg-green-500/10 p-2">
+                    <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-3xl font-bold">0</p>
+                <p className="mt-1 text-sm text-white/50">0.00 XRP</p>
+              </div>
+
+              <div className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg backdrop-blur-xl transition-all hover:border-xrpBlue/30 hover:shadow-xl">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-sm text-white/60">Supporters</p>
+                  <div className="rounded-lg bg-xrpBlue/10 p-2">
+                    <svg className="h-5 w-5 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-3xl font-bold">0</p>
+                <p className="mt-1 text-sm text-white/50">Personnes uniques</p>
+              </div>
+
+              <div className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg backdrop-blur-xl transition-all hover:border-xrpBlue/30 hover:shadow-xl">
+                <div className="mb-2 flex items-center justify-between">
+                  <p className="text-sm text-white/60">Ce mois</p>
+                  <div className="rounded-lg bg-cyan-500/10 p-2">
+                    <svg className="h-5 w-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+                    </svg>
+                  </div>
+                </div>
+                <p className="text-3xl font-bold">0</p>
+                <p className="mt-1 text-sm text-white/50">0.00 XRP</p>
+              </div>
+            </div>
+
+            {/* Recent Tips Table */}
+            <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
+              <div className="border-b border-white/5 bg-gradient-to-r from-xrpBlue/10 to-cyan-500/10 px-6 py-4">
+                <h2 className="text-lg font-semibold">Tips récents</h2>
+              </div>
+              <div className="p-6">
+                <div className="text-center py-12">
+                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/5">
+                    <svg className="h-8 w-8 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                    </svg>
+                  </div>
+                  <p className="text-white/60">Aucun tip reçu pour le moment</p>
+                  <p className="mt-2 text-sm text-white/40">
+                    Partage ta page pour commencer à recevoir des tips !
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "settings" && (
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
+            <div className="border-b border-white/5 bg-gradient-to-r from-orange-500/10 to-red-500/10 px-6 py-4">
+              <h2 className="text-lg font-semibold">Paramètres</h2>
+            </div>
+            <div className="p-6">
+              <p className="text-white/60">
+                Section paramètres à venir : notifications, sécurité, intégrations, etc.
+              </p>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
