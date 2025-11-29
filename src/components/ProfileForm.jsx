@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { creatorsAPI } from "../api";
 
 export const ProfileForm = () => {
   const [formData, setFormData] = useState({
@@ -13,6 +14,7 @@ export const ProfileForm = () => {
 
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [successMessage, setSuccessMessage] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,6 +23,7 @@ export const ProfileForm = () => {
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
+    setSuccessMessage("");
   };
 
   const validateForm = () => {
@@ -60,16 +63,46 @@ export const ProfileForm = () => {
     }
 
     setIsLoading(true);
+    setSuccessMessage("");
 
     try {
-      // TODO: Remplacer par l'appel API réel
-      console.log("Données du profil:", formData);
-      await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulation
+      // Préparer les données pour l'API
+      const payload = {
+        username: formData.username,
+        displayName: formData.displayName,
+        bio: formData.bio,
+        xrpAddress: formData.xrpAddress,
+        links: {
+          twitter: formData.twitterUrl,
+          twitch: formData.twitchUrl,
+        },
+      };
 
-      alert("Profil sauvegardé avec succès ! 🎉");
+      // Appel API pour créer le créateur
+      const response = await creatorsAPI.create(payload);
+
+      console.log("Profil créé:", response);
+      setSuccessMessage("Profil sauvegardé avec succès ! 🎉");
+      
+      // Optionnel: rediriger vers la page du créateur
+      // window.location.href = `/u/${formData.username}`;
     } catch (error) {
       console.error("Erreur lors de la sauvegarde:", error);
-      alert("Erreur lors de la sauvegarde du profil");
+      
+      // Gérer les erreurs spécifiques
+      if (error.status === 409) {
+        setErrors({ username: "Ce nom d'utilisateur est déjà pris" });
+      } else if (error.data?.errors) {
+        // Erreurs de validation du backend
+        const backendErrors = {};
+        error.data.errors.forEach((err) => {
+          const field = err.path || err.param;
+          backendErrors[field] = err.msg;
+        });
+        setErrors(backendErrors);
+      } else {
+        setErrors({ general: error.message || "Erreur lors de la sauvegarde du profil" });
+      }
     } finally {
       setIsLoading(false);
     }
@@ -77,6 +110,30 @@ export const ProfileForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Success Message */}
+      {successMessage && (
+        <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{successMessage}</span>
+          </div>
+        </div>
+      )}
+
+      {/* General Error Message */}
+      {errors.general && (
+        <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400">
+          <div className="flex items-center gap-2">
+            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span>{errors.general}</span>
+          </div>
+        </div>
+      )}
+
       {/* Username */}
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">

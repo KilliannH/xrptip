@@ -1,26 +1,38 @@
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { creatorsAPI } from "../api";
 
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
 export const CreatorPublicPage = () => {
   const { username } = useParams();
-  const [selectedAmount, setSelectedAmount] = useState<number | null>(5);
-  const [customAmount, setCustomAmount] = useState<string>("");
+  const [creator, setCreator] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedAmount, setSelectedAmount] = useState(5);
+  const [customAmount, setCustomAmount] = useState("");
   const [showHelp, setShowHelp] = useState(false);
 
-  // TODO: à remplacer par des données venant de l'API
-  const creator = {
-    username,
-    displayName: "CryptoArtist",
-    bio: "Illustrateur digital & créateur de NFT sur XRPL.",
-    avatarUrl: "",
-    links: {
-      twitter: "https://x.com/cryptoartist",
-      twitch: "https://twitch.tv/cryptoartist",
-    },
-    xrpAddress: "rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  };
+  // Charger les données du créateur
+  useEffect(() => {
+    const fetchCreator = async () => {
+      try {
+        setLoading(true);
+        const response = await creatorsAPI.getByUsername(username);
+        setCreator(response.data);
+        setError(null);
+      } catch (err) {
+        console.error("Erreur lors du chargement du créateur:", err);
+        setError(err.message || "Créateur non trouvé");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    if (username) {
+      fetchCreator();
+    }
+  }, [username]);
 
   const amountToSend = customAmount
     ? Number(customAmount)
@@ -32,9 +44,59 @@ export const CreatorPublicPage = () => {
   };
 
   const handleCopyAddress = async () => {
-    await navigator.clipboard.writeText(creator.xrpAddress);
-    // TODO: Ajouter un toast de confirmation
+    try {
+      await navigator.clipboard.writeText(creator.xrpAddress);
+      // TODO: Ajouter un toast de confirmation
+      alert("Adresse copiée !");
+    } catch (err) {
+      console.error("Erreur lors de la copie:", err);
+    }
   };
+
+  // État de chargement
+  if (loading) {
+    return (
+      <div className="relative min-h-screen overflow-hidden py-12">
+        <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
+        <div className="relative mx-auto max-w-2xl px-4">
+          <div className="flex items-center justify-center py-20">
+            <div className="spinner" style={{ width: '40px', height: '40px' }} />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // État d'erreur
+  if (error || !creator) {
+    return (
+      <div className="relative min-h-screen overflow-hidden py-12">
+        <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
+        <div className="relative mx-auto max-w-2xl px-4">
+          <div className="rounded-3xl border border-red-500/30 bg-red-500/10 p-8 text-center">
+            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-500/20">
+              <svg className="h-8 w-8 text-red-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <h2 className="text-xl font-semibold text-white mb-2">Créateur non trouvé</h2>
+            <p className="text-white/60 mb-6">
+              Le créateur @{username} n'existe pas ou a été supprimé.
+            </p>
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20"
+            >
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+              Retour à l'accueil
+            </a>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden py-12">
@@ -76,7 +138,7 @@ export const CreatorPublicPage = () => {
 
             {/* Social links */}
             <div className="flex flex-wrap gap-2">
-              {creator.links.twitter && (
+              {creator.links?.twitter && (
                 <a
                   href={creator.links.twitter}
                   target="_blank"
@@ -89,7 +151,7 @@ export const CreatorPublicPage = () => {
                   <span className="transition-colors group-hover:text-xrpBlue">X / Twitter</span>
                 </a>
               )}
-              {creator.links.twitch && (
+              {creator.links?.twitch && (
                 <a
                   href={creator.links.twitch}
                   target="_blank"
