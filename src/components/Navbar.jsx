@@ -1,6 +1,13 @@
 import { Link, NavLink } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Navbar = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
+  const handleLogout = async () => {
+    await logout();
+  };
+
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-xrpDark/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -37,24 +44,74 @@ export const Navbar = () => {
             Accueil
           </NavLink>
 
-          <NavLink
-            to="/dashboard"
-            className={({ isActive }) =>
-              `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${
-                isActive
-                  ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
-                  : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
-              }`
-            }
-          >
-            <span className="relative z-10 flex items-center gap-2">
-              <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-              </svg>
-              <span className="hidden sm:inline">Dashboard</span>
-              <span className="sm:hidden">Panel</span>
-            </span>
-          </NavLink>
+          {isAuthenticated ? (
+            <>
+              <NavLink
+                to="/dashboard"
+                className={({ isActive }) =>
+                  `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${
+                    isActive
+                      ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
+                      : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+                  }`
+                }
+              >
+                <span className="relative z-10 flex items-center gap-2">
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                  </svg>
+                  <span className="hidden sm:inline">Dashboard</span>
+                  <span className="sm:hidden">Panel</span>
+                </span>
+              </NavLink>
+
+              {/* User Menu */}
+              <div className="relative group">
+                <button className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 transition-all hover:bg-white/5 hover:text-white">
+                  <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-xrpBlue to-cyan-500 text-xs font-bold text-white">
+                    {user?.email?.[0].toUpperCase()}
+                  </div>
+                  <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {/* Dropdown Menu */}
+                <div className="absolute right-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
+                  <div className="rounded-xl border border-white/10 bg-gradient-to-br from-xrpDark to-black p-2 shadow-xl backdrop-blur-xl">
+                    <div className="border-b border-white/10 px-3 py-2 mb-2">
+                      <p className="text-xs text-white/60">Connecté en tant que</p>
+                      <p className="text-sm font-medium text-white truncate">{user?.email}</p>
+                    </div>
+                    <button
+                      onClick={handleLogout}
+                      className="flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 transition-all hover:bg-red-500/10 hover:text-red-400"
+                    >
+                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      Déconnexion
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                className="rounded-lg px-3 py-2 text-sm font-medium text-white/60 transition-all hover:bg-white/5 hover:text-white sm:px-4"
+              >
+                Connexion
+              </Link>
+              <Link
+                to="/register"
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue hover:scale-105"
+              >
+                S'inscrire
+              </Link>
+            </>
+          )}
         </nav>
       </div>
     </header>

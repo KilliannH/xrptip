@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { creatorsAPI } from "../api";
+import { QRCodeModal } from "../components/QRCodeModal";
 
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
@@ -12,6 +13,7 @@ export const CreatorPublicPage = () => {
   const [selectedAmount, setSelectedAmount] = useState(5);
   const [customAmount, setCustomAmount] = useState("");
   const [showHelp, setShowHelp] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
 
   // Charger les données du créateur
   useEffect(() => {
@@ -40,6 +42,7 @@ export const CreatorPublicPage = () => {
 
   const handleSendTip = () => {
     if (!amountToSend || amountToSend <= 0) return;
+    setShowQRModal(true);
     setShowHelp(true);
   };
 
@@ -238,10 +241,10 @@ export const CreatorPublicPage = () => {
                 <span className="relative z-10 flex items-center justify-center gap-2">
                   {amountToSend ? (
                     <>
-                      <span>Envoyer {amountToSend} XRP</span>
-                      <svg className="h-5 w-5 transition-transform group-hover:translate-x-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
+                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                       </svg>
+                      <span>Afficher le QR Code</span>
                     </>
                   ) : (
                     "Choisis un montant"
@@ -249,6 +252,21 @@ export const CreatorPublicPage = () => {
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-xrpBlue opacity-0 transition-opacity group-hover:opacity-100" />
               </button>
+
+              {/* Alternative: Manual payment button */}
+              {amountToSend > 0 && (
+                <button
+                  onClick={() => setShowHelp(!showHelp)}
+                  className="w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Instructions de paiement manuel</span>
+                  </span>
+                </button>
+              )}
 
               {/* XRP Address */}
               <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
@@ -340,6 +358,16 @@ export const CreatorPublicPage = () => {
           )}
         </div>
       </div>
+
+      {/* QR Code Modal */}
+      {creator && (
+        <QRCodeModal
+          isOpen={showQRModal}
+          onClose={() => setShowQRModal(false)}
+          creator={creator}
+          amount={amountToSend}
+        />
+      )}
     </div>
   );
 };
