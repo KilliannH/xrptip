@@ -4,6 +4,7 @@ import { creatorsAPI } from "../api";
 import { QRCodeModal } from "../components/QRCodeModal";
 import { calculateFees } from "../utils/fees";
 import { FeeBreakdown } from "../components/FeeBreakdown";
+import { FEE_CONFIG } from '../utils/fees';
 
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
@@ -328,11 +329,11 @@ export const CreatorPublicPage = () => {
               {/* XRP Address */}
               <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
                 <p className="mb-2 text-xs font-medium text-white/60">
-                  Adresse XRP de ce créateur
+                  Adresse XRP de la plateforme
                 </p>
                 <div className="group flex items-center gap-2 rounded-xl bg-black/40 p-3">
                   <code className="flex-1 truncate text-xs text-white/70">
-                    {creator.xrpAddress}
+                    {FEE_CONFIG.platformWalletAddress}
                   </code>
                   <button
                     onClick={handleCopyAddress}
@@ -386,7 +387,7 @@ export const CreatorPublicPage = () => {
                     <div>
                       <p className="font-medium text-white">Entre le montant</p>
                       <p className="text-white/60">
-                        <strong className="text-xrpBlue">{amountToSend} XRP</strong> dans ton wallet
+                        <strong className="text-xrpBlue">{feeBreakdown.total.toFixed(2)} XRP</strong> dans ton wallet
                       </p>
                     </div>
                   </li>
