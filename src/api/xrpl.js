@@ -21,7 +21,7 @@ export const xrplAPI = {
    * @returns {Promise}
    */
   syncTransactions: (username, limit = 50) => {
-    return api.post(`/xrpl/sync/${username}`, null, {
+    return api.post(`/xrpl/sync/${username}`, {}, {
       params: { limit }
     });
   },

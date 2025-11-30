@@ -110,15 +110,58 @@ export const CreatorPublicPage = () => {
       <div className="relative mx-auto max-w-2xl px-4">
         {/* Creator Profile Card */}
         <div className="mb-8 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
-          {/* Cover gradient */}
-          <div className="h-32 bg-gradient-to-br from-xrpBlue via-cyan-500 to-blue-600" />
+          {/* Banner / Cover */}
+          <div className="relative h-48 overflow-hidden">
+            {creator.bannerUrl ? (
+              <img 
+                src={creator.bannerUrl} 
+                alt={`${creator.displayName} banner`}
+                className="h-full w-full object-cover"
+                onError={(e) => {
+                  // Si l'image ne charge pas, afficher le gradient par défaut
+                  e.target.style.display = 'none';
+                  e.target.nextElementSibling.style.display = 'block';
+                }}
+              />
+            ) : null}
+            {/* Fallback gradient (affiché si pas de banner ou erreur de chargement) */}
+            <div 
+              className="absolute inset-0 bg-gradient-to-br from-xrpBlue via-cyan-500 to-blue-600"
+              style={{ display: creator.bannerUrl ? 'none' : 'block' }}
+            />
+          </div>
           
           {/* Profile content */}
           <div className="relative px-6 pb-6">
             {/* Avatar */}
             <div className="relative -mt-16 mb-4">
               <div className="inline-block rounded-2xl border-4 border-xrpDark bg-gradient-to-br from-xrpBlue via-cyan-400 to-blue-500 p-1">
-                <div className="h-24 w-24 rounded-xl bg-gradient-to-br from-xrpBlue to-cyan-400" />
+                {creator.avatarUrl ? (
+                  <div className="relative h-24 w-24 overflow-hidden rounded-xl">
+                    <img 
+                      src={creator.avatarUrl} 
+                      alt={creator.displayName}
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        // Si l'image ne charge pas, afficher le gradient par défaut
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
+                    />
+                    {/* Fallback gradient */}
+                    <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-xrpBlue to-cyan-400">
+                      <svg className="h-12 w-12 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                      </svg>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="flex h-24 w-24 items-center justify-center rounded-xl bg-gradient-to-br from-xrpBlue to-cyan-400">
+                    <svg className="h-12 w-12 text-white/50" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                    </svg>
+                  </div>
+                )}
               </div>
               <div className="absolute bottom-2 right-2 flex h-7 w-7 items-center justify-center rounded-full border-2 border-xrpDark bg-green-500 shadow-lg">
                 <svg className="h-4 w-4 text-white" fill="currentColor" viewBox="0 0 20 20">

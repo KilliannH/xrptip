@@ -1,9 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ProfileForm } from "../components/ProfileForm";
+import { SyncButton } from "../components/SyncButton";
+import { tipsAPI, creatorsAPI } from "../api";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Dashboard = () => {
+  const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("profile");
   const [currentUsername, setCurrentUsername] = useState("");
+  const [stats, setStats] = useState({
+    totalTips: 0,
+    totalAmount: 0,
+    uniqueSupporters: 0,
+    monthlyAmount: 0
+  });
+  const [recentTips, setRecentTips] = useState([]);
+  const [loadingStats, setLoadingStats] = useState(false);
+
+  // Charger les stats quand le username change
+  useEffect(() => {
+    if (currentUsername) {
+      loadStats();
+    }
+  }, [currentUsername]);
+
+  const loadStats = async () => {
+    if (!currentUsername) return;
+    
+    try {
+      setLoadingStats(true);
+      
+      // Charger les statistiques
+      const statsResponse = await tipsAPI.getStats(currentUsername);
+      setStats({
+        totalTips: statsResponse.data.allTime.totalTips || 0,
+        totalAmount: statsResponse.data.allTime.totalAmount || 0,
+        uniqueSupporters: statsResponse.data.allTime.uniqueSupporters || 0,
+        monthlyAmount: statsResponse.data.last30Days.totalAmount || 0
+      });
+
+      // Charger les tips récents
+      const tipsResponse = await tipsAPI.getByCreator(currentUsername, {
+        limit: 10,
+        status: 'confirmed'
+      });
+      setRecentTips(tipsResponse.data || []);
+      
+    } catch (error) {
+      console.error('Erreur lors du chargement des stats:', error);
+    } finally {
+      setLoadingStats(false);
+    }
+  };
+
+  const handleSyncComplete = (data) => {
+    console.log('Sync complete:', data);
+    // Recharger les stats après synchronisation
+    loadStats();
+  };
 
   return (
     <div className="relative min-h-screen overflow-hidden py-12">
@@ -134,6 +188,14 @@ export const Dashboard = () => {
 
         {activeTab === "stats" && (
           <div className="space-y-6">
+            {/* Sync Button */}
+            <div className="flex justify-end">
+              <SyncButton 
+                username={currentUsername} 
+                onSyncComplete={handleSyncComplete}
+              />
+            </div>
+
             {/* Stats Grid */}
             <div className="grid gap-6 sm:grid-cols-3">
               <div className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg backdrop-blur-xl transition-all hover:border-xrpBlue/30 hover:shadow-xl">
@@ -145,8 +207,20 @@ export const Dashboard = () => {
                     </svg>
                   </div>
                 </div>
-                <p className="text-3xl font-bold">0</p>
-                <p className="mt-1 text-sm text-white/50">0.00 XRP</p>
+                <p className="text-3xl font-bold">
+                  {loadingStats ? (
+                    <span className="inline-block h-9 w-16 animate-pulse rounded bg-white/10" />
+                  ) : (
+                    stats.totalTips
+                  )}
+                </p>
+                <p className="mt-1 text-sm text-white/50">
+                  {loadingStats ? (
+                    <span className="inline-block h-4 w-20 animate-pulse rounded bg-white/10" />
+                  ) : (
+                    `${stats.totalAmount.toFixed(2)} XRP`
+                  )}
+                </p>
               </div>
 
               <div className="group overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] p-6 shadow-lg backdrop-blur-xl transition-all hover:border-xrpBlue/30 hover:shadow-xl">
@@ -158,7 +232,13 @@ export const Dashboard = () => {
                     </svg>
                   </div>
                 </div>
-                <p className="text-3xl font-bold">0</p>
+                <p className="text-3xl font-bold">
+                  {loadingStats ? (
+                    <span className="inline-block h-9 w-16 animate-pulse rounded bg-white/10" />
+                  ) : (
+                    stats.uniqueSupporters
+                  )}
+                </p>
                 <p className="mt-1 text-sm text-white/50">Personnes uniques</p>
               </div>
 
@@ -171,8 +251,14 @@ export const Dashboard = () => {
                     </svg>
                   </div>
                 </div>
-                <p className="text-3xl font-bold">0</p>
-                <p className="mt-1 text-sm text-white/50">0.00 XRP</p>
+                <p className="text-3xl font-bold">
+                  {loadingStats ? (
+                    <span className="inline-block h-9 w-16 animate-pulse rounded bg-white/10" />
+                  ) : (
+                    stats.monthlyAmount.toFixed(2)
+                  )}
+                </p>
+                <p className="mt-1 text-sm text-white/50">XRP</p>
               </div>
             </div>
 
@@ -182,17 +268,94 @@ export const Dashboard = () => {
                 <h2 className="text-lg font-semibold">Tips récents</h2>
               </div>
               <div className="p-6">
-                <div className="text-center py-12">
-                  <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/5">
-                    <svg className="h-8 w-8 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                    </svg>
+                {loadingStats ? (
+                  <div className="space-y-3">
+                    {[1, 2, 3].map((i) => (
+                      <div key={i} className="h-16 animate-pulse rounded-xl bg-white/5" />
+                    ))}
                   </div>
-                  <p className="text-white/60">Aucun tip reçu pour le moment</p>
-                  <p className="mt-2 text-sm text-white/40">
-                    Partage ta page pour commencer à recevoir des tips !
-                  </p>
-                </div>
+                ) : recentTips.length === 0 ? (
+                  <div className="text-center py-12">
+                    <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-white/5">
+                      <svg className="h-8 w-8 text-white/40" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
+                      </svg>
+                    </div>
+                    <p className="text-white/60">Aucun tip reçu pour le moment</p>
+                    <p className="mt-2 text-sm text-white/40">
+                      Partage ta page pour commencer à recevoir des tips !
+                    </p>
+                  </div>
+                ) : (
+                  <div className="overflow-x-auto">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-white/5">
+                          <th className="pb-3 text-left text-xs font-medium text-white/60">Date</th>
+                          <th className="pb-3 text-left text-xs font-medium text-white/60">Montant</th>
+                          <th className="pb-3 text-left text-xs font-medium text-white/60">De</th>
+                          <th className="pb-3 text-left text-xs font-medium text-white/60">Message</th>
+                          <th className="pb-3 text-right text-xs font-medium text-white/60">Statut</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5">
+                        {recentTips.map((tip) => (
+                          <tr key={tip._id} className="group hover:bg-white/5">
+                            <td className="py-3 text-sm text-white/80">
+                              {new Date(tip.createdAt).toLocaleDateString('fr-FR', {
+                                day: '2-digit',
+                                month: 'short',
+                                hour: '2-digit',
+                                minute: '2-digit'
+                              })}
+                            </td>
+                            <td className="py-3 text-sm font-semibold text-green-400">
+                              {tip.amount} XRP
+                            </td>
+                            <td className="py-3 text-sm text-white/70">
+                              {tip.senderAddress ? (
+                                <code className="text-xs">
+                                  {tip.senderAddress.slice(0, 8)}...{tip.senderAddress.slice(-6)}
+                                </code>
+                              ) : (
+                                <span className="text-white/40">Anonyme</span>
+                              )}
+                            </td>
+                            <td className="py-3 text-sm text-white/60">
+                              {tip.message ? (
+                                <span className="line-clamp-1">{tip.message}</span>
+                              ) : (
+                                <span className="text-white/30">-</span>
+                              )}
+                            </td>
+                            <td className="py-3 text-right">
+                              {tip.status === 'confirmed' ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-green-500/10 px-2 py-1 text-xs font-medium text-green-400">
+                                  <svg className="h-3 w-3" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                                  </svg>
+                                  Confirmé
+                                </span>
+                              ) : tip.status === 'pending' ? (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-yellow-500/10 px-2 py-1 text-xs font-medium text-yellow-400">
+                                  <svg className="h-3 w-3 animate-spin" fill="none" viewBox="0 0 24 24">
+                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                  </svg>
+                                  En attente
+                                </span>
+                              ) : (
+                                <span className="inline-flex items-center gap-1 rounded-full bg-red-500/10 px-2 py-1 text-xs font-medium text-red-400">
+                                  Échoué
+                                </span>
+                              )}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                )}
               </div>
             </div>
           </div>
