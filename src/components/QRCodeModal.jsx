@@ -1,20 +1,20 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { useState, useEffect } from 'react';
+import { FeeBreakdown } from './FeeBreakdown';
+import { FEE_CONFIG } from '../utils/fees';
 
-export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
+export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) => {
   const [copied, setCopied] = useState(false);
 
   // Bloquer le scroll du body quand la modale est ouverte
   useEffect(() => {
     if (isOpen) {
-      // Sauvegarder la position actuelle du scroll
       const scrollY = window.scrollY;
       document.body.style.position = 'fixed';
       document.body.style.top = `-${scrollY}px`;
       document.body.style.width = '100%';
       document.body.style.overflow = 'hidden';
     } else {
-      // Restaurer le scroll
       const scrollY = document.body.style.top;
       document.body.style.position = '';
       document.body.style.top = '';
@@ -23,7 +23,6 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
       window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
 
-    // Cleanup au démontage
     return () => {
       document.body.style.position = '';
       document.body.style.top = '';
@@ -34,13 +33,20 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
 
   if (!isOpen) return null;
 
-  // Construire le payload XRP
-  // Format: ripple:ADDRESS?amount=AMOUNT&dt=DESTINATION_TAG
-  const xrpPaymentURI = `ripple:${creator.xrpAddress}?amount=${amount}`;
+  // Montant total à envoyer au wallet de la plateforme
+  const totalAmount = feeBreakdown?.total || amount;
+  
+  // Utiliser le destinationTag du créateur (généré automatiquement par le backend)
+  // XRPL n'accepte que des nombres entiers 32-bit comme DestinationTag
+  const destinationTag = creator.destinationTag;
+  
+  // QR code pointe vers le wallet intermédiaire de la plateforme
+  // Le backend redistribuera automatiquement au créateur via le DestinationTag
+  const xrpPaymentURI = `ripple:${FEE_CONFIG.platformWalletAddress}?amount=${totalAmount}&dt=${destinationTag}`;
 
   const handleCopyAddress = async () => {
     try {
-      await navigator.clipboard.writeText(creator.xrpAddress);
+      await navigator.clipboard.writeText(FEE_CONFIG.platformWalletAddress);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
@@ -49,7 +55,6 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
   };
 
   const handleDownloadQR = () => {
-    // Récupérer le SVG du QR code
     const svg = document.getElementById('payment-qr-code');
     const svgData = new XMLSerializer().serializeToString(svg);
     const canvas = document.createElement('canvas');
@@ -66,7 +71,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
       
       const pngFile = canvas.toDataURL('image/png');
       const downloadLink = document.createElement('a');
-      downloadLink.download = `xrptip-${creator.username}-${amount}XRP.png`;
+      downloadLink.download = `xrptip-${creator.username}-${totalAmount}XRP.png`;
       downloadLink.href = pngFile;
       downloadLink.click();
     };
@@ -113,11 +118,20 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
             <p className="text-sm text-white/50">@{creator.username}</p>
           </div>
 
-          {/* Amount */}
-          <div className="rounded-2xl border border-xrpBlue/30 bg-gradient-to-br from-xrpBlue/20 to-cyan-500/10 p-4 text-center">
-            <p className="text-sm text-white/60">Montant</p>
-            <p className="text-4xl font-bold text-xrpBlue">{amount} XRP</p>
-          </div>
+          {/* Fee Breakdown */}
+          {feeBreakdown ? (
+            <FeeBreakdown 
+              amount={feeBreakdown.amount}
+              fee={feeBreakdown.fee}
+              total={feeBreakdown.total}
+            />
+          ) : (
+            /* Fallback si pas de feeBreakdown */
+            <div className="rounded-2xl border border-xrpBlue/30 bg-gradient-to-br from-xrpBlue/20 to-cyan-500/10 p-4 text-center">
+              <p className="text-sm text-white/60">Montant</p>
+              <p className="text-4xl font-bold text-xrpBlue">{amount} XRP</p>
+            </div>
+          )}
 
           {/* QR Code */}
           <div className="flex justify-center">
@@ -129,7 +143,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
                 level="H"
                 includeMargin={true}
                 imageSettings={{
-                  src: "/xrp-logo.png", // Optionnel: ajouter le logo XRP au centre
+                  src: "/xrp-logo.png",
                   height: 40,
                   width: 40,
                   excavate: true,
@@ -140,6 +154,23 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
 
           {/* Instructions */}
           <div className="space-y-3">
+            {/* Info: Paiement via wallet intermédiaire */}
+            <div className="rounded-xl border border-cyan-500/30 bg-cyan-500/10 p-4">
+              <div className="flex items-start gap-3">
+                <svg className="h-5 w-5 shrink-0 text-cyan-400 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div>
+                  <p className="text-sm font-semibold text-cyan-200 mb-1">
+                    Paiement sécurisé
+                  </p>
+                  <p className="text-xs text-cyan-200/80">
+                    Le montant est envoyé à notre wallet intermédiaire qui redistribue automatiquement {feeBreakdown?.amount?.toFixed(2) || amount} XRP au créateur.
+                  </p>
+                </div>
+              </div>
+            </div>
+
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
               <p className="mb-2 text-sm font-semibold text-white">
                 📱 Scanne avec ton wallet XRP
@@ -149,14 +180,14 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
               </p>
             </div>
 
-            {/* XRP Address */}
+            {/* Platform Wallet Address */}
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
               <p className="mb-2 text-xs font-semibold text-white/80">
                 Ou copie l'adresse manuellement :
               </p>
               <div className="flex items-center gap-2 rounded-lg bg-black/40 p-3">
                 <code className="flex-1 truncate text-xs text-white/70">
-                  {creator.xrpAddress}
+                  {FEE_CONFIG.platformWalletAddress}
                 </code>
                 <button
                   onClick={handleCopyAddress}
@@ -174,6 +205,15 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
                   )}
                 </button>
               </div>
+              <p className="mt-2 text-xs text-white/50">
+                💡 Montant : <strong className="text-xrpBlue">{totalAmount} XRP</strong>
+              </p>
+              <p className="mt-1 text-xs text-white/50">
+                🏷️ Destination Tag : <strong className="text-xrpBlue">{destinationTag}</strong>
+              </p>
+              <p className="mt-1 text-xs text-white/40 italic">
+                ⚠️ Le Destination Tag est important pour identifier le créateur
+              </p>
             </div>
           </div>
 

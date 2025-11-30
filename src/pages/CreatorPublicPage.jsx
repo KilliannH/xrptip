@@ -2,6 +2,8 @@ import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { creatorsAPI } from "../api";
 import { QRCodeModal } from "../components/QRCodeModal";
+import { calculateFees } from "../utils/fees";
+import { FeeBreakdown } from "../components/FeeBreakdown";
 
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
@@ -40,8 +42,11 @@ export const CreatorPublicPage = () => {
     ? Number(customAmount)
     : selectedAmount ?? 0;
 
+  // Calculer les frais
+  const feeBreakdown = calculateFees(amountToSend);
+
   const handleSendTip = () => {
-    if (!amountToSend || amountToSend <= 0) return;
+    if (!feeBreakdown.total || feeBreakdown.total <= 0) return;
     setShowQRModal(true);
     setShowHelp(true);
   };
@@ -275,14 +280,23 @@ export const CreatorPublicPage = () => {
                 </div>
               </div>
 
+              {/* Fee Breakdown - Afficher seulement si montant > 0 */}
+              {amountToSend > 0 && (
+                <FeeBreakdown 
+                  amount={feeBreakdown.amount}
+                  fee={feeBreakdown.fee}
+                  total={feeBreakdown.total}
+                />
+              )}
+
               {/* Send button */}
               <button
                 onClick={handleSendTip}
-                disabled={!amountToSend}
+                disabled={!feeBreakdown.total}
                 className="group relative w-full overflow-hidden rounded-xl bg-gradient-to-r from-xrpBlue to-cyan-500 px-6 py-4 font-semibold text-white shadow-lg shadow-xrpBlue/30 transition-all hover:shadow-xl hover:shadow-xrpBlue/50 disabled:cursor-not-allowed disabled:from-white/10 disabled:to-white/10 disabled:text-white/40 disabled:shadow-none hover:enabled:scale-[1.02]"
               >
                 <span className="relative z-10 flex items-center justify-center gap-2">
-                  {amountToSend ? (
+                  {feeBreakdown.total ? (
                     <>
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
@@ -386,6 +400,16 @@ export const CreatorPublicPage = () => {
                     </div>
                   </li>
                 </ol>
+                <div className="mt-6 rounded-xl border border-cyan-500/20 bg-cyan-500/5 p-4">
+                  <p className="flex items-start gap-2 text-xs text-white/70">
+                    <svg className="h-4 w-4 shrink-0 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>
+                      Prochainement : QR code et deep link direct vers ton wallet pour une expérience encore plus rapide !
+                    </span>
+                  </p>
+                </div>
               </div>
             </div>
           )}
@@ -399,6 +423,7 @@ export const CreatorPublicPage = () => {
           onClose={() => setShowQRModal(false)}
           creator={creator}
           amount={amountToSend}
+          feeBreakdown={feeBreakdown}
         />
       )}
     </div>
