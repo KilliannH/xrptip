@@ -2,6 +2,14 @@ import api from './client';
 
 export const creatorsAPI = {
   /**
+   * Get my creator profile
+   * @returns {Promise}
+   */
+  getMyProfile: () => {
+    return api.get('/creators/me/profile');
+  },
+
+  /**
    * Get all creators
    * @param {Object} params - Query parameters (page, limit)
    * @returns {Promise}

@@ -3,6 +3,7 @@ import { ProfileForm } from "../components/ProfileForm";
 
 export const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("profile");
+  const [currentUsername, setCurrentUsername] = useState("");
 
   return (
     <div className="relative min-h-screen overflow-hidden py-12">
@@ -86,7 +87,7 @@ export const Dashboard = () => {
                 </p>
               </div>
               <div className="p-6">
-                <ProfileForm />
+                <ProfileForm onUsernameChange={setCurrentUsername} />
               </div>
             </div>
 
@@ -107,11 +108,24 @@ export const Dashboard = () => {
                 </p>
                 <div className="rounded-xl border border-xrpBlue/30 bg-xrpBlue/10 px-4 py-3">
                   <code className="text-sm text-xrpBlue">
-                    https://xrptip.com/u/username
+                    https://xrptip.com/u/{currentUsername || "username"}
                   </code>
                 </div>
+                {currentUsername && (
+                  <a
+                    href={`/u/${currentUsername}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-2 rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-white/80 transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+                  >
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                    </svg>
+                    Voir ma page publique
+                  </a>
+                )}
                 <p className="mt-4 text-xs text-white/50">
-                  💡 Sauvegarde ton profil pour voir l'aperçu en temps réel
+                  💡 {currentUsername ? "Ton profil est en ligne !" : "Sauvegarde ton profil pour voir l'aperçu en temps réel"}
                 </p>
               </div>
             </div>

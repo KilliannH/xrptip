@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { creatorsAPI } from "../api";
+import { useAuth } from "../contexts/AuthContext";
 
-export const ProfileForm = () => {
+export const ProfileForm = ({ onUsernameChange }) => {
+  const { user, refreshUser } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
     displayName: "",
@@ -13,12 +15,55 @@ export const ProfileForm = () => {
   });
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingProfile, setIsLoadingProfile] = useState(true);
   const [errors, setErrors] = useState({});
   const [successMessage, setSuccessMessage] = useState("");
+  const [existingCreator, setExistingCreator] = useState(null);
+
+  // Charger le profil créateur existant au montage
+  useEffect(() => {
+    loadCreatorProfile();
+  }, []);
+
+  const loadCreatorProfile = async () => {
+    try {
+      setIsLoadingProfile(true);
+      const response = await creatorsAPI.getMyProfile();
+      
+      // Profil trouvé - pré-remplir le formulaire
+      const creator = response.data;
+      setExistingCreator(creator);
+      setFormData({
+        username: creator.username || "",
+        displayName: creator.displayName || "",
+        bio: creator.bio || "",
+        xrpAddress: creator.xrpAddress || "",
+        twitterUrl: creator.links?.twitter || "",
+        twitchUrl: creator.links?.twitch || "",
+        avatarUrl: creator.avatarUrl || "",
+      });
+      
+      // Notifier le parent (Dashboard) du username
+      if (onUsernameChange && creator.username) {
+        onUsernameChange(creator.username);
+      }
+    } catch (error) {
+      // Pas de profil créateur - c'est normal pour un nouveau créateur
+      console.log('Aucun profil créateur trouvé, création d\'un nouveau');
+    } finally {
+      setIsLoadingProfile(false);
+    }
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+    
+    // Notifier le parent si c'est le username qui change
+    if (name === 'username' && onUsernameChange) {
+      onUsernameChange(value);
+    }
+    
     // Clear error when user starts typing
     if (errors[name]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
@@ -78,20 +123,38 @@ export const ProfileForm = () => {
         },
       };
 
-      // Appel API pour créer le créateur
-      const response = await creatorsAPI.create(payload);
+      let response;
 
-      console.log("Profil créé:", response);
-      setSuccessMessage("Profil sauvegardé avec succès ! 🎉");
+      if (existingCreator) {
+        // Mise à jour du profil existant
+        response = await creatorsAPI.update(existingCreator.username, payload);
+        setSuccessMessage("Profil mis à jour avec succès ! 🎉");
+      } else {
+        // Création d'un nouveau profil
+        response = await creatorsAPI.create(payload);
+        setSuccessMessage("Profil créé avec succès ! 🎉");
+        setExistingCreator(response.data);
+      }
+
+      console.log("Profil sauvegardé:", response);
       
-      // Optionnel: rediriger vers la page du créateur
-      // window.location.href = `/u/${formData.username}`;
+      // Rafraîchir les données utilisateur pour mettre à jour le rôle
+      await refreshUser();
+      
     } catch (error) {
       console.error("Erreur lors de la sauvegarde:", error);
       
       // Gérer les erreurs spécifiques
       if (error.status === 409) {
-        setErrors({ username: "Ce nom d'utilisateur est déjà pris" });
+        if (error.data?.existingCreator) {
+          setErrors({ 
+            general: `Vous avez déjà un profil créateur : @${error.data.existingCreator.username}` 
+          });
+        } else {
+          setErrors({ username: "Ce nom d'utilisateur est déjà pris" });
+        }
+      } else if (error.status === 403) {
+        setErrors({ general: "Vous n'êtes pas autorisé à modifier ce profil" });
       } else if (error.data?.errors) {
         // Erreurs de validation du backend
         const backendErrors = {};
@@ -110,6 +173,33 @@ export const ProfileForm = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Loading State */}
+      {isLoadingProfile && (
+        <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-center">
+          <div className="flex items-center justify-center gap-2">
+            <div className="spinner" />
+            <span className="text-sm text-white/60">Chargement du profil...</span>
+          </div>
+        </div>
+      )}
+
+      {/* Existing Creator Info */}
+      {existingCreator && (
+        <div className="rounded-xl border border-xrpBlue/30 bg-xrpBlue/10 px-4 py-3">
+          <div className="flex items-start gap-2">
+            <svg className="h-5 w-5 shrink-0 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="flex-1">
+              <p className="text-sm font-semibold text-xrpBlue">Mode édition</p>
+              <p className="mt-1 text-xs text-white/70">
+                Vous modifiez votre profil créateur existant : <strong>@{existingCreator.username}</strong>
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Success Message */}
       {successMessage && (
         <div className="rounded-xl border border-green-500/30 bg-green-500/10 px-4 py-3 text-sm text-green-400">
