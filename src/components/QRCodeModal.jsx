@@ -1,8 +1,36 @@
 import { QRCodeSVG } from 'qrcode.react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
   const [copied, setCopied] = useState(false);
+
+  // Bloquer le scroll du body quand la modale est ouverte
+  useEffect(() => {
+    if (isOpen) {
+      // Sauvegarder la position actuelle du scroll
+      const scrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+    } else {
+      // Restaurer le scroll
+      const scrollY = document.body.style.top;
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+
+    // Cleanup au démontage
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+    };
+  }, [isOpen]);
 
   if (!isOpen) return null;
 
@@ -47,16 +75,16 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto">
       {/* Backdrop */}
       <div 
-        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+        className="fixed inset-0 bg-black/80 backdrop-blur-sm"
         onClick={onClose}
       />
 
-      {/* Modal */}
-      <div className="relative z-10 w-full max-w-md overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-xrpDark to-black shadow-2xl">
-        {/* Header */}
+      {/* Modal - Scrollable */}
+      <div className="relative z-10 w-full max-w-md my-8 overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-xrpDark to-black shadow-2xl">
+        {/* Header - Fixed */}
         <div className="border-b border-white/10 bg-gradient-to-r from-xrpBlue/20 to-cyan-500/20 px-6 py-4">
           <div className="flex items-center justify-between">
             <h2 className="flex items-center gap-2 text-lg font-semibold text-white">
@@ -76,8 +104,8 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount }) => {
           </div>
         </div>
 
-        {/* Content */}
-        <div className="p-6 space-y-6">
+        {/* Content - Scrollable */}
+        <div className="max-h-[calc(100vh-12rem)] overflow-y-auto p-6 space-y-6">
           {/* Creator Info */}
           <div className="text-center">
             <p className="text-sm text-white/60">Envoyer un tip à</p>
