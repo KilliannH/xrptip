@@ -6,7 +6,7 @@ export const FEE_CONFIG = {
   // Adresse XRP du wallet intermédiaire de la plateforme
   // TOUS les paiements passent par cette adresse
   // Le backend redistribue ensuite au créateur (montant - frais)
-  platformWalletAddress: 'rsqiPWBjaJawvih61o9f2GoNNyPrSoMnx6', // TODO: Mettre votre adresse XRP
+  platformWalletAddress: 'rNDoLghX4eCZj82RX8f6QdPGVFQC9bCiCZ', // TODO: Mettre votre adresse XRP
   
   // Montant minimum pour appliquer les frais (en XRP)
   minAmountForFees: 1,
