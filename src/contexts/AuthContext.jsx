@@ -47,13 +47,23 @@ export const AuthProvider = ({ children }) => {
       setError(null);
       const response = await authAPI.register({ email, password });
       
-      // Sauvegarder le token
-      localStorage.setItem('token', response.token);
+      // Vérifier si la vérification email est requise
+      if (response.data?.requiresVerification) {
+        // Ne pas sauvegarder le token, rediriger vers vérification
+        return { 
+          success: true, 
+          data: response.data,
+          requiresVerification: true 
+        };
+      }
       
-      // Mettre à jour l'utilisateur
-      setUser(response.user);
+      // Ancien comportement (si pas de vérification requise)
+      if (response.token) {
+        localStorage.setItem('token', response.token);
+        setUser(response.user);
+      }
       
-      return { success: true };
+      return { success: true, data: response.data };
     } catch (err) {
       setError(err.message || 'Erreur lors de l\'inscription');
       return { success: false, error: err.message };
@@ -75,6 +85,17 @@ export const AuthProvider = ({ children }) => {
       return { success: true };
     } catch (err) {
       setError(err.message || 'Erreur lors de la connexion');
+      
+      // Vérifier si l'erreur est due à un email non vérifié
+      if (err.requiresVerification) {
+        return { 
+          success: false, 
+          error: err.message,
+          requiresVerification: true,
+          email: err.email
+        };
+      }
+      
       return { success: false, error: err.message };
     }
   };

@@ -71,4 +71,22 @@ export const authAPI = {
   linkCreator: (creatorId) => {
     return api.put(`/auth/link-creator/${creatorId}`);
   },
+
+  /**
+   * Vérifier l'email avec le code
+   * @param {Object} data - { email, code }
+   * @returns {Promise}
+   */
+  verifyEmail: (data) => {
+    return api.post('/auth/verify-email', data);
+  },
+
+  /**
+   * Renvoyer le code de vérification
+   * @param {string} email
+   * @returns {Promise}
+   */
+  resendVerification: (email) => {
+    return api.post('/auth/resend-verification', { email });
+  },
 };

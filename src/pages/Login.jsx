@@ -21,7 +21,18 @@ export const Login = () => {
     if (result.success) {
       navigate('/dashboard');
     } else {
-      setError(result.error || 'Erreur lors de la connexion');
+      // Vérifier si l'erreur est due à un email non vérifié
+      if (result.requiresVerification) {
+        // Rediriger vers la page de vérification
+        navigate('/verify-email', { 
+          state: { 
+            email: result.email || email,
+            fromLogin: true
+          }
+        });
+      } else {
+        setError(result.error || 'Erreur lors de la connexion');
+      }
     }
 
     setIsLoading(false);

@@ -37,7 +37,16 @@ export const Register = () => {
     const result = await register(email, password);
 
     if (result.success) {
-      navigate('/dashboard');
+      // Vérifier si la vérification email est requise
+      if (result.data?.requiresVerification) {
+        // Rediriger vers la page de vérification
+        navigate('/verify-email', { 
+          state: { email: email }
+        });
+      } else {
+        // Connexion directe (ancien comportement, au cas où)
+        navigate('/dashboard');
+      }
     } else {
       setError(result.error || 'Erreur lors de l\'inscription');
     }

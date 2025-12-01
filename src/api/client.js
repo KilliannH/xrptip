@@ -32,6 +32,8 @@ api.interceptors.response.use(
   (error) => {
     // Handle errors globally
     const message = error.response?.data?.message || error.message || 'Une erreur est survenue';
+    const requiresVerification = error.response?.data?.requiresVerification || false;
+    const email = error.response?.data?.email;
     
     console.error('API Error:', {
       status: error.response?.status,
@@ -43,6 +45,8 @@ api.interceptors.response.use(
       message,
       status: error.response?.status,
       data: error.response?.data,
+      requiresVerification,
+      email,
     });
   }
 );

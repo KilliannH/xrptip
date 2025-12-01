@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext';
 import { ProtectedRoute } from './components/ProtectedRoute';
 import { Login } from "./pages/Login";
 import { Register } from "./pages/Register";
+import { EmailVerification } from "./pages/EmailVerification";
 import { Dashboard } from "./pages/Dashboard";
 import { Home } from "./pages/Home";
 import { CreatorPublicPage } from "./pages/CreatorPublicPage";
@@ -19,6 +20,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/u/:username" element={<CreatorPublicPage />} />
 
             {/* Protected Routes */}
