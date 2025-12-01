@@ -7,7 +7,10 @@ import { EmailVerification } from "./pages/EmailVerification";
 import { Dashboard } from "./pages/Dashboard";
 import { Home } from "./pages/Home";
 import { CreatorPublicPage } from "./pages/CreatorPublicPage";
+import { Privacy } from "./pages/Privacy";
+import { Link } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
+import { CookieNotice } from "./components/CookieNotice";
 
 function App() {
   return (
@@ -21,6 +24,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/verify-email" element={<EmailVerification />} />
+            <Route path="/privacy" element={<Privacy />} />
             <Route path="/u/:username" element={<CreatorPublicPage />} />
 
             {/* Protected Routes */}
@@ -34,6 +38,9 @@ function App() {
             />
           </Routes>
         </main>
+
+        {/* Cookie Notice */}
+        <CookieNotice />
 
         <footer className="relative border-t border-white/10 bg-black/20 backdrop-blur-xl">
           <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
@@ -58,9 +65,9 @@ function App() {
                 <a href="https://xrpl.org" target="_blank" rel="noopener noreferrer" className="text-white/60 transition-colors hover:text-xrpBlue">
                   Documentation
                 </a>
-                <a href="#" className="text-white/60 transition-colors hover:text-xrpBlue">
-                  Support
-                </a>
+                <Link to="/privacy" className="text-white/60 transition-colors hover:text-xrpBlue">
+                  Politique de Confidentialité
+                </Link>
                 <a href="#" className="text-white/60 transition-colors hover:text-xrpBlue">
                   Twitter
                 </a>
