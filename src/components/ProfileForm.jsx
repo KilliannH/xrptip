@@ -1,9 +1,11 @@
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { creatorsAPI } from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import { ImageUpload } from "./ImageUpload";
 
 export const ProfileForm = ({ onUsernameChange }) => {
+  const { t } = useTranslation();
   const { user, refreshUser } = useAuth();
   const [formData, setFormData] = useState({
     username: "",
@@ -89,25 +91,25 @@ export const ProfileForm = ({ onUsernameChange }) => {
     const newErrors = {};
 
     if (!formData.username.trim()) {
-      newErrors.username = "Le nom d'utilisateur est requis";
+      newErrors.username = t('creator.form.errors.usernameRequired');
     } else if (!/^[a-zA-Z0-9_-]+$/.test(formData.username)) {
-      newErrors.username = "Uniquement lettres, chiffres, - et _";
+      newErrors.username = t('creator.form.errors.usernameInvalid');
     }
 
     if (!formData.displayName.trim()) {
-      newErrors.displayName = "Le nom d'affichage est requis";
+      newErrors.displayName = t('creator.form.errors.displayNameRequired');
     }
 
     if (!formData.bio.trim()) {
-      newErrors.bio = "La bio est requise";
+      newErrors.bio = t('creator.form.errors.bioRequired');
     } else if (formData.bio.length > 200) {
-      newErrors.bio = "Maximum 200 caractères";
+      newErrors.bio = t('creator.form.errors.bioTooLong');
     }
 
     if (!formData.xrpAddress.trim()) {
-      newErrors.xrpAddress = "L'adresse XRP est requise";
+      newErrors.xrpAddress = t('creator.form.errors.xrpAddressRequired');
     } else if (!formData.xrpAddress.startsWith("r")) {
-      newErrors.xrpAddress = "L'adresse XRP doit commencer par 'r'";
+      newErrors.xrpAddress = t('creator.form.errors.xrpAddressInvalid');
     }
 
     setErrors(newErrors);
@@ -146,11 +148,11 @@ export const ProfileForm = ({ onUsernameChange }) => {
       if (existingCreator) {
         // Mise à jour du profil existant
         response = await creatorsAPI.update(existingCreator.username, payload);
-        setSuccessMessage("Profil mis à jour avec succès ! 🎉");
+        setSuccessMessage(t('creator.form.success.profileUpdated'));
       } else {
         // Création d'un nouveau profil
         response = await creatorsAPI.create(payload);
-        setSuccessMessage("Profil créé avec succès ! 🎉");
+        setSuccessMessage(t('creator.form.success.profileCreated'));
         setExistingCreator(response.data);
       }
 
@@ -166,13 +168,15 @@ export const ProfileForm = ({ onUsernameChange }) => {
       if (error.status === 409) {
         if (error.data?.existingCreator) {
           setErrors({ 
-            general: `Vous avez déjà un profil créateur : @${error.data.existingCreator.username}` 
+            general: t('creator.form.errors.alreadyHasProfile', { 
+              username: error.data.existingCreator.username 
+            })
           });
         } else {
-          setErrors({ username: "Ce nom d'utilisateur est déjà pris" });
+          setErrors({ username: t('creator.form.errors.usernameTaken') });
         }
       } else if (error.status === 403) {
-        setErrors({ general: "Vous n'êtes pas autorisé à modifier ce profil" });
+        setErrors({ general: t('creator.form.errors.notAuthorized') });
       } else if (error.data?.errors) {
         // Erreurs de validation du backend
         const backendErrors = {};
@@ -182,7 +186,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
         });
         setErrors(backendErrors);
       } else {
-        setErrors({ general: error.message || "Erreur lors de la sauvegarde du profil" });
+        setErrors({ general: error.message || t('creator.form.errors.saveFailed') });
       }
     } finally {
       setIsLoading(false);
@@ -196,7 +200,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
         <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-center">
           <div className="flex items-center justify-center gap-2">
             <div className="spinner" />
-            <span className="text-sm text-white/60">Chargement du profil...</span>
+            <span className="text-sm text-white/60">{t('creator.form.states.loadingProfile')}</span>
           </div>
         </div>
       )}
@@ -209,9 +213,9 @@ export const ProfileForm = ({ onUsernameChange }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-xrpBlue">Mode édition</p>
+              <p className="text-sm font-semibold text-xrpBlue">{t('creator.form.states.editMode')}</p>
               <p className="mt-1 text-xs text-white/70">
-                Vous modifiez votre profil créateur existant : <strong>@{existingCreator.username}</strong>
+                {t('creator.form.states.editingProfile', { username: existingCreator.username })}
               </p>
             </div>
           </div>
@@ -245,7 +249,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Username */}
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">
-          Nom d'utilisateur <span className="text-red-400">*</span>
+          {t('creator.form.fields.username')} <span className="text-red-400">*</span>
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -270,14 +274,14 @@ export const ProfileForm = ({ onUsernameChange }) => {
           <p className="mt-1 text-xs text-red-400">{errors.username}</p>
         )}
         <p className="mt-1 text-xs text-white/50">
-          Votre URL sera : xrptip.com/u/{formData.username || "username"}
+          {t('creator.form.hints.urlPreview', { username: formData.username || 'username' })}
         </p>
       </div>
 
       {/* Display Name */}
       <div>
         <label htmlFor="displayName" className="block text-sm font-medium text-white/80 mb-2">
-          Nom d'affichage <span className="text-red-400">*</span>
+          {t('creator.form.fields.displayName')} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
@@ -300,14 +304,14 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Bio */}
       <div>
         <label htmlFor="bio" className="block text-sm font-medium text-white/80 mb-2">
-          Bio <span className="text-red-400">*</span>
+          {t('creator.form.fields.bio')} <span className="text-red-400">*</span>
         </label>
         <textarea
           id="bio"
           name="bio"
           value={formData.bio}
           onChange={handleChange}
-          placeholder="Illustrateur digital & créateur de NFT sur XRPL."
+          placeholder={t('creator.form.placeholders.bio')}
           rows={3}
           maxLength={200}
           className={`w-full rounded-xl border bg-white/5 px-4 py-3 text-white placeholder:text-white/40 transition-all focus:outline-none focus:ring-2 resize-none ${
@@ -323,7 +327,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
             <span />
           )}
           <p className="text-xs text-white/50">
-            {formData.bio.length}/200
+            {t('creator.form.hints.bioMaxLength', { current: formData.bio.length, max: 200 })}
           </p>
         </div>
       </div>
@@ -331,7 +335,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Photo de profil */}
       <div>
         <label className="block text-sm font-medium text-white/80 mb-2">
-          Photo de profil
+          {t('creator.form.fields.avatar')}
         </label>
         <ImageUpload
           type="avatar"
@@ -353,7 +357,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Bannière */}
       <div>
         <label className="block text-sm font-medium text-white/80 mb-2">
-          Bannière
+          {t('creator.form.fields.banner')}
         </label>
         <ImageUpload
           type="banner"
@@ -372,7 +376,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* XRP Address */}
       <div>
         <label htmlFor="xrpAddress" className="block text-sm font-medium text-white/80 mb-2">
-          Adresse XRP <span className="text-red-400">*</span>
+          {t('creator.form.fields.xrpAddress')} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
@@ -391,13 +395,13 @@ export const ProfileForm = ({ onUsernameChange }) => {
           <p className="mt-1 text-xs text-red-400">{errors.xrpAddress}</p>
         )}
         <p className="mt-1 text-xs text-white/50">
-          Les tips seront envoyés à cette adresse
+          {t('creator.form.hints.tipsWillBeSent')}
         </p>
       </div>
 
       {/* Social Links */}
       <div className="space-y-4">
-        <h3 className="text-sm font-medium text-white/80">Liens sociaux (optionnel)</h3>
+        <h3 className="text-sm font-medium text-white/80">{t('creator.form.fields.socialLinks')}</h3>
         
         {/* Twitter */}
         <div>
@@ -503,14 +507,14 @@ export const ProfileForm = ({ onUsernameChange }) => {
             {isLoading ? (
               <>
                 <div className="spinner" />
-                <span>Sauvegarde en cours...</span>
+                <span>{t('creator.form.states.saving')}</span>
               </>
             ) : (
               <>
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span>Sauvegarder le profil</span>
+                <span>{t('creator.form.states.saveProfile')}</span>
               </>
             )}
           </span>
@@ -520,13 +524,13 @@ export const ProfileForm = ({ onUsernameChange }) => {
         <button
           type="button"
           onClick={() => {
-            if (confirm("Êtes-vous sûr de vouloir annuler ? Les modifications seront perdues.")) {
+            if (confirm(t('creator.form.confirmCancel'))) {
               loadCreatorProfile();
             }
           }}
           className="rounded-xl border border-white/10 bg-white/5 px-6 py-3 font-semibold text-white transition-all hover:border-red-500/50 hover:bg-red-500/10 hover:text-red-400"
         >
-          Annuler
+          {t('common.cancel')}
         </button>
       </div>
     </form>

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export const CookieNotice = () => {
+  const { t } = useTranslation();
   const [showNotice, setShowNotice] = useState(false);
 
   useEffect(() => {
@@ -42,11 +44,10 @@ export const CookieNotice = () => {
               {/* Content */}
               <div className="flex-1">
                 <h3 className="text-lg font-semibold text-white mb-2">
-                  🍪 Cookies & Confidentialité
+                  {t('cookies.title')}
                 </h3>
                 <p className="text-sm text-white/70 leading-relaxed">
-                  Nous utilisons des cookies essentiels pour faire fonctionner xrpTip (authentification, préférences). 
-                  Aucun cookie de tracking ou publicitaire. En continuant, vous acceptez notre utilisation des cookies.
+                  {t('cookies.description')}
                   {' '}
                   <a 
                     href="/privacy" 
@@ -54,7 +55,7 @@ export const CookieNotice = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    En savoir plus
+                    {t('cookies.learnMore')}
                   </a>
                 </p>
               </div>
@@ -65,13 +66,13 @@ export const CookieNotice = () => {
                   onClick={handleReject}
                   className="flex-1 sm:flex-none px-4 py-2.5 rounded-lg border border-white/20 text-white/80 hover:bg-white/5 transition-all text-sm font-medium"
                 >
-                  Refuser
+                  {t('cookies.reject')}
                 </button>
                 <button
                   onClick={handleAccept}
                   className="flex-1 sm:flex-none px-6 py-2.5 rounded-lg bg-gradient-to-r from-xrpBlue to-cyan-500 text-white hover:shadow-lg hover:shadow-xrpBlue/50 transition-all text-sm font-semibold"
                 >
-                  Accepter
+                  {t('cookies.accept')}
                 </button>
               </div>
             </div>
@@ -80,10 +81,10 @@ export const CookieNotice = () => {
           {/* Bottom bar */}
           <div className="bg-white/5 px-6 py-3 border-t border-white/10">
             <div className="flex items-center justify-between text-xs text-white/50">
-              <span>Cookies essentiels uniquement</span>
+              <span>{t('cookies.essentialOnly')}</span>
               <div className="flex items-center gap-2">
                 <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
-                <span>Aucun tracking</span>
+                <span>{t('cookies.noTracking')}</span>
               </div>
             </div>
           </div>

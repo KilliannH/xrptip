@@ -1,0 +1,534 @@
+{
+    "common": {
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "success": "Succès",
+        "save": "Enregistrer",
+        "cancel": "Annuler",
+        "delete": "Supprimer",
+        "edit": "Modifier",
+        "create": "Créer",
+        "close": "Fermer",
+        "back": "Retour",
+        "next": "Suivant",
+        "submit": "Soumettre",
+        "confirm": "Confirmer",
+        "search": "Rechercher",
+        "filter": "Filtrer",
+        "sort": "Trier",
+        "actions": "Actions",
+        "view": "Voir",
+        "download": "Télécharger",
+        "share": "Partager",
+        "copy": "Copier",
+        "copied": "Copié !",
+        "required": "Requis"
+    },
+    "nav": {
+        "home": "Accueil",
+        "dashboard": "Dashboard",
+        "login": "Connexion",
+        "register": "S'inscrire",
+        "logout": "Déconnexion",
+        "profile": "Profil",
+        "settings": "Paramètres",
+        "connectedAs": "Connecté en tant que"
+    },
+    "auth": {
+        "login": {
+            "title": "Connexion",
+            "subtitle": "Connecte-toi à ton compte xrpTip",
+            "email": "Email",
+            "password": "Mot de passe",
+            "forgotPassword": "Mot de passe oublié ?",
+            "submit": "Se connecter",
+            "noAccount": "Pas encore de compte ?",
+            "signUp": "S'inscrire",
+            "error": "Email ou mot de passe incorrect",
+            "loading": "Connexion..."
+        },
+        "register": {
+            "title": "Inscription",
+            "subtitle": "Crée ton compte xrpTip gratuitement",
+            "email": "Email",
+            "password": "Mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "submit": "S'inscrire",
+            "hasAccount": "Déjà un compte ?",
+            "signIn": "Se connecter",
+            "passwordHint": "Au moins 8 caractères avec un chiffre",
+            "passwordMismatch": "Les mots de passe ne correspondent pas",
+            "passwordTooShort": "Le mot de passe doit contenir au moins 8 caractères",
+            "passwordNoDigit": "Le mot de passe doit contenir au moins un chiffre",
+            "loading": "Inscription...",
+            "error": "Erreur lors de l'inscription"
+        },
+        "verifyEmail": {
+            "title": "Vérifiez votre email",
+            "subtitle": "Nous avons envoyé un code à 6 chiffres à",
+            "codeSent": "Nouveau code envoyé avec succès !",
+            "codeExpires": "Le code expire dans 15 minutes",
+            "pasteHint": "Vous pouvez aussi coller le code directement",
+            "verify": "Vérifier",
+            "verifying": "Vérification...",
+            "resend": "Renvoyer le code",
+            "resendIn": "Renvoyer dans {{seconds}}s",
+            "resending": "Envoi en cours...",
+            "invalidCode": "Code invalide ou expiré",
+            "enterCode": "Veuillez entrer le code à 6 chiffres",
+            "noCode": "Code expiré ou pas reçu ?",
+            "backToLogin": "← Retour à la connexion",
+            "success": "Email vérifié avec succès ! 🎉",
+            "resendError": "Erreur lors du renvoi du code"
+        }
+    },
+    "home": {
+        "hero": {
+            "badge": "Tips instantanés · Frais quasi nuls",
+            "title": "Reçois des tips en",
+            "titleHighlight": "XRP",
+            "titleEnd": "en quelques secondes.",
+            "description": "xrpTip permet aux créateurs de recevoir des pourboires en XRP, instantanément, avec des frais ridicules. Partage ta page, tes fans scannent, envoient, c'est payé.",
+            "cta": "Créer ma page de tips",
+            "howItWorks": "Voir comment ça marche",
+            "features": {
+                "xrpl": "Basé sur XRPL",
+                "wallets": "Compatible wallets XRP",
+                "web3": "Web3 ready"
+            }
+        },
+        "demo": {
+            "sendTipTo": "Envoyer un tip à",
+            "creator": "@CryptoArtist",
+            "bio": "Illustrateur & NFT sur XRPL",
+            "verified": "Créateur vérifié",
+            "testimonial": "Grâce à xrpTip, mes followers peuvent me soutenir en XRP directement depuis X ou Twitch. C'est rapide, simple, et je garde presque tout.",
+            "support": "Soutenir @CryptoArtist",
+            "customAmount": "+ Montant personnalisé",
+            "howItWorks": {
+                "title": "Comment ça marche ?",
+                "step1": "Choisis un montant",
+                "step2": "Scanne le QR ou ouvre ton wallet XRP",
+                "step3": "Valide la transaction → tip envoyé ✅"
+            }
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard créateur",
+        "subtitle": "Configure ta page xrpTip, ton adresse XRP, tes liens sociaux et suis tes tips reçus.",
+        "tabs": {
+            "profile": "Profil",
+            "stats": "Statistiques",
+            "settings": "Paramètres"
+        },
+        "profile": {
+            "title": "Configuration du profil",
+            "subtitle": "Remplis les informations de ton profil créateur",
+            "preview": {
+                "title": "Aperçu de ta page",
+                "description": "Ta page publique sera visible à l'adresse :",
+                "viewPublic": "Voir ma page publique",
+                "hint": "Sauvegarde ton profil pour voir l'aperçu en temps réel"
+            }
+        },
+        "stats": {
+            "sync": "Synchroniser XRPL",
+            "syncing": "Synchronisation...",
+            "tipsReceived": "Tips reçus",
+            "supporters": "Supporters",
+            "uniquePersons": "Personnes uniques",
+            "thisMonth": "Ce mois",
+            "recentTips": "Tips récents",
+            "noTips": "Aucun tip reçu pour le moment",
+            "sharePage": "Partage ta page pour commencer à recevoir des tips !",
+            "date": "Date",
+            "amount": "Montant",
+            "from": "De",
+            "message": "Message",
+            "status": "Statut",
+            "anonymous": "Anonyme",
+            "confirmed": "Confirmé",
+            "pending": "En attente",
+            "failed": "Échoué"
+        },
+        "preview": {
+            "title": "Aperçu de ta page",
+            "description": "Ta page publique sera visible à l'adresse :",
+            "urlPreview": "https://xrptip.com/u/{{username}}",
+            "viewPublic": "Voir ma page publique",
+            "profileLive": "Ton profil est en ligne !",
+            "hint": "Sauvegarde ton profil pour voir l'aperçu en temps réel"
+        },
+        "settings": {
+            "comingSoon": "Section paramètres à venir : notifications, sécurité, intégrations, etc."
+        }
+    },
+    "creator": {
+        "form": {
+            "username": "Nom d'utilisateur",
+            "displayName": "Nom d'affichage",
+            "bio": "Bio",
+            "xrpAddress": "Adresse XRP",
+            "avatar": "Photo de profil",
+            "banner": "Bannière",
+            "socialLinks": "Liens sociaux (optionnel)",
+            "editMode": "Mode édition",
+            "editingProfile": "Vous modifiez votre profil créateur existant :",
+            "urlPreview": "Votre URL sera : xrptip.com/u/{{username}}",
+            "bioMaxLength": "{{current}}/{{max}}",
+            "saveProfile": "Sauvegarder le profil",
+            "saving": "Sauvegarde en cours...",
+            "choosePhoto": "Choisir une photo",
+            "chooseBanner": "Choisir une bannière",
+            "uploading": "Upload en cours...",
+            "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
+            "bannerHint": "💡 Recommandé: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
+            "tipsWillBeSent": "Les tips seront envoyés à cette adresse",
+            "errors": {
+                "usernameRequired": "Le nom d'utilisateur est requis",
+                "usernameInvalid": "Uniquement lettres, chiffres, - et _",
+                "displayNameRequired": "Le nom d'affichage est requis",
+                "bioRequired": "La bio est requise",
+                "bioTooLong": "Maximum 200 caractères",
+                "xrpAddressRequired": "L'adresse XRP est requise",
+                "xrpAddressInvalid": "L'adresse XRP doit commencer par 'r'",
+                "usernameTaken": "Ce nom d'utilisateur est déjà pris",
+                "alreadyHasProfile": "Vous avez déjà un profil créateur :",
+                "notAuthorized": "Vous n'êtes pas autorisé à modifier ce profil",
+                "fileTooLarge": "Fichier trop volumineux (max 5MB)",
+                "fileTypeNotAllowed": "Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP."
+            },
+            "success": {
+                "profileCreated": "Profil créé avec succès ! 🎉",
+                "profileUpdated": "Profil mis à jour avec succès ! 🎉"
+            }
+        }
+    },
+    "publicPage": {
+        "sendTip": "Soutenir ce créateur en XRP",
+        "description": "Choisis un montant et envoie un tip via ton wallet XRP. Les transactions sont rapides et les frais très faibles.",
+        "tipAmount": "Montant du tip (XRP)",
+        "customAmount": "Montant personnalisé",
+        "showQR": "Afficher le QR Code",
+        "chooseAmount": "Choisis un montant",
+        "manualPayment": "Instructions de paiement manuel",
+        "creatorAddress": "Adresse XRP de ce créateur",
+        "verifiedCreator": "Créateur vérifié",
+        "addressCopied": "Adresse copiée !",
+        "copyAddress": "Copier l'adresse",
+        "feeBreakdown": {
+            "title": "Détail du paiement :",
+            "forCreator": "Pour le créateur",
+            "platformFee": "Frais de plateforme (5%)",
+            "totalToPay": "Total à payer",
+            "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
+        },
+        "howToFinalize": "Comment finaliser ton tip ?",
+        "steps": {
+            "step1": {
+                "title": "Ouvre ton wallet XRP",
+                "description": "Compatible: Xaman/XUMM, Crossmark, etc."
+            },
+            "step2": {
+                "title": "Colle l'adresse du créateur",
+                "description": "Utilise le bouton copier ci-dessus"
+            },
+            "step3": {
+                "title": "Entre le montant",
+                "description": "{{amount}} XRP dans ton wallet"
+            },
+            "step4": {
+                "title": "Confirme la transaction",
+                "description": "C'est tout ! Le tip sera envoyé en quelques secondes"
+            }
+        },
+        "comingSoon": "Prochainement : QR code et deep link direct vers ton wallet pour une expérience encore plus rapide !",
+        "notFound": {
+            "title": "Créateur non trouvé",
+            "description": "Le créateur @{{username}} n'existe pas ou a été supprimé.",
+            "backHome": "Retour à l'accueil"
+        }
+    },
+    "qrCode": {
+        "title": "Scanne pour payer",
+        "sendTipTo": "Envoyer un tip à",
+        "amount": "Montant",
+        "securePayment": "Paiement sécurisé",
+        "secureDescription": "Le montant est envoyé à notre wallet intermédiaire qui redistribue automatiquement {{amount}} XRP au créateur.",
+        "scanWith": "📱 Scanne avec ton wallet XRP",
+        "scanDescription": "Utilise Xaman (XUMM), Crossmark ou tout autre wallet compatible pour scanner ce QR code.",
+        "orCopy": "Ou copie l'adresse manuellement :",
+        "copyAddress": "Copier l'adresse",
+        "amountLabel": "Montant",
+        "destinationTag": "Destination Tag",
+        "destinationTagImportant": "⚠️ Le Destination Tag est important pour identifier le créateur",
+        "download": "Télécharger",
+        "close": "Fermer",
+        "warning": "Vérifie toujours l'adresse de destination avant de confirmer la transaction. Les transactions XRP sont irréversibles."
+    },
+    "footer": {
+        "builtOn": "Built on XRPL · Tips instantanés pour créateurs",
+        "documentation": "Documentation",
+        "privacy": "Politique de Confidentialité",
+        "twitter": "Twitter",
+        "discord": "Discord",
+        "liveOnXRPL": "Live on XRPL",
+        "allRightsReserved": "Tous droits réservés."
+    },
+    "cookies": {
+        "title": "🍪 Cookies & Confidentialité",
+        "description": "Nous utilisons des cookies essentiels pour faire fonctionner xrpTip (authentification, préférences). Aucun cookie de tracking ou publicitaire. En continuant, vous acceptez notre utilisation des cookies.",
+        "learnMore": "En savoir plus",
+        "reject": "Refuser",
+        "accept": "Accepter",
+        "essentialOnly": "Cookies essentiels uniquement",
+        "noTracking": "Aucun tracking"
+    },
+    "privacy": {
+        "title": "Politique de Confidentialité",
+        "lastUpdate": "Dernière mise à jour",
+        "backHome": "← Retour à l'accueil",
+        "intro": {
+            "title": "Introduction",
+            "description": "Chez xrpTip, nous prenons votre vie privée au sérieux. Cette politique explique comment nous collectons, utilisons et protégeons vos données personnelles.",
+            "transparency": {
+                "title": "Transparence totale",
+                "text": "Nous ne vendons jamais vos données. Nous n'utilisons aucun tracker publicitaire."
+            }
+        },
+        "dataCollected": {
+            "title": "Données collectées",
+            "account": {
+                "title": "Informations de compte",
+                "email": {
+                    "label": "Email",
+                    "description": "Pour créer votre compte et la vérification"
+                },
+                "password": {
+                    "label": "Mot de passe",
+                    "description": "Hashé avec bcrypt (jamais stocké en clair)"
+                }
+            },
+            "creator": {
+                "title": "Informations de profil créateur (optionnel)",
+                "username": {
+                    "label": "Nom d'utilisateur",
+                    "description": "Votre identifiant public"
+                },
+                "displayName": {
+                    "label": "Nom d'affichage",
+                    "description": "Votre nom visible"
+                },
+                "bio": {
+                    "label": "Biographie",
+                    "description": "Description de votre profil"
+                },
+                "xrpAddress": {
+                    "label": "Adresse XRP",
+                    "description": "Pour recevoir les tips"
+                },
+                "socialLinks": {
+                    "label": "Liens sociaux",
+                    "description": "Twitter, Instagram, etc. (optionnel)"
+                },
+                "images": {
+                    "label": "Avatar et bannière",
+                    "description": "Images de profil"
+                },
+                "form": {
+                    "placeholders": {
+                        "bio": "Illustrateur digital & créateur de NFT sur XRPL."
+                    },
+                    "confirmCancel": "Êtes-vous sûr de vouloir annuler ? Les modifications seront perdues.",
+                    "errors": {
+                        "saveFailed": "Erreur lors de la sauvegarde du profil"
+                    }
+                }
+            },
+            "transactions": {
+                "title": "Données de transactions",
+                "hash": {
+                    "label": "Hash de transaction XRP",
+                    "description": "ID public sur le ledger"
+                },
+                "amount": {
+                    "label": "Montant",
+                    "description": "Valeur du tip"
+                },
+                "datetime": {
+                    "label": "Date et heure",
+                    "description": "Horodatage de la transaction"
+                },
+                "sender": {
+                    "label": "Adresse expéditeur",
+                    "description": "Adresse XRP publique"
+                }
+            },
+            "cookies": {
+                "title": "Cookies",
+                "auth": {
+                    "label": "Token d'authentification",
+                    "description": "Pour maintenir votre session (JWT)"
+                },
+                "preferences": {
+                    "label": "Préférences",
+                    "description": "Mémoriser vos choix (ex: acceptation cookies)"
+                }
+            }
+        },
+        "notCollected": {
+            "title": "Ce que nous NE collectons PAS",
+            "items": [
+                "Aucun cookie de tracking ou publicitaire",
+                "Aucune donnée de navigation (pages visitées, temps passé, etc.)",
+                "Aucune donnée de localisation GPS",
+                "Aucun partage avec des tiers (Google Analytics, Facebook Pixel, etc.)",
+                "Aucune vente de données personnelles"
+            ]
+        },
+        "dataUsage": {
+            "title": "Utilisation des données",
+            "description": "Nous utilisons vos données uniquement pour :",
+            "purposes": [
+                {
+                    "title": "Créer et gérer votre compte",
+                    "description": "Authentification et accès"
+                },
+                {
+                    "title": "Afficher votre profil public",
+                    "description": "Page créateur accessible à tous"
+                },
+                {
+                    "title": "Traiter les transactions XRP",
+                    "description": "Redistribuer les tips"
+                },
+                {
+                    "title": "Envoyer des emails essentiels",
+                    "description": "Vérification, notifications importantes"
+                },
+                {
+                    "title": "Améliorer le service",
+                    "description": "Statistiques anonymisées (nombre de tips, montants totaux)"
+                }
+            ]
+        },
+        "security": {
+            "title": "Sécurité",
+            "description": "Nous prenons des mesures techniques pour protéger vos données :",
+            "measures": [
+                {
+                    "title": "Chiffrement HTTPS",
+                    "description": "Toutes les communications sont chiffrées (SSL/TLS)"
+                },
+                {
+                    "title": "Mots de passe hashés",
+                    "description": "Algorithme bcrypt avec salt"
+                },
+                {
+                    "title": "Tokens JWT",
+                    "description": "Sessions sécurisées avec expiration"
+                },
+                {
+                    "title": "Serveurs sécurisés",
+                    "description": "Hébergement AWS avec firewall"
+                },
+                {
+                    "title": "Sauvegardes régulières",
+                    "description": "Base de données sauvegardée quotidiennement"
+                }
+            ]
+        },
+        "rights": {
+            "title": "Vos droits (RGPD)",
+            "description": "Conformément au RGPD, vous avez le droit de :",
+            "items": {
+                "access": {
+                    "title": "Accès",
+                    "description": "Demander une copie de vos données"
+                },
+                "rectification": {
+                    "title": "Rectification",
+                    "description": "Corriger vos informations"
+                },
+                "deletion": {
+                    "title": "Suppression",
+                    "description": "Supprimer votre compte"
+                },
+                "portability": {
+                    "title": "Portabilité",
+                    "description": "Exporter vos données"
+                }
+            },
+            "contact": "Pour exercer ces droits, contactez-nous à :"
+        },
+        "blockchain": {
+            "title": "Note importante : Blockchain publique",
+            "warning": "Les transactions XRP sont enregistrées sur le XRP Ledger, une blockchain publique.",
+            "items": [
+                "Les adresses XRP et montants sont visibles publiquement",
+                "Ces données ne peuvent pas être supprimées (nature de la blockchain)",
+                "Nous ne contrôlons pas le XRP Ledger (réseau décentralisé)"
+            ]
+        },
+        "modifications": {
+            "title": "Modifications de cette politique",
+            "description": "Nous pouvons mettre à jour cette politique de temps en temps. Toute modification sera publiée sur cette page avec une nouvelle date de mise à jour. Les changements importants vous seront notifiés par email."
+        },
+        "contact": {
+            "title": "Contact",
+            "question": "Des questions sur notre politique de confidentialité ?",
+            "email": "Email"
+        }
+    },
+    "transactionVerifier": {
+        "label": "Hash de transaction XRPL",
+        "placeholder": "Colle le hash de ta transaction ici...",
+        "hint": "64 caractères hexadécimaux",
+        "verify": "Vérifier la transaction",
+        "verifying": "Vérification en cours...",
+        "errorTitle": "Erreur de vérification",
+        "successTitle": "Transaction vérifiée !",
+        "errors": {
+            "enterHash": "Veuillez entrer un hash de transaction",
+            "invalidLength": "Le hash de transaction doit faire 64 caractères",
+            "invalidTransaction": "Transaction invalide",
+            "verificationFailed": "Erreur lors de la vérification de la transaction"
+        },
+        "details": {
+            "amount": "Montant",
+            "from": "De",
+            "ledger": "Ledger"
+        }
+    },
+    "syncButton": {
+        "sync": "Synchroniser XRPL",
+        "syncing": "Synchronisation...",
+        "success": "Synchronisation terminée !",
+        "error": "Erreur",
+        "errorMessage": "Erreur lors de la synchronisation",
+        "newTips": "{{count}} nouveaux tips trouvés",
+        "updatedTips": "{{count}} tips mis à jour",
+        "totalProcessed": "{{count}} transactions analysées"
+    },
+    "imageUpload": {
+    "avatarPreview": "Aperçu de l'avatar",
+    "bannerPreview": "Aperçu de la bannière",
+    "uploading": "Upload en cours...",
+    "choosePhoto": "Choisir une photo",
+    "chooseBanner": "Choisir une bannière",
+    "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
+    "bannerHint": "💡 Recommandé: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
+    "errors": {
+      "fileTooLarge": "Fichier trop volumineux (max 5MB)",
+      "fileTypeNotAllowed": "Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP.",
+      "uploadFailed": "Erreur lors de l'upload"
+    }
+  },
+  "feeBreakdown": {
+    "title": "Détail du paiement :",
+    "forCreator": "Pour le créateur",
+    "platformFee": "Frais de plateforme (5%)",
+    "totalToPay": "Total à payer",
+    "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
+  }
+}

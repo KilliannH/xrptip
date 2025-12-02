@@ -1,9 +1,11 @@
 import { QRCodeSVG } from 'qrcode.react';
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
 import { FeeBreakdown } from './FeeBreakdown';
 import { FEE_CONFIG } from '../utils/fees';
 
 export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) => {
+  const { t } = useTranslation();
   const [copied, setCopied] = useState(false);
 
   // Bloquer le scroll du body quand la modale est ouverte
@@ -96,7 +98,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
               <svg className="h-6 w-6 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
               </svg>
-              <span>Scanne pour payer</span>
+              <span>{t('qrCode.title')}</span>
             </h2>
             <button
               onClick={onClose}
@@ -113,7 +115,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
         <div className="max-h-[calc(100vh-12rem)] overflow-y-auto p-6 space-y-6">
           {/* Creator Info */}
           <div className="text-center">
-            <p className="text-sm text-white/60">Envoyer un tip à</p>
+            <p className="text-sm text-white/60">{t('qrCode.sendTipTo')}</p>
             <p className="mt-1 text-xl font-bold text-white">{creator.displayName}</p>
             <p className="text-sm text-white/50">@{creator.username}</p>
           </div>
@@ -128,7 +130,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
           ) : (
             /* Fallback si pas de feeBreakdown */
             <div className="rounded-2xl border border-xrpBlue/30 bg-gradient-to-br from-xrpBlue/20 to-cyan-500/10 p-4 text-center">
-              <p className="text-sm text-white/60">Montant</p>
+              <p className="text-sm text-white/60">{t('qrCode.amount')}</p>
               <p className="text-4xl font-bold text-xrpBlue">{amount} XRP</p>
             </div>
           )}
@@ -162,10 +164,12 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
                 </svg>
                 <div>
                   <p className="text-sm font-semibold text-cyan-200 mb-1">
-                    Paiement sécurisé
+                    {t('qrCode.securePayment')}
                   </p>
                   <p className="text-xs text-cyan-200/80">
-                    Le montant est envoyé à notre wallet intermédiaire qui redistribue automatiquement {feeBreakdown?.amount?.toFixed(2) || amount} XRP au créateur.
+                    {t('qrCode.secureDescription', { 
+                      amount: feeBreakdown?.amount?.toFixed(2) || amount 
+                    })}
                   </p>
                 </div>
               </div>
@@ -173,17 +177,17 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
 
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
               <p className="mb-2 text-sm font-semibold text-white">
-                📱 Scanne avec ton wallet XRP
+                {t('qrCode.scanWith')}
               </p>
               <p className="text-xs text-white/60">
-                Utilise Xaman (XUMM), Crossmark ou tout autre wallet compatible pour scanner ce QR code.
+                {t('qrCode.scanDescription')}
               </p>
             </div>
 
             {/* Platform Wallet Address */}
             <div className="rounded-xl border border-white/10 bg-white/5 p-4">
               <p className="mb-2 text-xs font-semibold text-white/80">
-                Ou copie l'adresse manuellement :
+                {t('qrCode.orCopy')}
               </p>
               <div className="flex items-center gap-2 rounded-lg bg-black/40 p-3">
                 <code className="flex-1 truncate text-xs text-white/70">
@@ -192,7 +196,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
                 <button
                   onClick={handleCopyAddress}
                   className="shrink-0 rounded-lg bg-white/10 p-2 transition-all hover:bg-xrpBlue/20 hover:text-xrpBlue"
-                  title="Copier l'adresse"
+                  title={t('qrCode.copyAddress')}
                 >
                   {copied ? (
                     <svg className="h-4 w-4 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -206,13 +210,13 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
                 </button>
               </div>
               <p className="mt-2 text-xs text-white/50">
-                💡 Montant : <strong className="text-xrpBlue">{totalAmount} XRP</strong>
+                💡 {t('qrCode.amountLabel')}: <strong className="text-xrpBlue">{totalAmount} XRP</strong>
               </p>
               <p className="mt-1 text-xs text-white/50">
-                🏷️ Destination Tag : <strong className="text-xrpBlue">{destinationTag}</strong>
+                🏷️ {t('qrCode.destinationTag')}: <strong className="text-xrpBlue">{destinationTag}</strong>
               </p>
               <p className="mt-1 text-xs text-white/40 italic">
-                ⚠️ Le Destination Tag est important pour identifier le créateur
+                {t('qrCode.destinationTagImportant')}
               </p>
             </div>
           </div>
@@ -227,14 +231,14 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                 </svg>
-                Télécharger
+                {t('qrCode.download')}
               </span>
             </button>
             <button
               onClick={onClose}
               className="flex-1 rounded-xl bg-gradient-to-r from-xrpBlue to-cyan-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-xrpBlue/30 transition-all hover:shadow-xl hover:shadow-xrpBlue/50 hover:scale-105"
             >
-              Fermer
+              {t('qrCode.close')}
             </button>
           </div>
 
@@ -245,7 +249,7 @@ export const QRCodeModal = ({ isOpen, onClose, creator, amount, feeBreakdown }) 
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
               <span>
-                Vérifie toujours l'adresse de destination avant de confirmer la transaction. Les transactions XRP sont irréversibles.
+                {t('qrCode.warning')}
               </span>
             </p>
           </div>

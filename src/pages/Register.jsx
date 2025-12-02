@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export const Register = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -18,17 +20,17 @@ export const Register = () => {
 
     // Validation
     if (password !== confirmPassword) {
-      setError('Les mots de passe ne correspondent pas');
+      setError(t('auth.register.passwordMismatch'));
       return;
     }
 
     if (password.length < 8) {
-      setError('Le mot de passe doit contenir au moins 8 caractères');
+      setError(t('auth.register.passwordTooShort'));
       return;
     }
 
     if (!/\d/.test(password)) {
-      setError('Le mot de passe doit contenir au moins un chiffre');
+      setError(t('auth.register.passwordNoDigit'));
       return;
     }
 
@@ -48,7 +50,7 @@ export const Register = () => {
         navigate('/dashboard');
       }
     } else {
-      setError(result.error || 'Erreur lors de l\'inscription');
+      setError(result.error || t('auth.register.error'));
     }
 
     setIsLoading(false);
@@ -64,9 +66,9 @@ export const Register = () => {
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
           {/* Header */}
           <div className="border-b border-white/5 bg-gradient-to-r from-cyan-500/10 to-xrpBlue/10 px-6 py-6 text-center">
-            <h1 className="text-2xl font-bold">Inscription</h1>
+            <h1 className="text-2xl font-bold">{t('auth.register.title')}</h1>
             <p className="mt-2 text-sm text-white/60">
-              Crée ton compte xrpTip gratuitement
+              {t('auth.register.subtitle')}
             </p>
           </div>
 
@@ -87,7 +89,7 @@ export const Register = () => {
             {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
-                Email
+                {t('auth.register.email')}
               </label>
               <input
                 type="email"
@@ -103,7 +105,7 @@ export const Register = () => {
             {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-white/80 mb-2">
-                Mot de passe
+                {t('auth.register.password')}
               </label>
               <input
                 type="password"
@@ -115,14 +117,14 @@ export const Register = () => {
                 placeholder="••••••••"
               />
               <p className="mt-1 text-xs text-white/50">
-                Au moins 8 caractères avec un chiffre
+                {t('auth.register.passwordHint')}
               </p>
             </div>
 
             {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-sm font-medium text-white/80 mb-2">
-                Confirmer le mot de passe
+                {t('auth.register.confirmPassword')}
               </label>
               <input
                 type="password"
@@ -144,21 +146,21 @@ export const Register = () => {
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="spinner" />
-                  <span>Inscription...</span>
+                  <span>{t('auth.register.loading')}</span>
                 </span>
               ) : (
-                'S\'inscrire'
+                t('auth.register.submit')
               )}
             </button>
 
             {/* Login Link */}
             <div className="text-center text-sm text-white/60">
-              Déjà un compte ?{' '}
+              {t('auth.register.hasAccount')}{' '}
               <Link
                 to="/login"
                 className="font-semibold text-xrpBlue hover:text-cyan-400 transition-colors"
               >
-                Se connecter
+                {t('auth.register.signIn')}
               </Link>
             </div>
           </form>

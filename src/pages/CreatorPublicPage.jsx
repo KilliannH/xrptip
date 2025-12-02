@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { creatorsAPI } from "../api";
 import { QRCodeModal } from "../components/QRCodeModal";
 import { calculateFees } from "../utils/fees";
@@ -8,6 +9,7 @@ import { FeeBreakdown } from "../components/FeeBreakdown";
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
 export const CreatorPublicPage = () => {
+  const { t } = useTranslation();
   const { username } = useParams();
   const [creator, setCreator] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,7 +29,7 @@ export const CreatorPublicPage = () => {
         setError(null);
       } catch (err) {
         console.error("Erreur lors du chargement du créateur:", err);
-        setError(err.message || "Créateur non trouvé");
+        setError(err.message || t('publicPage.notFound.title'));
       } finally {
         setLoading(false);
       }
@@ -36,7 +38,7 @@ export const CreatorPublicPage = () => {
     if (username) {
       fetchCreator();
     }
-  }, [username]);
+  }, [username, t]);
 
   const amountToSend = customAmount
     ? Number(customAmount)
@@ -55,7 +57,7 @@ export const CreatorPublicPage = () => {
     try {
       await navigator.clipboard.writeText(creator.xrpAddress);
       // TODO: Ajouter un toast de confirmation
-      alert("Adresse copiée !");
+      alert(t('publicPage.addressCopied'));
     } catch (err) {
       console.error("Erreur lors de la copie:", err);
     }
@@ -87,18 +89,18 @@ export const CreatorPublicPage = () => {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
               </svg>
             </div>
-            <h2 className="text-xl font-semibold text-white mb-2">Créateur non trouvé</h2>
+            <h2 className="text-xl font-semibold text-white mb-2">{t('publicPage.notFound.title')}</h2>
             <p className="text-white/60 mb-6">
-              Le créateur @{username} n'existe pas ou a été supprimé.
+              {t('publicPage.notFound.description', { username })}
             </p>
-            <a
-              href="/"
+            
+            <a href="/"
               className="inline-flex items-center gap-2 rounded-xl bg-white/10 px-6 py-3 font-semibold text-white transition-all hover:bg-white/20"
             >
               <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
               </svg>
-              Retour à l'accueil
+              {t('publicPage.notFound.backHome')}
             </a>
           </div>
         </div>
@@ -180,7 +182,7 @@ export const CreatorPublicPage = () => {
               <div className="mb-1 flex items-center gap-2">
                 <h1 className="text-2xl font-bold">{creator.displayName}</h1>
                 <span className="rounded-full bg-xrpBlue/10 px-2.5 py-0.5 text-xs font-medium text-xrpBlue">
-                  Créateur vérifié
+                  {t('publicPage.verifiedCreator')}
                 </span>
               </div>
               <p className="text-sm text-white/50">@{creator.username}</p>
@@ -190,8 +192,8 @@ export const CreatorPublicPage = () => {
             {/* Social links */}
             <div className="flex flex-wrap gap-2">
               {creator.links?.twitter && (
-                <a
-                  href={creator.links.twitter}
+                
+                <a href={creator.links.twitter}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10"
@@ -203,8 +205,8 @@ export const CreatorPublicPage = () => {
                 </a>
               )}
               {creator.links?.youtube && (
-                <a
-                  href={creator.links.youtube}
+                
+                <a href={creator.links.youtube}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm transition-all hover:border-red-500/50 hover:bg-red-500/10"
@@ -216,8 +218,8 @@ export const CreatorPublicPage = () => {
                 </a>
               )}
               {creator.links?.tiktok && (
-                <a
-                  href={creator.links.tiktok}
+                
+                <a  href={creator.links.tiktok}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm transition-all hover:border-pink-500/50 hover:bg-pink-500/10"
@@ -229,8 +231,8 @@ export const CreatorPublicPage = () => {
                 </a>
               )}
               {creator.links?.twitch && (
-                <a
-                  href={creator.links.twitch}
+                
+                <a  href={creator.links.twitch}
                   target="_blank"
                   rel="noreferrer"
                   className="group flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-sm transition-all hover:border-purple-500/50 hover:bg-purple-500/10"
@@ -251,11 +253,10 @@ export const CreatorPublicPage = () => {
             <div className="border-b border-white/5 bg-gradient-to-r from-xrpBlue/10 to-cyan-500/10 px-6 py-4">
               <h2 className="flex items-center gap-2 text-lg font-semibold">
                 <span>💎</span>
-                <span>Soutenir ce créateur en XRP</span>
+                <span>{t('publicPage.sendTip')}</span>
               </h2>
               <p className="mt-1 text-sm text-white/60">
-                Choisis un montant et envoie un tip via ton wallet XRP. Les
-                transactions sont rapides et les frais très faibles.
+                {t('publicPage.description')}
               </p>
             </div>
 
@@ -263,7 +264,7 @@ export const CreatorPublicPage = () => {
               {/* Amount selection */}
               <div className="space-y-3">
                 <p className="text-sm font-medium text-white/80">
-                  Montant du tip (XRP)
+                  {t('publicPage.tipAmount')}
                 </p>
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
                   {PRESET_AMOUNTS.map((amount) => (
@@ -298,7 +299,7 @@ export const CreatorPublicPage = () => {
                         setCustomAmount(e.target.value);
                         setSelectedAmount(null);
                       }}
-                      placeholder="Montant personnalisé"
+                      placeholder={t('publicPage.customAmount')}
                       className="flex-1 bg-transparent text-sm outline-none placeholder:text-white/40"
                     />
                     <span className="text-sm font-medium text-white/50">XRP</span>
@@ -327,10 +328,10 @@ export const CreatorPublicPage = () => {
                       <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z" />
                       </svg>
-                      <span>Afficher le QR Code</span>
+                      <span>{t('publicPage.showQR')}</span>
                     </>
                   ) : (
-                    "Choisis un montant"
+                    t('publicPage.chooseAmount')
                   )}
                 </span>
                 <div className="absolute inset-0 bg-gradient-to-r from-cyan-500 to-xrpBlue opacity-0 transition-opacity group-hover:opacity-100" />
@@ -346,7 +347,7 @@ export const CreatorPublicPage = () => {
                     <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Instructions de paiement manuel</span>
+                    <span>{t('publicPage.manualPayment')}</span>
                   </span>
                 </button>
               )}
@@ -354,7 +355,7 @@ export const CreatorPublicPage = () => {
               {/* XRP Address */}
               <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
                 <p className="mb-2 text-xs font-medium text-white/60">
-                  Adresse XRP de ce créateur
+                  {t('publicPage.creatorAddress')}
                 </p>
                 <div className="group flex items-center gap-2 rounded-xl bg-black/40 p-3">
                   <code className="flex-1 truncate text-xs text-white/70">
@@ -363,7 +364,7 @@ export const CreatorPublicPage = () => {
                   <button
                     onClick={handleCopyAddress}
                     className="shrink-0 rounded-lg bg-white/5 p-2 transition-all hover:bg-xrpBlue/20 hover:text-xrpBlue"
-                    title="Copier l'adresse"
+                    title={t('publicPage.copyAddress')}
                   >
                     <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
@@ -382,7 +383,7 @@ export const CreatorPublicPage = () => {
                   <svg className="h-5 w-5 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Comment finaliser ton tip ?
+                  {t('publicPage.howToFinalize.title')}
                 </p>
               </div>
               <div className="p-6">
@@ -392,8 +393,8 @@ export const CreatorPublicPage = () => {
                       1
                     </span>
                     <div>
-                      <p className="font-medium text-white">Ouvre ton wallet XRP</p>
-                      <p className="text-white/60">Compatible: Xaman/XUMM, Crossmark, etc.</p>
+                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step1.title')}</p>
+                      <p className="text-white/60">{t('publicPage.howToFinalize.step1.description')}</p>
                     </div>
                   </li>
                   <li className="flex gap-4">
@@ -401,8 +402,8 @@ export const CreatorPublicPage = () => {
                       2
                     </span>
                     <div>
-                      <p className="font-medium text-white">Colle l'adresse du créateur</p>
-                      <p className="text-white/60">Utilise le bouton copier ci-dessus</p>
+                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step2.title')}</p>
+                      <p className="text-white/60">{t('publicPage.howToFinalize.step2.description')}</p>
                     </div>
                   </li>
                   <li className="flex gap-4">
@@ -410,9 +411,9 @@ export const CreatorPublicPage = () => {
                       3
                     </span>
                     <div>
-                      <p className="font-medium text-white">Entre le montant</p>
+                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step3.title')}</p>
                       <p className="text-white/60">
-                        <strong className="text-xrpBlue">{amountToSend} XRP</strong> dans ton wallet
+                        <strong className="text-xrpBlue">{amountToSend} XRP</strong> {t('publicPage.howToFinalize.step3.description')}
                       </p>
                     </div>
                   </li>
@@ -421,8 +422,8 @@ export const CreatorPublicPage = () => {
                       ✓
                     </span>
                     <div>
-                      <p className="font-medium text-white">Confirme la transaction</p>
-                      <p className="text-white/60">C'est tout ! Le tip sera envoyé en quelques secondes</p>
+                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step4.title')}</p>
+                      <p className="text-white/60">{t('publicPage.howToFinalize.step4.description')}</p>
                     </div>
                   </li>
                 </ol>
@@ -432,7 +433,7 @@ export const CreatorPublicPage = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>
-                      Prochainement : QR code et deep link direct vers ton wallet pour une expérience encore plus rapide !
+                      {t('publicPage.comingSoon')}
                     </span>
                   </p>
                 </div>

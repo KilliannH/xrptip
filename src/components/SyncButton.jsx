@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { xrplAPI } from '../api';
 
 export const SyncButton = ({ username, onSyncComplete }) => {
+  const { t } = useTranslation();
   const [isSyncing, setIsSyncing] = useState(false);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null);
@@ -20,11 +22,11 @@ export const SyncButton = ({ username, onSyncComplete }) => {
           onSyncComplete(response.data);
         }
       } else {
-        setError(response.message || 'Erreur lors de la synchronisation');
+        setError(response.message || t('syncButton.errorMessage'));
       }
     } catch (err) {
       console.error('Erreur lors de la synchronisation:', err);
-      setError(err.message || 'Erreur lors de la synchronisation');
+      setError(err.message || t('syncButton.errorMessage'));
     } finally {
       setIsSyncing(false);
     }
@@ -45,7 +47,7 @@ export const SyncButton = ({ username, onSyncComplete }) => {
         >
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
         </svg>
-        <span>{isSyncing ? 'Synchronisation...' : 'Synchroniser XRPL'}</span>
+        <span>{isSyncing ? t('syncButton.syncing') : t('syncButton.sync')}</span>
       </button>
 
       {/* Success Message */}
@@ -57,12 +59,12 @@ export const SyncButton = ({ username, onSyncComplete }) => {
             </svg>
             <div className="flex-1">
               <p className="text-sm font-semibold text-green-400">
-                Synchronisation terminée !
+                {t('syncButton.success')}
               </p>
               <div className="mt-2 space-y-1 text-xs text-green-300">
-                <p>✅ {result.newTips} nouveaux tips trouvés</p>
-                <p>🔄 {result.updatedTips} tips mis à jour</p>
-                <p>📊 {result.totalProcessed} transactions analysées</p>
+                <p>✅ {t('syncButton.newTips', { count: result.newTips })}</p>
+                <p>🔄 {t('syncButton.updatedTips', { count: result.updatedTips })}</p>
+                <p>📊 {t('syncButton.totalProcessed', { count: result.totalProcessed })}</p>
               </div>
             </div>
           </div>
@@ -77,7 +79,7 @@ export const SyncButton = ({ username, onSyncComplete }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-red-400">Erreur</p>
+              <p className="text-sm font-semibold text-red-400">{t('syncButton.error')}</p>
               <p className="mt-1 text-xs text-red-300">{error}</p>
             </div>
           </div>

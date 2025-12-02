@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export const Login = () => {
+  const { t } = useTranslation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -21,9 +23,7 @@ export const Login = () => {
     if (result.success) {
       navigate('/dashboard');
     } else {
-      // Vérifier si l'erreur est due à un email non vérifié
       if (result.requiresVerification) {
-        // Rediriger vers la page de vérification
         navigate('/verify-email', { 
           state: { 
             email: result.email || email,
@@ -31,7 +31,7 @@ export const Login = () => {
           }
         });
       } else {
-        setError(result.error || 'Erreur lors de la connexion');
+        setError(result.error || t('auth.login.error'));
       }
     }
 
@@ -40,23 +40,19 @@ export const Login = () => {
 
   return (
     <div className="relative min-h-screen overflow-hidden py-12">
-      {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
       <div className="absolute top-0 left-1/3 h-96 w-96 rounded-full bg-xrpBlue/10 blur-3xl" />
 
       <div className="relative mx-auto max-w-md px-4">
         <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
-          {/* Header */}
           <div className="border-b border-white/5 bg-gradient-to-r from-xrpBlue/10 to-cyan-500/10 px-6 py-6 text-center">
-            <h1 className="text-2xl font-bold">Connexion</h1>
+            <h1 className="text-2xl font-bold">{t('auth.login.title')}</h1>
             <p className="mt-2 text-sm text-white/60">
-              Connecte-toi à ton compte xrpTip
+              {t('auth.login.subtitle')}
             </p>
           </div>
 
-          {/* Form */}
           <form onSubmit={handleSubmit} className="p-6 space-y-6">
-            {/* Error Message */}
             {error && (
               <div className="rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3">
                 <div className="flex items-start gap-2">
@@ -68,10 +64,9 @@ export const Login = () => {
               </div>
             )}
 
-            {/* Email */}
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-white/80 mb-2">
-                Email
+                {t('auth.login.email')}
               </label>
               <input
                 type="email"
@@ -84,10 +79,9 @@ export const Login = () => {
               />
             </div>
 
-            {/* Password */}
             <div>
               <label htmlFor="password" className="block text-sm font-medium text-white/80 mb-2">
-                Mot de passe
+                {t('auth.login.password')}
               </label>
               <input
                 type="password"
@@ -100,17 +94,15 @@ export const Login = () => {
               />
             </div>
 
-            {/* Forgot Password Link */}
             <div className="text-right">
               <Link
                 to="/forgot-password"
                 className="text-sm text-xrpBlue hover:text-cyan-400 transition-colors"
               >
-                Mot de passe oublié ?
+                {t('auth.login.forgotPassword')}
               </Link>
             </div>
 
-            {/* Submit Button */}
             <button
               type="submit"
               disabled={isLoading}
@@ -119,21 +111,20 @@ export const Login = () => {
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
                   <div className="spinner" />
-                  <span>Connexion...</span>
+                  <span>{t('auth.login.loading')}</span>
                 </span>
               ) : (
-                'Se connecter'
+                t('auth.login.submit')
               )}
             </button>
 
-            {/* Sign Up Link */}
             <div className="text-center text-sm text-white/60">
-              Pas encore de compte ?{' '}
+              {t('auth.login.noAccount')}{' '}
               <Link
                 to="/register"
                 className="font-semibold text-xrpBlue hover:text-cyan-400 transition-colors"
               >
-                S'inscrire
+                {t('auth.login.signUp')}
               </Link>
             </div>
           </form>

@@ -1,7 +1,9 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { xrplAPI } from '../api';
 
 export const TransactionVerifier = ({ tipId, onVerified }) => {
+  const { t } = useTranslation();
   const [txHash, setTxHash] = useState('');
   const [isVerifying, setIsVerifying] = useState(false);
   const [result, setResult] = useState(null);
@@ -9,12 +11,12 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
 
   const handleVerify = async () => {
     if (!txHash.trim()) {
-      setError('Veuillez entrer un hash de transaction');
+      setError(t('transactionVerifier.errors.enterHash'));
       return;
     }
 
     if (txHash.length !== 64) {
-      setError('Le hash de transaction doit faire 64 caractères');
+      setError(t('transactionVerifier.errors.invalidLength'));
       return;
     }
 
@@ -31,11 +33,11 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
           onVerified(response);
         }
       } else {
-        setError(response.message || 'Transaction invalide');
+        setError(response.message || t('transactionVerifier.errors.invalidTransaction'));
       }
     } catch (err) {
       console.error('Erreur lors de la vérification:', err);
-      setError(err.message || 'Erreur lors de la vérification de la transaction');
+      setError(err.message || t('transactionVerifier.errors.verificationFailed'));
     } finally {
       setIsVerifying(false);
     }
@@ -45,7 +47,7 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
     <div className="space-y-4">
       <div>
         <label htmlFor="txHash" className="block text-sm font-medium text-white/80 mb-2">
-          Hash de transaction XRPL
+          {t('transactionVerifier.label')}
         </label>
         <input
           type="text"
@@ -56,12 +58,12 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
             setError(null);
             setResult(null);
           }}
-          placeholder="Colle le hash de ta transaction ici..."
+          placeholder={t('transactionVerifier.placeholder')}
           className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 font-mono text-sm text-white placeholder:text-white/40 transition-all focus:outline-none focus:ring-2 focus:border-xrpBlue/50 focus:ring-xrpBlue/50"
           maxLength={64}
         />
         <p className="mt-1 text-xs text-white/50">
-          64 caractères hexadécimaux
+          {t('transactionVerifier.hint')}
         </p>
       </div>
 
@@ -73,14 +75,14 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
         {isVerifying ? (
           <span className="flex items-center justify-center gap-2">
             <div className="spinner" />
-            <span>Vérification en cours...</span>
+            <span>{t('transactionVerifier.verifying')}</span>
           </span>
         ) : (
           <span className="flex items-center justify-center gap-2">
             <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <span>Vérifier la transaction</span>
+            <span>{t('transactionVerifier.verify')}</span>
           </span>
         )}
       </button>
@@ -93,7 +95,7 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-red-400">Erreur de vérification</p>
+              <p className="text-sm font-semibold text-red-400">{t('transactionVerifier.errorTitle')}</p>
               <p className="mt-1 text-xs text-red-300">{error}</p>
             </div>
           </div>
@@ -108,23 +110,23 @@ export const TransactionVerifier = ({ tipId, onVerified }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-green-400">Transaction vérifiée !</p>
+              <p className="text-sm font-semibold text-green-400">{t('transactionVerifier.successTitle')}</p>
               <p className="mt-1 text-xs text-green-300">{result.message}</p>
               
               {result.transaction && (
                 <div className="mt-3 space-y-2 text-xs text-white/70">
                   <div className="flex justify-between">
-                    <span>Montant:</span>
+                    <span>{t('transactionVerifier.details.amount')}:</span>
                     <span className="font-semibold text-green-400">
                       {result.transaction.amount} XRP
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span>De:</span>
+                    <span>{t('transactionVerifier.details.from')}:</span>
                     <code className="text-xs">{result.transaction.from.slice(0, 10)}...</code>
                   </div>
                   <div className="flex justify-between">
-                    <span>Ledger:</span>
+                    <span>{t('transactionVerifier.details.ledger')}:</span>
                     <span>{result.transaction.ledgerIndex}</span>
                   </div>
                 </div>

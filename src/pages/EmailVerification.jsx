@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
 export const EmailVerification = () => {
+  const { t } = useTranslation();
   const [code, setCode] = useState(['', '', '', '', '', '']);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -78,7 +80,7 @@ export const EmailVerification = () => {
     const codeToVerify = verificationCode || code.join('');
 
     if (codeToVerify.length !== 6) {
-      setError('Veuillez entrer le code à 6 chiffres');
+      setError(t('auth.verifyEmail.enterCode'));
       return;
     }
 
@@ -96,10 +98,10 @@ export const EmailVerification = () => {
 
       // Rediriger vers dashboard
       navigate('/dashboard', { 
-        state: { message: 'Email vérifié avec succès ! 🎉' } 
+        state: { message: t('auth.verifyEmail.success') } 
       });
     } catch (err) {
-      setError(err.response?.data?.message || 'Code invalide ou expiré');
+      setError(err.response?.data?.message || t('auth.verifyEmail.invalidCode'));
       // Réinitialiser les inputs en cas d'erreur
       setCode(['', '', '', '', '', '']);
       inputRefs.current[0]?.focus();
@@ -123,7 +125,7 @@ export const EmailVerification = () => {
       // Masquer le message de succès après 5 secondes
       setTimeout(() => setResendSuccess(false), 5000);
     } catch (err) {
-      setError(err.response?.data?.message || 'Erreur lors du renvoi du code');
+      setError(err.response?.data?.message || t('auth.verifyEmail.resendError'));
     } finally {
       setResending(false);
     }
@@ -146,10 +148,10 @@ export const EmailVerification = () => {
               </svg>
             </div>
             <h1 className="text-3xl font-bold text-white mb-2">
-              Vérifiez votre email
+              {t('auth.verifyEmail.title')}
             </h1>
             <p className="text-white/70 text-sm">
-              Nous avons envoyé un code à 6 chiffres à
+              {t('auth.verifyEmail.subtitle')}
             </p>
             <p className="text-xrpBlue font-semibold mt-1">
               {email}
@@ -160,7 +162,7 @@ export const EmailVerification = () => {
           {resendSuccess && (
             <div className="mb-6 p-4 bg-green-500/20 border border-green-500/30 rounded-lg">
               <p className="text-green-300 text-sm text-center">
-                ✅ Nouveau code envoyé avec succès !
+                ✅ {t('auth.verifyEmail.codeSent')}
               </p>
             </div>
           )}
@@ -195,7 +197,7 @@ export const EmailVerification = () => {
               ))}
             </div>
             <p className="text-white/50 text-xs text-center mt-2">
-              💡 Vous pouvez aussi coller le code directement
+              {t('auth.verifyEmail.pasteHint')}
             </p>
           </div>
 
@@ -211,14 +213,14 @@ export const EmailVerification = () => {
                   <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                   <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                 </svg>
-                Vérification...
+                {t('auth.verifyEmail.verifying')}
               </>
             ) : (
               <>
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                Vérifier
+                {t('auth.verifyEmail.verify')}
               </>
             )}
           </button>
@@ -230,7 +232,7 @@ export const EmailVerification = () => {
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="px-4 bg-transparent text-white/50">
-                Code expiré ou pas reçu ?
+                {t('auth.verifyEmail.noCode')}
               </span>
             </div>
           </div>
@@ -242,18 +244,18 @@ export const EmailVerification = () => {
             className="w-full py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/20 text-white font-medium rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {resending ? (
-              'Envoi en cours...'
+              t('auth.verifyEmail.resending')
             ) : countdown > 0 ? (
-              `Renvoyer dans ${countdown}s`
+              t('auth.verifyEmail.resendIn', { seconds: countdown })
             ) : (
-              '↻ Renvoyer le code'
+              t('auth.verifyEmail.resend')
             )}
           </button>
 
           {/* Helper text */}
           <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg">
             <p className="text-white/70 text-xs text-center">
-              ⏱️ Le code expire dans 15 minutes
+              {t('auth.verifyEmail.codeExpires')}
             </p>
           </div>
         </div>
@@ -264,7 +266,7 @@ export const EmailVerification = () => {
             onClick={() => navigate('/login')}
             className="text-white/70 hover:text-white text-sm transition-colors"
           >
-            ← Retour à la connexion
+            {t('auth.verifyEmail.backToLogin')}
           </button>
         </div>
       </div>

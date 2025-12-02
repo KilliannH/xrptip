@@ -1,8 +1,11 @@
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
+import { LanguageSwitcher } from "./LanguageSwitcher";
+import { useTranslation } from 'react-i18next';
 
 export const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
+  const { t } = useTranslation();
 
   const handleLogout = async () => {
     await logout();
@@ -41,8 +44,11 @@ export const Navbar = () => {
               }`
             }
           >
-            Accueil
+            {t('nav.home')}
           </NavLink>
+
+          {/* Language Switcher */}
+          <LanguageSwitcher variant="compact" />
 
           {isAuthenticated ? (
             <>
@@ -60,7 +66,7 @@ export const Navbar = () => {
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                   </svg>
-                  <span className="hidden sm:inline">Dashboard</span>
+                  <span className="hidden sm:inline">{t('nav.dashboard')}</span>
                   <span className="sm:hidden">Panel</span>
                 </span>
               </NavLink>
@@ -80,7 +86,7 @@ export const Navbar = () => {
                 <div className="absolute right-0 mt-2 w-48 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all">
                   <div className="rounded-xl border border-white/10 bg-gradient-to-br from-xrpDark to-black p-2 shadow-xl backdrop-blur-xl">
                     <div className="border-b border-white/10 px-3 py-2 mb-2">
-                      <p className="text-xs text-white/60">Connecté en tant que</p>
+                      <p className="text-xs text-white/60">{t('nav.connectedAs')}</p>
                       <p className="text-sm font-medium text-white truncate">{user?.email}</p>
                     </div>
                     <button
@@ -90,7 +96,7 @@ export const Navbar = () => {
                       <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
                       </svg>
-                      Déconnexion
+                      {t('nav.logout')}
                     </button>
                   </div>
                 </div>
@@ -102,13 +108,13 @@ export const Navbar = () => {
                 to="/login"
                 className="rounded-lg px-3 py-2 text-sm font-medium text-white/60 transition-all hover:bg-white/5 hover:text-white sm:px-4"
               >
-                Connexion
+                {t('nav.login')}
               </Link>
               <Link
                 to="/register"
                 className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-semibold text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue hover:scale-105"
               >
-                S'inscrire
+                {t('nav.register')}
               </Link>
             </>
           )}

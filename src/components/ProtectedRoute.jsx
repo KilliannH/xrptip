@@ -1,7 +1,9 @@
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useTranslation } from 'react-i18next';
 
 export const ProtectedRoute = ({ children, requireCreator = false }) => {
+  const { t } = useTranslation();
   const { user, loading, isAuthenticated, isCreator } = useAuth();
 
   // Afficher un loader pendant la vérification
@@ -10,7 +12,7 @@ export const ProtectedRoute = ({ children, requireCreator = false }) => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="spinner mx-auto mb-4" style={{ width: '40px', height: '40px' }} />
-          <p className="text-white/60">Chargement...</p>
+          <p className="text-white/60">{ t.common.loading }</p>
         </div>
       </div>
     );
