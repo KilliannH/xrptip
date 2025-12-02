@@ -200,7 +200,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
         <div className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-center">
           <div className="flex items-center justify-center gap-2">
             <div className="spinner" />
-            <span className="text-sm text-white/60">{t('creator.form.states.loadingProfile')}</span>
+            <span className="text-sm text-white/60">{t('creator.form.loadingProfile')}</span>
           </div>
         </div>
       )}
@@ -213,9 +213,9 @@ export const ProfileForm = ({ onUsernameChange }) => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="flex-1">
-              <p className="text-sm font-semibold text-xrpBlue">{t('creator.form.states.editMode')}</p>
+              <p className="text-sm font-semibold text-xrpBlue">{t('creator.form.editMode')}</p>
               <p className="mt-1 text-xs text-white/70">
-                {t('creator.form.states.editingProfile', { username: existingCreator.username })}
+                {t('creator.form.editingProfile', { username: existingCreator.username })}
               </p>
             </div>
           </div>
@@ -249,7 +249,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Username */}
       <div>
         <label htmlFor="username" className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.username')} <span className="text-red-400">*</span>
+          {t('creator.form.username')} <span className="text-red-400">*</span>
         </label>
         <div className="relative">
           <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
@@ -274,14 +274,14 @@ export const ProfileForm = ({ onUsernameChange }) => {
           <p className="mt-1 text-xs text-red-400">{errors.username}</p>
         )}
         <p className="mt-1 text-xs text-white/50">
-          {t('creator.form.hints.urlPreview', { username: formData.username || 'username' })}
+          {t('creator.form.urlPreview', { username: formData.username || 'username' })}
         </p>
       </div>
 
       {/* Display Name */}
       <div>
         <label htmlFor="displayName" className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.displayName')} <span className="text-red-400">*</span>
+          {t('creator.form.displayName')} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
@@ -304,7 +304,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Bio */}
       <div>
         <label htmlFor="bio" className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.bio')} <span className="text-red-400">*</span>
+          {t('creator.form.bio')} <span className="text-red-400">*</span>
         </label>
         <textarea
           id="bio"
@@ -327,7 +327,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
             <span />
           )}
           <p className="text-xs text-white/50">
-            {t('creator.form.hints.bioMaxLength', { current: formData.bio.length, max: 200 })}
+            {t('creator.form.bioMaxLength', { current: formData.bio.length, max: 200 })}
           </p>
         </div>
       </div>
@@ -335,7 +335,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Photo de profil */}
       <div>
         <label className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.avatar')}
+          {t('creator.form.avatar')}
         </label>
         <ImageUpload
           type="avatar"
@@ -357,7 +357,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* Bannière */}
       <div>
         <label className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.banner')}
+          {t('creator.form.banner')}
         </label>
         <ImageUpload
           type="banner"
@@ -376,7 +376,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       {/* XRP Address */}
       <div>
         <label htmlFor="xrpAddress" className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.fields.xrpAddress')} <span className="text-red-400">*</span>
+          {t('creator.form.xrpAddress')} <span className="text-red-400">*</span>
         </label>
         <input
           type="text"
@@ -395,13 +395,13 @@ export const ProfileForm = ({ onUsernameChange }) => {
           <p className="mt-1 text-xs text-red-400">{errors.xrpAddress}</p>
         )}
         <p className="mt-1 text-xs text-white/50">
-          {t('creator.form.hints.tipsWillBeSent')}
+          {t('creator.form.tipsWillBeSent')}
         </p>
       </div>
 
       {/* Social Links */}
       <div className="space-y-4">
-        <h3 className="text-sm font-medium text-white/80">{t('creator.form.fields.socialLinks')}</h3>
+        <h3 className="text-sm font-medium text-white/80">{t('creator.form.socialLinks')}</h3>
         
         {/* Twitter */}
         <div>
@@ -507,14 +507,14 @@ export const ProfileForm = ({ onUsernameChange }) => {
             {isLoading ? (
               <>
                 <div className="spinner" />
-                <span>{t('creator.form.states.saving')}</span>
+                <span>{t('creator.form.saving')}</span>
               </>
             ) : (
               <>
                 <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                 </svg>
-                <span>{t('creator.form.states.saveProfile')}</span>
+                <span>{t('creator.form.saveProfile')}</span>
               </>
             )}
           </span>

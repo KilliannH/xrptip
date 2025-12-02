@@ -47,6 +47,37 @@
             "error": "Email ou mot de passe incorrect",
             "loading": "Connexion..."
         },
+        "forgotPassword": {
+            "title": "Mot de passe oublié",
+            "subtitle": "Entrez votre email et nous vous enverrons un lien de réinitialisation",
+            "emailLabel": "Adresse email",
+            "emailPlaceholder": "votre@email.com",
+            "emailRequired": "Veuillez entrer votre adresse email",
+            "sendLink": "Envoyer le lien",
+            "sending": "Envoi en cours...",
+            "backToLogin": "Retour à la connexion",
+            "error": "Erreur lors de l'envoi de l'email",
+            "emailSent": "Email envoyé !",
+            "checkInbox": "Nous avons envoyé un lien de réinitialisation",
+            "linkExpires": "Le lien expire dans 1 heure"
+        },
+        "resetPassword": {
+            "title": "Réinitialiser le mot de passe",
+            "subtitle": "Choisissez un nouveau mot de passe sécurisé",
+            "newPassword": "Nouveau mot de passe",
+            "confirmPassword": "Confirmer le mot de passe",
+            "passwordPlaceholder": "Au moins 8 caractères",
+            "confirmPasswordPlaceholder": "Confirmez votre mot de passe",
+            "resetButton": "Réinitialiser",
+            "resetting": "Réinitialisation...",
+            "success": "Mot de passe réinitialisé avec succès !",
+            "redirecting": "Redirection vers la connexion...",
+            "error": "Erreur lors de la réinitialisation",
+            "validating": "Validation du lien...",
+            "invalidToken": "Ce lien de réinitialisation est invalide ou a expiré",
+            "invalidTokenTitle": "Lien invalide",
+            "requestNewLink": "Demander un nouveau lien"
+        },
         "register": {
             "title": "Inscription",
             "subtitle": "Crée ton compte xrpTip gratuitement",
@@ -511,24 +542,24 @@
         "totalProcessed": "{{count}} transactions analysées"
     },
     "imageUpload": {
-    "avatarPreview": "Aperçu de l'avatar",
-    "bannerPreview": "Aperçu de la bannière",
-    "uploading": "Upload en cours...",
-    "choosePhoto": "Choisir une photo",
-    "chooseBanner": "Choisir une bannière",
-    "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
-    "bannerHint": "💡 Recommandé: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
-    "errors": {
-      "fileTooLarge": "Fichier trop volumineux (max 5MB)",
-      "fileTypeNotAllowed": "Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP.",
-      "uploadFailed": "Erreur lors de l'upload"
+        "avatarPreview": "Aperçu de l'avatar",
+        "bannerPreview": "Aperçu de la bannière",
+        "uploading": "Upload en cours...",
+        "choosePhoto": "Choisir une photo",
+        "chooseBanner": "Choisir une bannière",
+        "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
+        "bannerHint": "💡 Recommandé: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
+        "errors": {
+            "fileTooLarge": "Fichier trop volumineux (max 5MB)",
+            "fileTypeNotAllowed": "Type de fichier non autorisé. Utilisez JPG, PNG, GIF ou WebP.",
+            "uploadFailed": "Erreur lors de l'upload"
+        }
+    },
+    "feeBreakdown": {
+        "title": "Détail du paiement :",
+        "forCreator": "Pour le créateur",
+        "platformFee": "Frais de plateforme (5%)",
+        "totalToPay": "Total à payer",
+        "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
     }
-  },
-  "feeBreakdown": {
-    "title": "Détail du paiement :",
-    "forCreator": "Pour le créateur",
-    "platformFee": "Frais de plateforme (5%)",
-    "totalToPay": "Total à payer",
-    "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
-  }
 }

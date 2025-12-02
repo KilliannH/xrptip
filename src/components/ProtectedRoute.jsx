@@ -12,7 +12,7 @@ export const ProtectedRoute = ({ children, requireCreator = false }) => {
       <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
           <div className="spinner mx-auto mb-4" style={{ width: '40px', height: '40px' }} />
-          <p className="text-white/60">{ t.common.loading }</p>
+          <p className="text-white/60">{ t("common.loading") }</p>
         </div>
       </div>
     );

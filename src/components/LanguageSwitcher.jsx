@@ -1,170 +1,115 @@
-import { useState, useRef, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
-import { uploadAPI } from '../api';
+import { useState, useRef, useEffect } from 'react';
 
-export const ImageUpload = ({ 
-  type = 'avatar', // 'avatar' or 'banner'
-  currentImage,
-  onUploadSuccess,
-  onUploadError
-}) => {
-  const { t } = useTranslation();
-  const [uploading, setUploading] = useState(false);
-  const [preview, setPreview] = useState(currentImage || '');
-  const fileInputRef = useRef(null);
+export const LanguageSwitcher = ({ variant = 'default' }) => {
+  const { i18n } = useTranslation();
+  const [isOpen, setIsOpen] = useState(false);
+  const dropdownRef = useRef(null);
 
-  // Mettre à jour le preview quand currentImage change
+  const languages = [
+    { code: 'en', name: 'English', flag: '🇬🇧' },
+    { code: 'fr', name: 'Français', flag: '🇫🇷' }
+  ];
+
+  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+
+  const changeLanguage = (langCode) => {
+    i18n.changeLanguage(langCode);
+    setIsOpen(false);
+  };
+
+  // Fermer le dropdown si on clique à l'extérieur
   useEffect(() => {
-    setPreview(currentImage || '');
-  }, [currentImage]);
-
-  const handleFileSelect = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    // Validation taille (5MB max)
-    if (file.size > 5 * 1024 * 1024) {
-      onUploadError?.(t('imageUpload.errors.fileTooLarge'));
-      return;
-    }
-
-    // Validation type
-    const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
-    if (!allowedTypes.includes(file.type)) {
-      onUploadError?.(t('imageUpload.errors.fileTypeNotAllowed'));
-      return;
-    }
-
-    // Preview local
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setPreview(reader.result);
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
     };
-    reader.readAsDataURL(file);
 
-    // Upload vers S3
-    try {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append(type, file);
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-      const response = type === 'avatar' 
-        ? await uploadAPI.uploadAvatar(formData)
-        : await uploadAPI.uploadBanner(formData);
+  // Variant compact (pour la navbar mobile)
+  if (variant === 'compact') {
+    return (
+      <div className="relative" ref={dropdownRef}>
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/80 transition-all hover:bg-white/5 hover:text-white"
+        >
+          <span className="text-lg">{currentLanguage.flag}</span>
+          <span className="hidden sm:inline">{currentLanguage.code.toUpperCase()}</span>
+          <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
 
-      // Succès
-      const imageUrl = response.data.url;
-      setPreview(imageUrl);
-      onUploadSuccess?.(imageUrl);
-    } catch (error) {
-      console.error('Upload error:', error);
-      onUploadError?.(error.message || t('imageUpload.errors.uploadFailed'));
-      // Reset preview en cas d'erreur
-      setPreview(currentImage || '');
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const handleClick = () => {
-    fileInputRef.current?.click();
-  };
-
-  const isAvatar = type === 'avatar';
-
-  return (
-    <div>
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept="image/jpeg,image/png,image/gif,image/webp"
-        onChange={handleFileSelect}
-        className="hidden"
-      />
-
-      {isAvatar ? (
-        // Avatar upload
-        <div className="flex items-start gap-4">
-          {/* Preview */}
-          <div className="shrink-0">
-            <div className="relative h-24 w-24 overflow-hidden rounded-full border-2 border-white/10 bg-white/5">
-              {preview ? (
-                <img
-                  src={preview}
-                  alt={t('imageUpload.avatarPreview')}
-                  className="h-full w-full object-cover"
-                  onError={() => setPreview('')}
-                />
-              ) : (
-                <div className="flex h-full w-full items-center justify-center">
-                  <svg className="h-12 w-12 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+        {isOpen && (
+          <div className="absolute right-0 mt-2 w-40 rounded-xl border border-white/10 bg-gradient-to-br from-xrpDark to-black p-2 shadow-xl backdrop-blur-xl z-50">
+            {languages.map((lang) => (
+              <button
+                key={lang.code}
+                onClick={() => changeLanguage(lang.code)}
+                className={`flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm transition-all ${
+                  lang.code === i18n.language
+                    ? 'bg-xrpBlue/10 text-xrpBlue'
+                    : 'text-white/80 hover:bg-white/5 hover:text-white'
+                }`}
+              >
+                <span className="text-lg">{lang.flag}</span>
+                <span>{lang.name}</span>
+                {lang.code === i18n.language && (
+                  <svg className="ml-auto h-4 w-4" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                   </svg>
-                </div>
-              )}
-              {uploading && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                  <div className="spinner" style={{ width: '24px', height: '24px' }} />
-                </div>
-              )}
-            </div>
+                )}
+              </button>
+            ))}
           </div>
+        )}
+      </div>
+    );
+  }
 
-          {/* Upload button */}
-          <div className="flex-1">
+  // Variant par défaut
+  return (
+    <div className="relative" ref={dropdownRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="group flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+      >
+        <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129" />
+        </svg>
+        <span className="hidden sm:inline">{currentLanguage.name}</span>
+        <span className="sm:hidden">{currentLanguage.code.toUpperCase()}</span>
+        <svg className="h-4 w-4 transition-transform group-hover:rotate-180" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+
+      {isOpen && (
+        <div className="absolute right-0 mt-2 w-48 rounded-xl border border-white/10 bg-gradient-to-br from-xrpDark to-black p-2 shadow-xl backdrop-blur-xl z-50 animate-in fade-in slide-in-from-bottom-4">
+          {languages.map((lang) => (
             <button
-              type="button"
-              onClick={handleClick}
-              disabled={uploading}
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue disabled:cursor-not-allowed disabled:opacity-50"
+              key={lang.code}
+              onClick={() => changeLanguage(lang.code)}
+              className={`flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm transition-all ${
+                lang.code === i18n.language
+                  ? 'bg-xrpBlue/10 text-xrpBlue font-semibold'
+                  : 'text-white/80 hover:bg-white/5 hover:text-white'
+              }`}
             >
-              {uploading ? t('imageUpload.uploading') : t('imageUpload.choosePhoto')}
-            </button>
-            <p className="mt-2 text-xs text-white/50">
-              {t('imageUpload.imageHint')}
-            </p>
-          </div>
-        </div>
-      ) : (
-        // Banner upload
-        <div className="space-y-4">
-          {/* Preview */}
-          <div className="relative h-40 w-full overflow-hidden rounded-xl border-2 border-white/10 bg-white/5">
-            {preview ? (
-              <img
-                src={preview}
-                alt={t('imageUpload.bannerPreview')}
-                className="h-full w-full object-cover"
-                onError={() => setPreview('')}
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center">
-                <svg className="h-16 w-16 text-white/30" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              <span className="text-xl">{lang.flag}</span>
+              <span className="flex-1 text-left">{lang.name}</span>
+              {lang.code === i18n.language && (
+                <svg className="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>
-              </div>
-            )}
-            {uploading && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/60">
-                <div className="spinner" style={{ width: '32px', height: '32px' }} />
-              </div>
-            )}
-          </div>
-
-          {/* Upload button */}
-          <div>
-            <button
-              type="button"
-              onClick={handleClick}
-              disabled={uploading}
-              className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-medium text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue disabled:cursor-not-allowed disabled:opacity-50"
-            >
-              {uploading ? t('imageUpload.uploading') : t('imageUpload.chooseBanner')}
+              )}
             </button>
-            <p className="mt-2 text-xs text-white/50">
-              {t('imageUpload.bannerHint')}
-            </p>
-          </div>
+          ))}
         </div>
       )}
     </div>

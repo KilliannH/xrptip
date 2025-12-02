@@ -24,8 +24,8 @@ export const Login = () => {
       navigate('/dashboard');
     } else {
       if (result.requiresVerification) {
-        navigate('/verify-email', { 
-          state: { 
+        navigate('/verify-email', {
+          state: {
             email: result.email || email,
             fromLogin: true
           }
@@ -94,13 +94,14 @@ export const Login = () => {
               />
             </div>
 
-            <div className="text-right">
-              <Link
-                to="/forgot-password"
+            <div className="flex items-center justify-end">
+              <button
+                type="button"
+                onClick={() => navigate('/forgot-password')}
                 className="text-sm text-xrpBlue hover:text-cyan-400 transition-colors"
               >
                 {t('auth.login.forgotPassword')}
-              </Link>
+              </button>
             </div>
 
             <button

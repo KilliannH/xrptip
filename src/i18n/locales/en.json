@@ -47,6 +47,37 @@
             "error": "Invalid email or password",
             "loading": "Signing in..."
         },
+        "forgotPassword": {
+            "title": "Forgot Password",
+            "subtitle": "Enter your email and we'll send you a reset link",
+            "emailLabel": "Email address",
+            "emailPlaceholder": "your@email.com",
+            "emailRequired": "Please enter your email address",
+            "sendLink": "Send reset link",
+            "sending": "Sending...",
+            "backToLogin": "Back to login",
+            "error": "Error sending reset email",
+            "emailSent": "Email sent!",
+            "checkInbox": "We've sent a password reset link",
+            "linkExpires": "The link expires in 1 hour"
+        },
+        "resetPassword": {
+            "title": "Reset Password",
+            "subtitle": "Choose a new secure password",
+            "newPassword": "New password",
+            "confirmPassword": "Confirm password",
+            "passwordPlaceholder": "At least 8 characters",
+            "confirmPasswordPlaceholder": "Confirm your password",
+            "resetButton": "Reset password",
+            "resetting": "Resetting...",
+            "success": "Password reset successfully!",
+            "redirecting": "Redirecting to login...",
+            "error": "Error resetting password",
+            "validating": "Validating reset link...",
+            "invalidToken": "This reset link is invalid or has expired",
+            "invalidTokenTitle": "Invalid Link",
+            "requestNewLink": "Request a new link"
+        },
         "register": {
             "title": "Sign Up",
             "subtitle": "Create your xrpTip account for free",
@@ -511,17 +542,24 @@
         "totalProcessed": "{{count}} transactions analyzed"
     },
     "imageUpload": {
-    "avatarPreview": "Avatar preview",
-    "bannerPreview": "Banner preview",
-    "uploading": "Uploading...",
-    "choosePhoto": "Choose a photo",
-    "chooseBanner": "Choose a banner",
-    "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
-    "bannerHint": "💡 Recommended: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
-    "errors": {
-      "fileTooLarge": "File too large (max 5MB)",
-      "fileTypeNotAllowed": "File type not allowed. Use JPG, PNG, GIF or WebP.",
-      "uploadFailed": "Error during upload"
+        "avatarPreview": "Avatar preview",
+        "bannerPreview": "Banner preview",
+        "uploading": "Uploading...",
+        "choosePhoto": "Choose a photo",
+        "chooseBanner": "Choose a banner",
+        "imageHint": "💡 Format: JPG, PNG, GIF, WebP · Max: 5MB",
+        "bannerHint": "💡 Recommended: 1500x500px · Format: JPG, PNG, WebP · Max: 5MB",
+        "errors": {
+            "fileTooLarge": "File too large (max 5MB)",
+            "fileTypeNotAllowed": "File type not allowed. Use JPG, PNG, GIF or WebP.",
+            "uploadFailed": "Error during upload"
+        }
+    },
+    "feeBreakdown": {
+        "title": "Payment details:",
+        "forCreator": "For the creator",
+        "platformFee": "Platform fee (5%)",
+        "totalToPay": "Total to pay",
+        "hint": "💡 Fees help maintain and improve the platform."
     }
-  }
 }

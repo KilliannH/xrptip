@@ -11,8 +11,12 @@ import { Privacy } from "./pages/Privacy";
 import { Link } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { CookieNotice } from "./components/CookieNotice";
+import { ResetPassword } from './pages/ResetPassword';
+import { ForgotPassword } from './pages/ForgotPassword';
+import { useTranslation } from "react-i18next";
 
 function App() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen flex flex-col bg-xrpDark text-white">
       <AuthProvider>
@@ -23,6 +27,8 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password/:token" element={<ResetPassword />} />
             <Route path="/verify-email" element={<EmailVerification />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/u/:username" element={<CreatorPublicPage />} />
@@ -56,23 +62,23 @@ function App() {
                   <span className="text-lg font-bold">xrpTip</span>
                 </div>
                 <p className="text-xs text-white/50 text-center sm:text-left">
-                  Built on XRPL · Tips instantanés pour créateurs
+                  {t('footer.builtOn')}
                 </p>
               </div>
 
               {/* Links */}
               <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
                 <a href="https://xrpl.org" target="_blank" rel="noopener noreferrer" className="text-white/60 transition-colors hover:text-xrpBlue">
-                  Documentation
+                  {t('footer.documentation')}
                 </a>
                 <Link to="/privacy" className="text-white/60 transition-colors hover:text-xrpBlue">
-                  Politique de Confidentialité
+                  {t('footer.privacy')}
                 </Link>
                 <a href="#" className="text-white/60 transition-colors hover:text-xrpBlue">
-                  Twitter
+                  {t('footer.twitter')}
                 </a>
                 <a href="#" className="text-white/60 transition-colors hover:text-xrpBlue">
-                  Discord
+                  {t('footer.discord')}
                 </a>
               </div>
 
@@ -82,12 +88,12 @@ function App() {
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-xrpBlue opacity-75" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-xrpBlue" />
                 </span>
-                <span className="font-medium text-xrpBlue">Live on XRPL</span>
+                <span className="font-medium text-xrpBlue">{t('footer.liveOnXRPL')}</span>
               </div>
             </div>
 
             <div className="mt-6 border-t border-white/5 pt-6 text-center text-xs text-white/40">
-              © {new Date().getFullYear()} xrpTip. Tous droits réservés.
+              {t('footer.allRightsReserved', { year: new Date().getFullYear() })}
             </div>
           </div>
         </footer>
