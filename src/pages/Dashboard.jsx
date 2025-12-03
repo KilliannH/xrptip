@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { ProfileForm } from "../components/ProfileForm";
 import { SyncButton } from "../components/SyncButton";
 import { tipsAPI, creatorsAPI } from "../api";
+import { WidgetGenerator } from "../components/WidgetGenerator";
 import { useAuth } from "../contexts/AuthContext";
 
 export const Dashboard = () => {
@@ -81,8 +82,8 @@ export const Dashboard = () => {
           <button
             onClick={() => setActiveTab("profile")}
             className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${activeTab === "profile"
-                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+              ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+              : "text-white/60 hover:bg-white/5 hover:text-white"
               }`}
           >
             <span className="flex items-center gap-2">
@@ -95,8 +96,8 @@ export const Dashboard = () => {
           <button
             onClick={() => setActiveTab("stats")}
             className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${activeTab === "stats"
-                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+              ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+              : "text-white/60 hover:bg-white/5 hover:text-white"
               }`}
           >
             <span className="flex items-center gap-2">
@@ -107,10 +108,24 @@ export const Dashboard = () => {
             </span>
           </button>
           <button
+            onClick={() => setActiveTab("widget")}
+            className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${activeTab === "widget"
+              ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+              : "text-white/60 hover:bg-white/5 hover:text-white"
+              }`}
+          >
+            <span className="flex items-center gap-2">
+              <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+              </svg>
+              Widget
+            </span>
+          </button>
+          <button
             onClick={() => setActiveTab("settings")}
             className={`rounded-t-xl px-6 py-3 font-semibold transition-all ${activeTab === "settings"
-                ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+              ? "border-b-2 border-xrpBlue bg-xrpBlue/10 text-xrpBlue"
+              : "text-white/60 hover:bg-white/5 hover:text-white"
               }`}
           >
             <span className="flex items-center gap-2">
@@ -356,6 +371,25 @@ export const Dashboard = () => {
                   </div>
                 )}
               </div>
+            </div>
+          </div>
+        )}
+
+        {activeTab === "widget" && (
+          <div className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-white/[0.07] to-white/[0.02] shadow-2xl backdrop-blur-xl">
+            <div className="border-b border-white/5 bg-gradient-to-r from-purple-500/10 to-pink-500/10 px-6 py-4">
+              <h2 className="flex items-center gap-2 text-lg font-semibold">
+                <svg className="h-5 w-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                {t('dashboard.widget.title')}
+              </h2>
+              <p className="mt-1 text-sm text-white/60">
+                {t('dashboard.widget.subtitle')}
+              </p>
+            </div>
+            <div className="p-6">
+              <WidgetGenerator username={currentUsername} />
             </div>
           </div>
         )}

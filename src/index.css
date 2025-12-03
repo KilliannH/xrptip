@@ -217,3 +217,9 @@ a {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Widget styles */
+body.widget {
+  background: transparent !important;
+  overflow: hidden;
+}

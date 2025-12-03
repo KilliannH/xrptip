@@ -145,6 +145,10 @@
         }
     },
     "dashboard": {
+        "widget": {
+      "title": "Widget & Intégration",
+      "subtitle": "Ajoute un bouton tip à ton stream ou réseaux sociaux"
+    },
         "title": "Dashboard créateur",
         "subtitle": "Configure ta page xrpTip, ton adresse XRP, tes liens sociaux et suis tes tips reçus.",
         "tabs": {
@@ -561,5 +565,29 @@
         "platformFee": "Frais de plateforme (5%)",
         "totalToPay": "Total à payer",
         "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
-    }
+    },
+    "widget": {
+    "notFound": "Créateur non trouvé",
+    "tipMe": "Tip moi",
+    "preview": "Aperçu",
+    "size": "Taille du widget",
+    "sizes": {
+      "small": "Petit",
+      "medium": "Moyen",
+      "large": "Grand"
+    },
+    "integration": "Intégration",
+    "saveProfileFirst": "Sauvegarde ton profil d'abord pour générer un widget",
+    "obs": {
+      "step1": "Ajoute une nouvelle source 'Navigateur' dans OBS",
+      "step2": "Colle l'URL ci-dessous",
+      "step3": "Ajuste la position et la taille selon tes besoins"
+    },
+    "twitch": {
+      "description": "Ajoute ce code iframe à ton panneau Twitch ou page personnalisée",
+      "iframeCode": "Code iframe"
+    },
+    "directLink": "Lien direct",
+    "directLink.description": "Partage ce lien sur les réseaux sociaux, ta bio, ou n'importe où"
+  }
 }

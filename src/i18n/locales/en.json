@@ -145,6 +145,10 @@
         }
     },
     "dashboard": {
+        "widget": {
+      "title": "Widget & Integration",
+      "subtitle": "Add a tip button to your stream or social media"
+    },
         "title": "Creator Dashboard",
         "subtitle": "Configure your xrpTip page, your XRP address, your social links and track your received tips.",
         "tabs": {
@@ -561,5 +565,29 @@
         "platformFee": "Platform fee (5%)",
         "totalToPay": "Total to pay",
         "hint": "💡 Fees help maintain and improve the platform."
-    }
+    },
+    "widget": {
+    "notFound": "Creator not found",
+    "tipMe": "Tip me",
+    "preview": "Preview",
+    "size": "Widget Size",
+    "sizes": {
+      "small": "Small",
+      "medium": "Medium",
+      "large": "Large"
+    },
+    "integration": "Integration",
+    "saveProfileFirst": "Save your profile first to generate a widget",
+    "obs": {
+      "step1": "Add a new 'Browser' source in OBS",
+      "step2": "Paste the URL below",
+      "step3": "Adjust position and size as needed"
+    },
+    "twitch": {
+      "description": "Add this iframe code to your Twitch panel or custom page",
+      "iframeCode": "Iframe Code"
+    },
+    "directLink": "Direct Link",
+    "directLink.description": "Share this link on social media, bio, or anywhere else"
+  }
 }
