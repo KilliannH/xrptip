@@ -57,7 +57,7 @@ fi
 
 # Step 1: Install dependencies
 echo -e "${BLUE}📦 Installation des dépendances...${NC}"
-npm install
+npm install --force
 echo -e "${GREEN}✅ Dépendances installées${NC}"
 echo ""
 

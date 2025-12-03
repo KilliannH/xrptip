@@ -29,7 +29,7 @@ export const SEO = ({
 
   const defaultTitle = defaultTitles[lang] || defaultTitles.en;
   const defaultDescription = defaultDescriptions[lang] || defaultDescriptions.en;
-  const defaultImage = `${window.location.origin}/og-image.jpg`;
+  const defaultImage = `${window.location.origin}/og-image.png`;
   const defaultUrl = window.location.origin;
 
   const pageTitle = title ? `${title} | ${siteName}` : defaultTitle;
