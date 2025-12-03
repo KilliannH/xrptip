@@ -630,5 +630,27 @@
       "previous": "Previous",
       "next": "Next"
     }
+  },
+  "seo": {
+    "home": {
+      "title": "Instant XRP Tips for Creators",
+      "description": "Accept XRP tips instantly on XRPL. Fast, secure, and low-cost tipping platform for content creators, streamers, and artists. Start receiving crypto donations today."
+    },
+    "login": {
+      "title": "Login",
+      "description": "Log in to your xrpTip account to manage your creator profile and view your tips."
+    },
+    "register": {
+      "title": "Create Account",
+      "description": "Create your xrpTip account and start accepting XRP tips from your supporters."
+    },
+    "dashboard": {
+      "title": "Creator Dashboard",
+      "description": "Manage your xrpTip profile, track your tips, and customize your creator page."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "description": "Read our privacy policy to understand how we protect your data on xrpTip."
+    }
   }
 }

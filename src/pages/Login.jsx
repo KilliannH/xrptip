@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { SEO } from '../components/SEO';
 
 export const Login = () => {
   const { t } = useTranslation();
@@ -39,6 +40,12 @@ export const Login = () => {
   };
 
   return (
+    <>
+    <SEO
+        title={t('seo.login.title')}
+        description={t('seo.login.description')}
+        noindex={true}
+      />
     <div className="relative min-h-screen overflow-hidden py-12">
       <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
       <div className="absolute top-0 left-1/3 h-96 w-96 rounded-full bg-xrpBlue/10 blur-3xl" />
@@ -132,5 +139,6 @@ export const Login = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

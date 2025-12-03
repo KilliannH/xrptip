@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import { useTranslation } from 'react-i18next';
+import { SEO } from '../components/SEO';
 
 export const Register = () => {
   const { t } = useTranslation();
@@ -57,6 +58,12 @@ export const Register = () => {
   };
 
   return (
+    <>
+    <SEO
+        title={t('seo.register.title')}
+        description={t('seo.register.description')}
+        noindex={true}
+      />
     <div className="relative min-h-screen overflow-hidden py-12">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
@@ -167,5 +174,6 @@ export const Register = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

@@ -17,6 +17,7 @@ import { Widget } from "./pages/Widget";
 import { Admin } from "./pages/Admin";
 import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const { t } = useTranslation();
@@ -24,6 +25,7 @@ function App() {
   const isWidgetPage = location.pathname.startsWith('/widget/');
   return (
     <div className="min-h-screen flex flex-col bg-xrpDark text-white">
+      <HelmetProvider>
       <AuthProvider>
         {!isWidgetPage && <Navbar />}
         <main className="flex-1">
@@ -115,6 +117,7 @@ function App() {
           </footer>
         )}
       </AuthProvider>
+      </HelmetProvider>
     </div>
   );
 }

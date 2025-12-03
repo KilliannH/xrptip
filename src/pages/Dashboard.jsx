@@ -5,6 +5,7 @@ import { SyncButton } from "../components/SyncButton";
 import { tipsAPI, creatorsAPI } from "../api";
 import { WidgetGenerator } from "../components/WidgetGenerator";
 import { useAuth } from "../contexts/AuthContext";
+import { SEO } from "../components/SEO";
 
 export const Dashboard = () => {
   const { t, i18n } = useTranslation();
@@ -63,6 +64,12 @@ export const Dashboard = () => {
   };
 
   return (
+    <>
+      <SEO
+        title={t('seo.dashboard.title')}
+        description={t('seo.dashboard.description')}
+        noindex={true}
+      />
     <div className="relative min-h-screen overflow-hidden py-12">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
@@ -408,5 +415,6 @@ export const Dashboard = () => {
         )}
       </div>
     </div>
+    </>
   );
 };

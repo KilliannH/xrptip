@@ -1,10 +1,17 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import { SEO } from "../components/SEO";
 
 export const Home = () => {
   const { t } = useTranslation();
 
   return (
+    <>
+    <SEO
+        title={t('seo.home.title')}
+        description={t('seo.home.description')}
+        keywords="XRP, XRPL, tips, crypto, creators, streamers, donations, blockchain, Ripple"
+      />
   <div className="relative overflow-hidden">
     {/* Background gradients */}
     <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
@@ -160,5 +167,6 @@ export const Home = () => {
       </div>
     </div>
   </div>
+  </>
 );
 };

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://xrptip.com/</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xrptip.com/" />
+    <xhtml:link rel="alternate" hreflang="fr" href="https://xrptip.com/" />
+  </url>
+  
+  <!-- Login -->
+  <url>
+    <loc>https://xrptip.com/login</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Register -->
+  <url>
+    <loc>https://xrptip.com/register</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.5</priority>
+  </url>
+  
+  <!-- Privacy Policy -->
+  <url>
+    <loc>https://xrptip.com/privacy</loc>
+    <lastmod>2024-01-01</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  
+  <!-- 
+    Note: Ajoutez manuellement les URLs de vos créateurs principaux ici
+    Exemple:
+    <url>
+      <loc>https://xrptip.com/u/cryptoartist</loc>
+      <lastmod>2024-01-01</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  -->
+
+  <url>
+      <loc>https://xrptip.com/u/demo</loc>
+      <lastmod>2024-01-01</lastmod>
+      <changefreq>weekly</changefreq>
+      <priority>0.8</priority>
+    </url>
+  
+</urlset>

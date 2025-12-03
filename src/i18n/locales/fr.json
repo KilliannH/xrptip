@@ -630,5 +630,27 @@
       "previous": "Précédent",
       "next": "Suivant"
     }
+  },
+  "seo": {
+    "home": {
+      "title": "Tips XRP Instantanés pour Créateurs",
+      "description": "Acceptez des tips XRP instantanément sur XRPL. Plateforme de pourboires rapide, sécurisée et économique pour créateurs de contenu, streamers et artistes. Commencez à recevoir des dons crypto aujourd'hui."
+    },
+    "login": {
+      "title": "Connexion",
+      "description": "Connectez-vous à votre compte xrpTip pour gérer votre profil créateur et voir vos tips."
+    },
+    "register": {
+      "title": "Créer un Compte",
+      "description": "Créez votre compte xrpTip et commencez à accepter des tips XRP de vos supporters."
+    },
+    "dashboard": {
+      "title": "Dashboard Créateur",
+      "description": "Gérez votre profil xrpTip, suivez vos tips et personnalisez votre page créateur."
+    },
+    "privacy": {
+      "title": "Politique de Confidentialité",
+      "description": "Lisez notre politique de confidentialité pour comprendre comment nous protégeons vos données sur xrpTip."
+    }
   }
 }

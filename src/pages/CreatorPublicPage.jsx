@@ -5,6 +5,7 @@ import { creatorsAPI } from "../api";
 import { QRCodeModal } from "../components/QRCodeModal";
 import { calculateFees } from "../utils/fees";
 import { FeeBreakdown } from "../components/FeeBreakdown";
+import { SEO } from "../components/SEO";
 
 const PRESET_AMOUNTS = [1, 5, 10, 25];
 
@@ -109,6 +110,16 @@ export const CreatorPublicPage = () => {
   }
 
   return (
+    <>
+    <SEO
+        title={`${creator.displayName} (@${creator.username})`}
+        description={creator.bio}
+        image={creator.avatarUrl || creator.bannerUrl}
+        url={`${window.location.origin}/u/${creator.username}`}
+        type="profile"
+        author={creator.displayName}
+        keywords={`${creator.username}, XRP tips, crypto donations, XRPL`}
+      />
     <div className="relative min-h-screen overflow-hidden py-12">
       {/* Background gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-xrpBlue/5 via-transparent to-cyan-500/5" />
@@ -454,5 +465,6 @@ export const CreatorPublicPage = () => {
         />
       )}
     </div>
+    </>
   );
 };
