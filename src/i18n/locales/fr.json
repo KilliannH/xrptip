@@ -589,5 +589,46 @@
     },
     "directLink": "Lien direct",
     "directLink.description": "Partage ce lien sur les réseaux sociaux, ta bio, ou n'importe où"
+  },
+  "admin": {
+    "title": "Panneau Admin",
+    "subtitle": "Gestion et statistiques de la plateforme",
+    "adminAccess": "Accès Admin",
+    "error": "Erreur lors du chargement des données admin",
+    "stats": {
+      "totalUsers": "Total Utilisateurs",
+      "totalCreators": "Créateurs",
+      "verifiedUsers": "Vérifiés",
+      "newUsers": "Nouveaux",
+      "registered": "inscrits",
+      "withProfile": "avec profil",
+      "verified": "vérifiés",
+      "last7Days": "7 derniers jours"
+    },
+    "usersList": "Liste des utilisateurs",
+    "usersListSubtitle": "Gérer et voir tous les utilisateurs de la plateforme",
+    "searchPlaceholder": "Rechercher par email ou pseudo...",
+    "showingResults": "Affichage de {{count}} sur {{total}} utilisateurs",
+    "roles": {
+      "all": "Tous",
+      "user": "Utilisateur",
+      "creator": "Créateur",
+      "admin": "Admin"
+    },
+    "table": {
+      "email": "Email",
+      "username": "Pseudo",
+      "role": "Rôle",
+      "verified": "Vérifié",
+      "createdAt": "Inscrit le",
+      "yes": "Oui",
+      "no": "Non"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "sur",
+      "previous": "Précédent",
+      "next": "Suivant"
+    }
   }
 }

@@ -589,5 +589,46 @@
     },
     "directLink": "Direct Link",
     "directLink.description": "Share this link on social media, bio, or anywhere else"
+  },
+  "admin": {
+    "title": "Admin Panel",
+    "subtitle": "Platform management and statistics",
+    "adminAccess": "Admin Access",
+    "error": "Error loading admin data",
+    "stats": {
+      "totalUsers": "Total Users",
+      "totalCreators": "Creators",
+      "verifiedUsers": "Verified",
+      "newUsers": "New Users",
+      "registered": "registered",
+      "withProfile": "with profile",
+      "verified": "verified",
+      "last7Days": "last 7 days"
+    },
+    "usersList": "Users List",
+    "usersListSubtitle": "Manage and view all platform users",
+    "searchPlaceholder": "Search by email or username...",
+    "showingResults": "Showing {{count}} of {{total}} users",
+    "roles": {
+      "all": "All",
+      "user": "User",
+      "creator": "Creator",
+      "admin": "Admin"
+    },
+    "table": {
+      "email": "Email",
+      "username": "Username",
+      "role": "Role",
+      "verified": "Verified",
+      "createdAt": "Registered",
+      "yes": "Yes",
+      "no": "No"
+    },
+    "pagination": {
+      "page": "Page",
+      "of": "of",
+      "previous": "Previous",
+      "next": "Next"
+    }
   }
 }

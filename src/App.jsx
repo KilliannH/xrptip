@@ -14,6 +14,7 @@ import { CookieNotice } from "./components/CookieNotice";
 import { ResetPassword } from './pages/ResetPassword';
 import { ForgotPassword } from './pages/ForgotPassword';
 import { Widget } from "./pages/Widget";
+import { Admin } from "./pages/Admin";
 import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 
@@ -44,6 +45,14 @@ function App() {
               element={
                 <ProtectedRoute>
                   <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/secret-admin-panel-xyz123"
+              element={
+                <ProtectedRoute>
+                  <Admin />
                 </ProtectedRoute>
               }
             />
