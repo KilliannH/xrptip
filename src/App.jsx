@@ -18,6 +18,7 @@ import { Admin } from "./pages/Admin";
 import { useTranslation } from "react-i18next";
 import { useLocation } from 'react-router-dom';
 import { HelmetProvider } from "react-helmet-async";
+import { AnnouncementBanner } from './components/AnnouncementBanner';
 
 function App() {
   const { t } = useTranslation();
@@ -27,6 +28,8 @@ function App() {
     <div className="min-h-screen flex flex-col bg-xrpDark text-white">
       <HelmetProvider>
       <AuthProvider>
+        {/* Announcement Banner - Avant la Navbar */}
+          {!isWidgetPage && <AnnouncementBanner />}
         {!isWidgetPage && <Navbar />}
         <main className="flex-1">
           <Routes>

@@ -223,3 +223,17 @@ body.widget {
   background: transparent !important;
   overflow: hidden;
 }
+
+/* Animation shimmer pour la bannière */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 3s infinite;
+}

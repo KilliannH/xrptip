@@ -652,5 +652,13 @@
       "title": "Politique de Confidentialité",
       "description": "Lisez notre politique de confidentialité pour comprendre comment nous protégeons vos données sur xrpTip."
     }
+  },
+  "banner": {
+    "close": "Fermer",
+    "giveaway": {
+      "title": "GIVEAWAY 50 XRP",
+      "subtitle": "5 gagnants de 10 XRP chacun",
+      "cta": "Participer"
+    }
   }
 }
