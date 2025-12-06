@@ -208,7 +208,7 @@
             "banner": "Banner",
             "socialLinks": "Social links (optional)",
             "editMode": "Edit mode",
-            "editingProfile": "You are editing your existing creator profile:",
+            "editingProfile": "You are editing your existing creator profile: {{username}}",
             "urlPreview": "Your URL will be: xrptip.com/u/{{username}}",
             "bioMaxLength": "{{current}}/{{max}}",
             "saveProfile": "Save profile",
@@ -618,6 +618,7 @@
     "table": {
       "email": "Email",
       "username": "Username",
+      "xrpAddress": "XRP Address",
       "role": "Role",
       "verified": "Verified",
       "createdAt": "Registered",

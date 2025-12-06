@@ -42,6 +42,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
       // Profil trouvé - pré-remplir le formulaire
       const creator = response.data;
       setExistingCreator(creator);
+      console.log(existingCreator);
       setFormData({
         username: creator.username || "",
         displayName: creator.displayName || "",
