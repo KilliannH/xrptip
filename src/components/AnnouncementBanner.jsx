@@ -34,7 +34,7 @@ export const AnnouncementBanner = () => {
           <div className="flex flex-1 items-center justify-center gap-3">
             {/* Icon */}
             <div className="hidden sm:flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm animate-bounce">
-              <span className="text-2xl">🚨</span>
+              <span className="text-2xl">🎁</span>
             </div>
 
             {/* Text content */}
