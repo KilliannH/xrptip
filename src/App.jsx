@@ -29,7 +29,7 @@ function App() {
       <HelmetProvider>
       <AuthProvider>
         {/* Announcement Banner - Avant la Navbar */}
-          {/* !isWidgetPage && <AnnouncementBanner /> */}
+          {!isWidgetPage && <AnnouncementBanner />}
         {!isWidgetPage && <Navbar />}
         <main className="flex-1">
           <Routes>
