@@ -11,11 +11,12 @@ export const SEO = ({
   author,
   noindex = false
 }) => {
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const lang = i18n.language;
 
   const siteName = 'xrpTip';
   
+  // Titres et descriptions par défaut selon la langue
   const defaultTitles = {
     en: 'xrpTip - Instant XRP Tips for Creators',
     fr: 'xrpTip - Tips XRP Instantanés pour Créateurs'
@@ -28,7 +29,7 @@ export const SEO = ({
 
   const defaultTitle = defaultTitles[lang] || defaultTitles.en;
   const defaultDescription = defaultDescriptions[lang] || defaultDescriptions.en;
-  const defaultImage = `${window.location.origin}/og-image.jpg`;
+  const defaultImage = `${window.location.origin}/og-image.png`;
   const defaultUrl = window.location.origin;
 
   const pageTitle = title ? `${title} | ${siteName}` : defaultTitle;
@@ -39,20 +40,16 @@ export const SEO = ({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": type === 'profile' ? 'ProfilePage' : 'WebSite',
-    "name": author || siteName,
-    "url": pageUrl,
-    "description": pageDescription,
+    "name": siteName,
+    "url": defaultUrl,
+    "description": defaultDescription,
     "inLanguage": lang,
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": `${defaultUrl}/u/{search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
   };
-
-  // Structured data pour les profils créateurs
-  if (type === 'profile' && author) {
-    structuredData["@type"] = "Person";
-    structuredData["name"] = author;
-    structuredData["url"] = pageUrl;
-    structuredData["description"] = pageDescription;
-    structuredData["image"] = pageImage;
-  }
 
   return (
     <Helmet>
@@ -75,21 +72,16 @@ export const SEO = ({
       <meta property="og:title" content={pageTitle} />
       <meta property="og:description" content={pageDescription} />
       <meta property="og:image" content={pageImage} />
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
-      <meta property="og:image:alt" content={pageTitle} />
       <meta property="og:site_name" content={siteName} />
       <meta property="og:locale" content={lang === 'fr' ? 'fr_FR' : 'en_US'} />
-      
+
       {/* Twitter Card */}
       <meta name="twitter:card" content="summary_large_image" />
       <meta name="twitter:url" content={pageUrl} />
       <meta name="twitter:title" content={pageTitle} />
       <meta name="twitter:description" content={pageDescription} />
       <meta name="twitter:image" content={pageImage} />
-      <meta name="twitter:image:alt" content={pageTitle} />
       <meta name="twitter:creator" content="@xrptip" />
-      <meta name="twitter:site" content="@xrptip" />
 
       {/* Additional Meta Tags */}
       <meta name="theme-color" content="#1a8cff" />
