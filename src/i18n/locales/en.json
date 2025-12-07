@@ -146,9 +146,9 @@
     },
     "dashboard": {
         "widget": {
-      "title": "Widget & Integration",
-      "subtitle": "Add a tip button to your stream or social media"
-    },
+            "title": "Widget & Integration",
+            "subtitle": "Add a tip button to your stream or social media"
+        },
         "title": "Creator Dashboard",
         "subtitle": "Configure your xrpTip page, your XRP address, your social links and track your received tips.",
         "tabs": {
@@ -200,6 +200,31 @@
     },
     "creator": {
         "form": {
+            "labels": {
+                "walletType": "Wallet Type",
+                "userDestinationTag": "Your Destination Tag"
+            },
+            "walletType": {
+                "personal": {
+                    "title": "Personal Wallet",
+                    "description": "Direct XRP address (recommended)"
+                },
+                "exchange": {
+                    "title": "Exchange Wallet",
+                    "description": "Requires destination tag"
+                }
+            },
+            "hints": {
+                "userDestinationTag": "Enter the destination tag provided by your exchange"
+            },
+            "warnings": {
+                "walletType": {
+                    "title": "Important: Wallet Type",
+                    "description": "For best experience, we recommend using a personal wallet (not an exchange).",
+                    "recommended": "Recommended",
+                    "notRecommended": "Not recommended"
+                }
+            },
             "username": "Username",
             "displayName": "Display name",
             "bio": "Bio",
@@ -567,99 +592,99 @@
         "hint": "💡 Fees help maintain and improve the platform."
     },
     "widget": {
-    "notFound": "Creator not found",
-    "tipMe": "Tip me",
-    "preview": "Preview",
-    "size": "Widget Size",
-    "sizes": {
-      "small": "Small",
-      "medium": "Medium",
-      "large": "Large"
+        "notFound": "Creator not found",
+        "tipMe": "Tip me",
+        "preview": "Preview",
+        "size": "Widget Size",
+        "sizes": {
+            "small": "Small",
+            "medium": "Medium",
+            "large": "Large"
+        },
+        "integration": "Integration",
+        "saveProfileFirst": "Save your profile first to generate a widget",
+        "obs": {
+            "step1": "Add a new 'Browser' source in OBS",
+            "step2": "Paste the URL below",
+            "step3": "Adjust position and size as needed"
+        },
+        "twitch": {
+            "description": "Add this iframe code to your Twitch panel or custom page",
+            "iframeCode": "Iframe Code"
+        },
+        "directLink": "Direct Link",
+        "directLink.description": "Share this link on social media, bio, or anywhere else"
     },
-    "integration": "Integration",
-    "saveProfileFirst": "Save your profile first to generate a widget",
-    "obs": {
-      "step1": "Add a new 'Browser' source in OBS",
-      "step2": "Paste the URL below",
-      "step3": "Adjust position and size as needed"
+    "admin": {
+        "title": "Admin Panel",
+        "subtitle": "Platform management and statistics",
+        "adminAccess": "Admin Access",
+        "error": "Error loading admin data",
+        "stats": {
+            "totalUsers": "Total Users",
+            "totalCreators": "Creators",
+            "verifiedUsers": "Verified",
+            "newUsers": "New Users",
+            "registered": "registered",
+            "withProfile": "with profile",
+            "verified": "verified",
+            "last7Days": "last 7 days"
+        },
+        "usersList": "Users List",
+        "usersListSubtitle": "Manage and view all platform users",
+        "searchPlaceholder": "Search by email or username...",
+        "showingResults": "Showing {{count}} of {{total}} users",
+        "roles": {
+            "all": "All",
+            "user": "User",
+            "creator": "Creator",
+            "admin": "Admin"
+        },
+        "table": {
+            "email": "Email",
+            "username": "Username",
+            "xrpAddress": "XRP Address",
+            "role": "Role",
+            "verified": "Verified",
+            "createdAt": "Registered",
+            "yes": "Yes",
+            "no": "No"
+        },
+        "pagination": {
+            "page": "Page",
+            "of": "of",
+            "previous": "Previous",
+            "next": "Next"
+        }
     },
-    "twitch": {
-      "description": "Add this iframe code to your Twitch panel or custom page",
-      "iframeCode": "Iframe Code"
+    "seo": {
+        "home": {
+            "title": "Instant XRP Tips for Creators",
+            "description": "Accept XRP tips instantly on XRPL. Fast, secure, and low-cost tipping platform for content creators, streamers, and artists. Start receiving crypto donations today."
+        },
+        "login": {
+            "title": "Login",
+            "description": "Log in to your xrpTip account to manage your creator profile and view your tips."
+        },
+        "register": {
+            "title": "Create Account",
+            "description": "Create your xrpTip account and start accepting XRP tips from your supporters."
+        },
+        "dashboard": {
+            "title": "Creator Dashboard",
+            "description": "Manage your xrpTip profile, track your tips, and customize your creator page."
+        },
+        "privacy": {
+            "title": "Privacy Policy",
+            "description": "Read our privacy policy to understand how we protect your data on xrpTip."
+        }
     },
-    "directLink": "Direct Link",
-    "directLink.description": "Share this link on social media, bio, or anywhere else"
-  },
-  "admin": {
-    "title": "Admin Panel",
-    "subtitle": "Platform management and statistics",
-    "adminAccess": "Admin Access",
-    "error": "Error loading admin data",
-    "stats": {
-      "totalUsers": "Total Users",
-      "totalCreators": "Creators",
-      "verifiedUsers": "Verified",
-      "newUsers": "New Users",
-      "registered": "registered",
-      "withProfile": "with profile",
-      "verified": "verified",
-      "last7Days": "last 7 days"
-    },
-    "usersList": "Users List",
-    "usersListSubtitle": "Manage and view all platform users",
-    "searchPlaceholder": "Search by email or username...",
-    "showingResults": "Showing {{count}} of {{total}} users",
-    "roles": {
-      "all": "All",
-      "user": "User",
-      "creator": "Creator",
-      "admin": "Admin"
-    },
-    "table": {
-      "email": "Email",
-      "username": "Username",
-      "xrpAddress": "XRP Address",
-      "role": "Role",
-      "verified": "Verified",
-      "createdAt": "Registered",
-      "yes": "Yes",
-      "no": "No"
-    },
-    "pagination": {
-      "page": "Page",
-      "of": "of",
-      "previous": "Previous",
-      "next": "Next"
+    "banner": {
+        "close": "Close",
+        "giveaway": {
+            "title": "BONUS!",
+            "subtitle": "The first 500 sign-ups receive 0.1 XRP free to try. 👶",
+            "cta": "Join Now"
+        }
     }
-  },
-  "seo": {
-    "home": {
-      "title": "Instant XRP Tips for Creators",
-      "description": "Accept XRP tips instantly on XRPL. Fast, secure, and low-cost tipping platform for content creators, streamers, and artists. Start receiving crypto donations today."
-    },
-    "login": {
-      "title": "Login",
-      "description": "Log in to your xrpTip account to manage your creator profile and view your tips."
-    },
-    "register": {
-      "title": "Create Account",
-      "description": "Create your xrpTip account and start accepting XRP tips from your supporters."
-    },
-    "dashboard": {
-      "title": "Creator Dashboard",
-      "description": "Manage your xrpTip profile, track your tips, and customize your creator page."
-    },
-    "privacy": {
-      "title": "Privacy Policy",
-      "description": "Read our privacy policy to understand how we protect your data on xrpTip."
-    }
-  },
-  "banner": {
-    "close": "Close",
-    "giveaway": {
-      "title": "BONUS!",
-      "subtitle": "The first 500 sign-ups receive 0.1 XRP free to try. 👶",
-      "cta": "Join Now"
-    }
-  }
 }

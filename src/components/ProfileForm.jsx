@@ -27,6 +27,8 @@ export const ProfileForm = ({ onUsernameChange }) => {
   const [existingCreator, setExistingCreator] = useState(null);
   const [avatarPreview, setAvatarPreview] = useState("");
   const [bannerPreview, setBannerPreview] = useState("");
+  const [walletType, setWalletType] = useState('personal');
+  const [userDestinationTag, setUserDestinationTag] = useState('');
   const [uploadError, setUploadError] = useState("");
 
   // Charger le profil créateur existant au montage
@@ -42,7 +44,8 @@ export const ProfileForm = ({ onUsernameChange }) => {
       // Profil trouvé - pré-remplir le formulaire
       const creator = response.data;
       setExistingCreator(creator);
-      console.log(existingCreator);
+      setWalletType(creator.walletType || 'personal');
+      setUserDestinationTag(creator.userDestinationTag || '');
       setFormData({
         username: creator.username || "",
         displayName: creator.displayName || "",
@@ -134,6 +137,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
         displayName: formData.displayName,
         bio: formData.bio,
         xrpAddress: formData.xrpAddress,
+        walletType,
         avatarUrl: formData.avatarUrl,
         bannerUrl: formData.bannerUrl,
         links: {
@@ -143,6 +147,10 @@ export const ProfileForm = ({ onUsernameChange }) => {
           tiktok: formData.tiktokUrl,
         },
       };
+
+      if (walletType === 'exchange') {
+        payload.userDestinationTag = parseInt(userDestinationTag, 10);
+      }
 
       let response;
 
@@ -374,31 +382,102 @@ export const ProfileForm = ({ onUsernameChange }) => {
         />
       </div>
 
-      {/* XRP Address */}
-      <div>
-        <label htmlFor="xrpAddress" className="block text-sm font-medium text-white/80 mb-2">
-          {t('creator.form.xrpAddress')} <span className="text-red-400">*</span>
-        </label>
-        <input
-          type="text"
-          id="xrpAddress"
-          name="xrpAddress"
-          value={formData.xrpAddress}
-          onChange={handleChange}
-          placeholder="rXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
-          className={`w-full rounded-xl border bg-white/5 px-4 py-3 font-mono text-sm text-white placeholder:text-white/40 transition-all focus:outline-none focus:ring-2 ${
-            errors.xrpAddress
-              ? "border-red-500/50 focus:ring-red-500/50"
-              : "border-white/10 focus:border-xrpBlue/50 focus:ring-xrpBlue/50"
-          }`}
-        />
-        {errors.xrpAddress && (
-          <p className="mt-1 text-xs text-red-400">{errors.xrpAddress}</p>
-        )}
-        <p className="mt-1 text-xs text-white/50">
-          {t('creator.form.tipsWillBeSent')}
-        </p>
+      <div className="space-y-2">
+  <label className="block text-sm font-medium text-white">
+    {t('creator.form.labels.walletType')}
+  </label>
+  
+  <div className="grid grid-cols-2 gap-3">
+    <button
+      type="button"
+      onClick={() => setWalletType('personal')}
+      className={`rounded-xl border p-4 text-left transition-all ${
+        walletType === 'personal'
+          ? 'border-xrpBlue bg-xrpBlue/10'
+          : 'border-white/10 bg-white/5 hover:border-white/20'
+      }`}
+    >
+      <div className="flex items-center gap-2 mb-1">
+        <svg className="h-5 w-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span className="font-semibold text-white">
+          {t('creator.form.walletType.personal.title')}
+        </span>
       </div>
+      <p className="text-xs text-white/60">
+        {t('creator.form.walletType.personal.description')}
+      </p>
+      <p className="text-xs text-white/40 mt-1">
+        Xaman, Crossmark, Ledger
+      </p>
+    </button>
+
+    <button
+      type="button"
+      onClick={() => setWalletType('exchange')}
+      className={`rounded-xl border p-4 text-left transition-all ${
+        walletType === 'exchange'
+          ? 'border-xrpBlue bg-xrpBlue/10'
+          : 'border-white/10 bg-white/5 hover:border-white/20'
+      }`}
+    >
+      <div className="flex items-center gap-2 mb-1">
+        <svg className="h-5 w-5 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <span className="font-semibold text-white">
+          {t('creator.form.walletType.exchange.title')}
+        </span>
+      </div>
+      <p className="text-xs text-white/60">
+        {t('creator.form.walletType.exchange.description')}
+      </p>
+      <p className="text-xs text-white/40 mt-1">
+        Binance, Kraken, Coinbase
+      </p>
+    </button>
+  </div>
+</div>
+
+{/* Champ XRP Address */}
+<div className="space-y-2">
+  <label htmlFor="xrpAddress" className="block text-sm font-medium text-white">
+    {t('creator.form.labels.xrpAddress')} *
+  </label>
+  <input
+    type="text"
+    id="xrpAddress"
+    value={formData.xrpAddress}
+    onChange={(e) => setFormData({ ...formData, xrpAddress: e.target.value })}
+    placeholder="rN7n7otQDd6FczFgLdCqmMdp4fqtLweSh"
+    className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 transition-all focus:border-xrpBlue/50 focus:outline-none focus:ring-2 focus:ring-xrpBlue/50"
+    required
+  />
+</div>
+
+{/* Destination Tag - Seulement si Exchange */}
+{walletType === 'exchange' && (
+  <div className="space-y-2">
+    <label htmlFor="userDestinationTag" className="block text-sm font-medium text-white">
+      {t('creator.form.labels.userDestinationTag')} *
+    </label>
+    <input
+      type="number"
+      id="userDestinationTag"
+      value={userDestinationTag}
+      onChange={(e) => setUserDestinationTag(e.target.value)}
+      placeholder="123456789"
+      min="0"
+      max="4294967295"
+      className="w-full rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-white placeholder:text-white/40 transition-all focus:border-xrpBlue/50 focus:outline-none focus:ring-2 focus:ring-xrpBlue/50"
+      required
+    />
+    <p className="text-xs text-white/50">
+      {t('creator.form.hints.userDestinationTag')}
+    </p>
+  </div>
+)}
 
       {/* Social Links */}
       <div className="space-y-4">

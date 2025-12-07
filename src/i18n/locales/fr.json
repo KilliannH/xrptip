@@ -146,9 +146,9 @@
     },
     "dashboard": {
         "widget": {
-      "title": "Widget & Intégration",
-      "subtitle": "Ajoute un bouton tip à ton stream ou réseaux sociaux"
-    },
+            "title": "Widget & Intégration",
+            "subtitle": "Ajoute un bouton tip à ton stream ou réseaux sociaux"
+        },
         "title": "Dashboard créateur",
         "subtitle": "Configure ta page xrpTip, ton adresse XRP, tes liens sociaux et suis tes tips reçus.",
         "tabs": {
@@ -200,6 +200,31 @@
     },
     "creator": {
         "form": {
+            "labels": {
+                "walletType": "Type de Wallet",
+                "userDestinationTag": "Votre Destination Tag"
+            },
+            "walletType": {
+                "personal": {
+                    "title": "Wallet Personnel",
+                    "description": "Adresse XRP directe (recommandé)"
+                },
+                "exchange": {
+                    "title": "Wallet Exchange",
+                    "description": "Nécessite un destination tag"
+                }
+            },
+            "hints": {
+                "userDestinationTag": "Entrez le destination tag fourni par votre exchange"
+            },
+            "warnings": {
+                "walletType": {
+                    "title": "Important : Type de Wallet",
+                    "description": "Pour une meilleure expérience, nous recommandons d'utiliser un wallet personnel (pas un exchange).",
+                    "recommended": "Recommandé",
+                    "notRecommended": "Non recommandé"
+                }
+            },
             "username": "Nom d'utilisateur",
             "displayName": "Nom d'affichage",
             "bio": "Bio",
@@ -567,99 +592,99 @@
         "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
     },
     "widget": {
-    "notFound": "Créateur non trouvé",
-    "tipMe": "Tip moi",
-    "preview": "Aperçu",
-    "size": "Taille du widget",
-    "sizes": {
-      "small": "Petit",
-      "medium": "Moyen",
-      "large": "Grand"
+        "notFound": "Créateur non trouvé",
+        "tipMe": "Tip moi",
+        "preview": "Aperçu",
+        "size": "Taille du widget",
+        "sizes": {
+            "small": "Petit",
+            "medium": "Moyen",
+            "large": "Grand"
+        },
+        "integration": "Intégration",
+        "saveProfileFirst": "Sauvegarde ton profil d'abord pour générer un widget",
+        "obs": {
+            "step1": "Ajoute une nouvelle source 'Navigateur' dans OBS",
+            "step2": "Colle l'URL ci-dessous",
+            "step3": "Ajuste la position et la taille selon tes besoins"
+        },
+        "twitch": {
+            "description": "Ajoute ce code iframe à ton panneau Twitch ou page personnalisée",
+            "iframeCode": "Code iframe"
+        },
+        "directLink": "Lien direct",
+        "directLink.description": "Partage ce lien sur les réseaux sociaux, ta bio, ou n'importe où"
     },
-    "integration": "Intégration",
-    "saveProfileFirst": "Sauvegarde ton profil d'abord pour générer un widget",
-    "obs": {
-      "step1": "Ajoute une nouvelle source 'Navigateur' dans OBS",
-      "step2": "Colle l'URL ci-dessous",
-      "step3": "Ajuste la position et la taille selon tes besoins"
+    "admin": {
+        "title": "Panneau Admin",
+        "subtitle": "Gestion et statistiques de la plateforme",
+        "adminAccess": "Accès Admin",
+        "error": "Erreur lors du chargement des données admin",
+        "stats": {
+            "totalUsers": "Total Utilisateurs",
+            "totalCreators": "Créateurs",
+            "verifiedUsers": "Vérifiés",
+            "newUsers": "Nouveaux",
+            "registered": "inscrits",
+            "withProfile": "avec profil",
+            "verified": "vérifiés",
+            "last7Days": "7 derniers jours"
+        },
+        "usersList": "Liste des utilisateurs",
+        "usersListSubtitle": "Gérer et voir tous les utilisateurs de la plateforme",
+        "searchPlaceholder": "Rechercher par email ou pseudo...",
+        "showingResults": "Affichage de {{count}} sur {{total}} utilisateurs",
+        "roles": {
+            "all": "Tous",
+            "user": "Utilisateur",
+            "creator": "Créateur",
+            "admin": "Admin"
+        },
+        "table": {
+            "email": "Email",
+            "username": "Pseudo",
+            "xrpAddress": "Adresse XRP",
+            "role": "Rôle",
+            "verified": "Vérifié",
+            "createdAt": "Inscrit le",
+            "yes": "Oui",
+            "no": "Non"
+        },
+        "pagination": {
+            "page": "Page",
+            "of": "sur",
+            "previous": "Précédent",
+            "next": "Suivant"
+        }
     },
-    "twitch": {
-      "description": "Ajoute ce code iframe à ton panneau Twitch ou page personnalisée",
-      "iframeCode": "Code iframe"
+    "seo": {
+        "home": {
+            "title": "Tips XRP Instantanés pour Créateurs",
+            "description": "Acceptez des tips XRP instantanément sur XRPL. Plateforme de pourboires rapide, sécurisée et économique pour créateurs de contenu, streamers et artistes. Commencez à recevoir des dons crypto aujourd'hui."
+        },
+        "login": {
+            "title": "Connexion",
+            "description": "Connectez-vous à votre compte xrpTip pour gérer votre profil créateur et voir vos tips."
+        },
+        "register": {
+            "title": "Créer un Compte",
+            "description": "Créez votre compte xrpTip et commencez à accepter des tips XRP de vos supporters."
+        },
+        "dashboard": {
+            "title": "Dashboard Créateur",
+            "description": "Gérez votre profil xrpTip, suivez vos tips et personnalisez votre page créateur."
+        },
+        "privacy": {
+            "title": "Politique de Confidentialité",
+            "description": "Lisez notre politique de confidentialité pour comprendre comment nous protégeons vos données sur xrpTip."
+        }
     },
-    "directLink": "Lien direct",
-    "directLink.description": "Partage ce lien sur les réseaux sociaux, ta bio, ou n'importe où"
-  },
-  "admin": {
-    "title": "Panneau Admin",
-    "subtitle": "Gestion et statistiques de la plateforme",
-    "adminAccess": "Accès Admin",
-    "error": "Erreur lors du chargement des données admin",
-    "stats": {
-      "totalUsers": "Total Utilisateurs",
-      "totalCreators": "Créateurs",
-      "verifiedUsers": "Vérifiés",
-      "newUsers": "Nouveaux",
-      "registered": "inscrits",
-      "withProfile": "avec profil",
-      "verified": "vérifiés",
-      "last7Days": "7 derniers jours"
-    },
-    "usersList": "Liste des utilisateurs",
-    "usersListSubtitle": "Gérer et voir tous les utilisateurs de la plateforme",
-    "searchPlaceholder": "Rechercher par email ou pseudo...",
-    "showingResults": "Affichage de {{count}} sur {{total}} utilisateurs",
-    "roles": {
-      "all": "Tous",
-      "user": "Utilisateur",
-      "creator": "Créateur",
-      "admin": "Admin"
-    },
-    "table": {
-      "email": "Email",
-      "username": "Pseudo",
-      "xrpAddress": "Adresse XRP",
-      "role": "Rôle",
-      "verified": "Vérifié",
-      "createdAt": "Inscrit le",
-      "yes": "Oui",
-      "no": "Non"
-    },
-    "pagination": {
-      "page": "Page",
-      "of": "sur",
-      "previous": "Précédent",
-      "next": "Suivant"
+    "banner": {
+        "close": "Fermer",
+        "giveaway": {
+            "title": "BONUS !",
+            "subtitle": "Les 500 premiers inscrits reçoivent 0.1 XRP gratuit pour tester. 👶",
+            "cta": "Participer"
+        }
     }
-  },
-  "seo": {
-    "home": {
-      "title": "Tips XRP Instantanés pour Créateurs",
-      "description": "Acceptez des tips XRP instantanément sur XRPL. Plateforme de pourboires rapide, sécurisée et économique pour créateurs de contenu, streamers et artistes. Commencez à recevoir des dons crypto aujourd'hui."
-    },
-    "login": {
-      "title": "Connexion",
-      "description": "Connectez-vous à votre compte xrpTip pour gérer votre profil créateur et voir vos tips."
-    },
-    "register": {
-      "title": "Créer un Compte",
-      "description": "Créez votre compte xrpTip et commencez à accepter des tips XRP de vos supporters."
-    },
-    "dashboard": {
-      "title": "Dashboard Créateur",
-      "description": "Gérez votre profil xrpTip, suivez vos tips et personnalisez votre page créateur."
-    },
-    "privacy": {
-      "title": "Politique de Confidentialité",
-      "description": "Lisez notre politique de confidentialité pour comprendre comment nous protégeons vos données sur xrpTip."
-    }
-  },
-  "banner": {
-    "close": "Fermer",
-    "giveaway": {
-      "title": "BONUS !",
-      "subtitle": "Les 500 premiers inscrits reçoivent 0.1 XRP gratuit pour tester. 👶",
-      "cta": "Participer"
-    }
-  }
 }
