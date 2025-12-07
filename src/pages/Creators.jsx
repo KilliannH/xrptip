@@ -18,7 +18,6 @@ export const Creators = () => {
   const fetchCreators = async () => {
     try {
       const response = await creatorsAPI.getAll();
-      console.log(response);
       // ✅ Vérifier que response.data est bien un tableau
       setCreators(Array.isArray(response) ? response : []);
     } catch (error) {
