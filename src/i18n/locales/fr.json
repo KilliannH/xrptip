@@ -644,11 +644,16 @@
             "email": "Email",
             "username": "Pseudo",
             "xrpAddress": "Adresse XRP",
+            "walletType":"Type de Wallet",
             "role": "Rôle",
             "verified": "Vérifié",
             "createdAt": "Inscrit le",
             "yes": "Oui",
-            "no": "Non"
+            "no": "Non",
+            "wallet": {
+                "personal": "Personnel",
+                "exchange": "Exchange"
+            }
         },
         "pagination": {
             "page": "Page",
