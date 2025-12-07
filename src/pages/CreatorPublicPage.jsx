@@ -109,16 +109,26 @@ export const CreatorPublicPage = () => {
     );
   }
 
+  // URLs
+  const pageUrl = `${window.location.origin}/u/${username}`;
+  
+  // Image OG : utiliser banner ou avatar ou image par défaut
+  const ogImage = creator.bannerUrl || creator.avatarUrl || `${window.location.origin}/og-default.jpg`;
+  
+  // Description enrichie
+  const ogDescription = `${creator.bio} | Tip @${creator.username} instantly with XRP on xrpTip. ${creator.stats.totalTips > 0 ? `${creator.stats.totalTips} tips received!` : 'Be the first to tip!'}`;
+
+
   return (
     <>
     <SEO
         title={`${creator.displayName} (@${creator.username})`}
-        description={creator.bio}
-        image={creator.avatarUrl || creator.bannerUrl}
-        url={`${window.location.origin}/u/${creator.username}`}
+        description={ogDescription}
+        image={ogImage}
+        url={pageUrl}
         type="profile"
         author={creator.displayName}
-        keywords={`${creator.username}, XRP tips, crypto donations, XRPL`}
+        keywords={`${creator.username}, ${creator.displayName}, XRP tips, crypto donations, XRPL, content creator`}
       />
     <div className="relative min-h-screen overflow-hidden py-12">
       {/* Background gradients */}

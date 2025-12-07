@@ -33,7 +33,7 @@ export const Admin = () => {
     try {
       setLoading(true);
       const token = localStorage.getItem('token');
-
+      
       // Récupérer les statistiques
       const statsResponse = await axios.get(`${API_URL}/admin/stats`, {
         headers: { Authorization: `Bearer ${token}` }
@@ -49,7 +49,7 @@ export const Admin = () => {
     } catch (err) {
       console.error('Error fetching admin data:', err);
       setError(err.response?.data?.message || t('admin.error'));
-
+      
       // Si non autorisé, rediriger
       if (err.response?.status === 403) {
         navigate('/');
@@ -61,10 +61,10 @@ export const Admin = () => {
 
   // Filtrer les utilisateurs
   const filteredUsers = users.filter(u => {
-    const matchesSearch =
+    const matchesSearch = 
       u.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (u.username && u.username.toLowerCase().includes(searchTerm.toLowerCase()));
-
+    
     const matchesRole = filterRole === 'all' || u.role === filterRole;
 
     return matchesSearch && matchesRole;
@@ -108,7 +108,7 @@ export const Admin = () => {
               <p className="text-white/60">{t('admin.subtitle')}</p>
             </div>
           </div>
-
+          
           {/* Badge admin */}
           <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-sm">
             <span className="relative flex h-2 w-2">
@@ -222,10 +222,11 @@ export const Admin = () => {
                   <button
                     key={role}
                     onClick={() => setFilterRole(role)}
-                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${filterRole === role
+                    className={`rounded-lg px-4 py-2 text-sm font-medium transition-all ${
+                      filterRole === role
                         ? 'bg-xrpBlue text-white'
                         : 'bg-white/5 text-white/70 hover:bg-white/10'
-                      }`}
+                    }`}
                   >
                     {t(`admin.roles.${role}`)}
                   </button>
@@ -263,7 +264,7 @@ export const Admin = () => {
                     <td className="px-6 py-4 text-sm text-white/70">
                       {u.xrpAddress ? (
                         <span className="font-mono text-xs">
-                          {u.xrpAddress.substring(0, 8)}...{u.xrpAddress.substring(u.xrpAddress.length - 6)}
+                          {u.xrpAddress}
                         </span>
                       ) : (
                         <span className="text-white/40">-</span>
