@@ -26,6 +26,7 @@
     },
     "nav": {
         "home": "Accueil",
+        "creators": "Créateurs",
         "dashboard": "Dashboard",
         "login": "Connexion",
         "register": "S'inscrire",
@@ -691,5 +692,30 @@
             "subtitle": "Les 500 premiers inscrits reçoivent 0.1 XRP gratuit pour tester. 👶",
             "cta": "Participer"
         }
+    },
+    "creators": {
+    "seo": {
+      "title": "Découvrir les Créateurs",
+      "description": "Parcourez tous les créateurs acceptant des tips XRP sur xrpTip. Supportez vos créateurs de contenu préférés avec de la crypto."
+    },
+    "badge": "Découvrez des Créateurs Incroyables",
+    "title": "Créateurs en Vedette",
+    "subtitle": "Découvrez et supportez des créateurs talentueux acceptant des tips XRP sur XRPL",
+    "searchPlaceholder": "Rechercher des créateurs...",
+    "noResults": "Aucun créateur trouvé",
+    "verified": "Actif",
+    "stats": {
+      "totalCreators": "Créateurs",
+      "totalTips": "Tips Envoyés",
+      "totalVolume": "Volume Total"
+    },
+    "sort": {
+      "newest": "Récents",
+      "popular": "Populaires",
+      "alphabetical": "A-Z"
+    },
+    "card": {
+      "tips": "tips"
     }
+  }
 }

@@ -13,6 +13,7 @@ import { Navbar } from "./components/Navbar";
 import { CookieNotice } from "./components/CookieNotice";
 import { ResetPassword } from './pages/ResetPassword';
 import { ForgotPassword } from './pages/ForgotPassword';
+import { Creators } from "./pages/Creators";
 import { Widget } from "./pages/Widget";
 import { Admin } from "./pages/Admin";
 import { useTranslation } from "react-i18next";
@@ -35,6 +36,7 @@ function App() {
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/creators" element={<Creators />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />

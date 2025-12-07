@@ -35,12 +35,22 @@ export const Navbar = () => {
         {/* Navigation */}
         <nav className="flex items-center gap-2 sm:gap-4">
           <NavLink
+            to="/creators"
+            className={({ isActive }) =>
+              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${isActive
+                ? "text-white"
+                : "text-white/60 hover:bg-white/5 hover:text-white"
+              }`
+            }
+          >
+            {t('nav.creators')}
+          </NavLink>
+          <NavLink
             to="/"
             className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${
-                isActive
-                  ? "text-white"
-                  : "text-white/60 hover:bg-white/5 hover:text-white"
+              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${isActive
+                ? "text-white"
+                : "text-white/60 hover:bg-white/5 hover:text-white"
               }`
             }
           >
@@ -55,10 +65,9 @@ export const Navbar = () => {
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
-                  `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${
-                    isActive
-                      ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
-                      : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+                  `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${isActive
+                    ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
+                    : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
                   }`
                 }
               >
