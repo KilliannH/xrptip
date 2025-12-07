@@ -270,7 +270,7 @@
             },
             "step3": {
                 "title": "Entre le montant",
-                "description": "{{amount}} XRP dans ton wallet"
+                "description": " dans ton wallet"
             },
             "step4": {
                 "title": "Confirme la transaction",

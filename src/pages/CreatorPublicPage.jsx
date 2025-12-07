@@ -394,7 +394,7 @@ export const CreatorPublicPage = () => {
                   <svg className="h-5 w-5 text-xrpBlue" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  {t('publicPage.howToFinalize.title')}
+                  {t('publicPage.howToFinalize')}
                 </p>
               </div>
               <div className="p-6">
@@ -404,8 +404,8 @@ export const CreatorPublicPage = () => {
                       1
                     </span>
                     <div>
-                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step1.title')}</p>
-                      <p className="text-white/60">{t('publicPage.howToFinalize.step1.description')}</p>
+                      <p className="font-medium text-white">{t('publicPage.steps.step1.title')}</p>
+                      <p className="text-white/60">{t('publicPage.steps.step1.description')}</p>
                     </div>
                   </li>
                   <li className="flex gap-4">
@@ -413,8 +413,8 @@ export const CreatorPublicPage = () => {
                       2
                     </span>
                     <div>
-                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step2.title')}</p>
-                      <p className="text-white/60">{t('publicPage.howToFinalize.step2.description')}</p>
+                      <p className="font-medium text-white">{t('publicPage.steps.step2.title')}</p>
+                      <p className="text-white/60">{t('publicPage.steps.step2.description')}</p>
                     </div>
                   </li>
                   <li className="flex gap-4">
@@ -422,9 +422,9 @@ export const CreatorPublicPage = () => {
                       3
                     </span>
                     <div>
-                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step3.title')}</p>
+                      <p className="font-medium text-white">{t('publicPage.steps.step3.title')}</p>
                       <p className="text-white/60">
-                        <strong className="text-xrpBlue">{amountToSend} XRP</strong> {t('publicPage.howToFinalize.step3.description')}
+                        <strong className="text-xrpBlue">{feeBreakdown.total} XRP</strong> {t('publicPage.steps.step3.description')}
                       </p>
                     </div>
                   </li>
@@ -433,8 +433,8 @@ export const CreatorPublicPage = () => {
                       ✓
                     </span>
                     <div>
-                      <p className="font-medium text-white">{t('publicPage.howToFinalize.step4.title')}</p>
-                      <p className="text-white/60">{t('publicPage.howToFinalize.step4.description')}</p>
+                      <p className="font-medium text-white">{t('publicPage.steps.step4.title')}</p>
+                      <p className="text-white/60">{t('publicPage.steps.step4.description')}</p>
                     </div>
                   </li>
                 </ol>
