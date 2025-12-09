@@ -97,7 +97,7 @@ function App() {
                   <Link to="/privacy" className="text-white/60 transition-colors hover:text-xrpBlue">
                     {t('footer.privacy')}
                   </Link>
-                  <a href="https://x.com/xrpTip_com" target="_blank" rel="noopener noreferrer" className="text-white/60 transition-colors hover:text-xrpBlue">
+                  <a href="https://x.com/xrptipcom" target="_blank" rel="noopener noreferrer" className="text-white/60 transition-colors hover:text-xrpBlue">
                     {t('footer.twitter')}
                   </a>
                   <a href="https://discord.com/channels/1445893446375309476/1445893447113248810" target="_blank" rel="noopener noreferrer" className="text-white/60 transition-colors hover:text-xrpBlue">
