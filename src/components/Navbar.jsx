@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import { LanguageSwitcher } from "./LanguageSwitcher";
@@ -6,16 +7,22 @@ import { useTranslation } from 'react-i18next';
 export const Navbar = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const { t } = useTranslation();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = async () => {
     await logout();
+    setMobileMenuOpen(false);
+  };
+
+  const closeMobileMenu = () => {
+    setMobileMenuOpen(false);
   };
 
   return (
     <header className="sticky top-0 z-50 border-b border-white/10 bg-xrpDark/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <Link to="/" className="group flex items-center gap-3">
+        <Link to="/" className="group flex items-center gap-3" onClick={closeMobileMenu}>
           <div className="relative">
             <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-xrpBlue to-cyan-500 opacity-20 blur-lg transition-opacity group-hover:opacity-40" />
             <div className="relative flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-xrpBlue to-cyan-500 shadow-lg shadow-xrpBlue/30">
@@ -32,14 +39,15 @@ export const Navbar = () => {
           </div>
         </Link>
 
-        {/* Navigation */}
-        <nav className="flex items-center gap-2 sm:gap-4">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center gap-2 sm:gap-4">
           <NavLink
             to="/creators"
             className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${isActive
-                ? "text-white"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${
+                isActive
+                  ? "text-white"
+                  : "text-white/60 hover:bg-white/5 hover:text-white"
               }`
             }
           >
@@ -48,9 +56,10 @@ export const Navbar = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${isActive
-                ? "text-white"
-                : "text-white/60 hover:bg-white/5 hover:text-white"
+              `rounded-lg px-3 py-2 text-sm font-medium transition-all sm:px-4 ${
+                isActive
+                  ? "text-white"
+                  : "text-white/60 hover:bg-white/5 hover:text-white"
               }`
             }
           >
@@ -65,9 +74,10 @@ export const Navbar = () => {
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
-                  `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${isActive
-                    ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
-                    : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+                  `group relative overflow-hidden rounded-xl border px-4 py-2 text-sm font-semibold transition-all hover:scale-105 ${
+                    isActive
+                      ? "border-xrpBlue bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue shadow-lg shadow-xrpBlue/20"
+                      : "border-white/10 bg-white/5 text-white/80 hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
                   }`
                 }
               >
@@ -75,8 +85,7 @@ export const Navbar = () => {
                   <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
                   </svg>
-                  <span className="hidden sm:inline">{t('nav.dashboard')}</span>
-                  <span className="sm:hidden">Panel</span>
+                  {t('nav.dashboard')}
                 </span>
               </NavLink>
 
@@ -127,6 +136,127 @@ export const Navbar = () => {
               </Link>
             </>
           )}
+        </nav>
+
+        {/* Mobile Menu Button */}
+        <button
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          className="lg:hidden rounded-lg p-2 text-white/80 transition-all hover:bg-white/5 hover:text-white"
+          aria-label="Toggle menu"
+        >
+          {mobileMenuOpen ? (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Menu */}
+      <div
+        className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
+          mobileMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <nav className="border-t border-white/10 bg-xrpDark/95 px-4 py-4 space-y-2">
+          <NavLink
+            to="/creators"
+            onClick={closeMobileMenu}
+            className={({ isActive }) =>
+              `block rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-white/10 text-white"
+                  : "text-white/60 hover:bg-white/5 hover:text-white"
+              }`
+            }
+          >
+            {t('nav.creators')}
+          </NavLink>
+          
+          <NavLink
+            to="/"
+            onClick={closeMobileMenu}
+            className={({ isActive }) =>
+              `block rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-white/10 text-white"
+                  : "text-white/60 hover:bg-white/5 hover:text-white"
+              }`
+            }
+          >
+            {t('nav.home')}
+          </NavLink>
+
+          {isAuthenticated ? (
+            <>
+              <NavLink
+                to="/dashboard"
+                onClick={closeMobileMenu}
+                className={({ isActive }) =>
+                  `flex items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-all ${
+                    isActive
+                      ? "bg-gradient-to-r from-xrpBlue/20 to-cyan-500/10 text-xrpBlue border border-xrpBlue/30"
+                      : "text-white/80 hover:bg-white/5 hover:text-white"
+                  }`
+                }
+              >
+                <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+                </svg>
+                {t('nav.dashboard')}
+              </NavLink>
+
+              <div className="border-t border-white/10 pt-2 mt-2">
+                <div className="px-4 py-2">
+                  <p className="text-xs text-white/60">{t('nav.connectedAs')}</p>
+                  <div className="flex items-center gap-2 mt-1">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-xrpBlue to-cyan-500 text-xs font-bold text-white">
+                      {user?.email?.[0].toUpperCase()}
+                    </div>
+                    <p className="text-sm font-medium text-white truncate">{user?.email}</p>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm text-white/80 transition-all hover:bg-red-500/10 hover:text-red-400 mt-2"
+                >
+                  <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                  </svg>
+                  {t('nav.logout')}
+                </button>
+              </div>
+            </>
+          ) : (
+            <>
+              <Link
+                to="/login"
+                onClick={closeMobileMenu}
+                className="block rounded-lg px-4 py-3 text-sm font-medium text-white/60 transition-all hover:bg-white/5 hover:text-white"
+              >
+                {t('nav.login')}
+              </Link>
+              <Link
+                to="/register"
+                onClick={closeMobileMenu}
+                className="block rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-center text-sm font-semibold text-white transition-all hover:border-xrpBlue/50 hover:bg-xrpBlue/10 hover:text-xrpBlue"
+              >
+                {t('nav.register')}
+              </Link>
+            </>
+          )}
+
+          {/* Language Switcher Mobile */}
+          <div className="pt-2 border-t border-white/10">
+            <div className="px-4 py-2">
+              <p className="text-xs text-white/60 mb-2">{t('nav.language') || 'Language'}</p>
+              <LanguageSwitcher variant="full" />
+            </div>
+          </div>
         </nav>
       </div>
     </header>

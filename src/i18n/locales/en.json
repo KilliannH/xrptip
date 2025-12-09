@@ -33,7 +33,8 @@
         "logout": "Logout",
         "profile": "Profile",
         "settings": "Settings",
-        "connectedAs": "Connected as"
+        "connectedAs": "Connected as",
+        "language": "language"
     },
     "auth": {
         "login": {
