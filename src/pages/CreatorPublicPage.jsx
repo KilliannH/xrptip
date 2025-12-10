@@ -18,7 +18,6 @@ export const CreatorPublicPage = () => {
   const [error, setError] = useState(null);
   const [selectedAmount, setSelectedAmount] = useState(5);
   const [customAmount, setCustomAmount] = useState("");
-  const [showHelp, setShowHelp] = useState(false);
   const [showQRModal, setShowQRModal] = useState(false);
 
   // ✅ Obtenir le thème du créateur
@@ -56,16 +55,6 @@ export const CreatorPublicPage = () => {
     if (!feeBreakdown.total || feeBreakdown.total <= 0) return;
     setShowQRModal(true);
     setShowHelp(true);
-  };
-
-  const handleCopyAddress = async () => {
-    try {
-      await navigator.clipboard.writeText(creator.xrpAddress);
-      // TODO: Ajouter un toast de confirmation
-      alert(t('publicPage.addressCopied'));
-    } catch (err) {
-      console.error("Erreur lors de la copie:", err);
-    }
   };
 
   // État de chargement
@@ -386,123 +375,8 @@ export const CreatorPublicPage = () => {
                     }}
                   />
                 </button>
-
-                {/* Alternative: Manual payment button */}
-                {amountToSend > 0 && (
-                  <button
-                    onClick={() => setShowHelp(!showHelp)}
-                    className={`w-full rounded-xl border border-white/10 bg-white/5 px-6 py-3 text-sm font-semibold text-white transition-all ${theme.colors.hover}`}
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                      <span>{t('publicPage.manualPayment')}</span>
-                    </span>
-                  </button>
-                )}
-
-                {/* XRP Address */}
-                <div className="rounded-2xl border border-white/5 bg-white/[0.03] p-4">
-                  <p className="mb-2 text-xs font-medium text-white/60">
-                    {t('publicPage.creatorAddress')}
-                  </p>
-                  <div className="group flex items-center gap-2 rounded-xl bg-black/40 p-3">
-                    <code className="flex-1 truncate text-xs text-white/70">
-                      {creator.xrpAddress}
-                    </code>
-                    <button
-                      onClick={handleCopyAddress}
-                      className={`shrink-0 rounded-lg bg-white/5 p-2 transition-all ${theme.colors.hover}`}
-                      title={t('publicPage.copyAddress')}
-                    >
-                      <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                      </svg>
-                    </button>
-                  </div>
-                </div>
               </div>
             </div>
-
-            {/* Help Section */}
-            {showHelp && (
-              <div 
-                className="animate-in fade-in slide-in-from-bottom-4 duration-500 overflow-hidden rounded-3xl border shadow-xl backdrop-blur-xl"
-                style={{
-                  borderColor: `${theme.colors.primary}30`,
-                  background: `linear-gradient(135deg, ${theme.colors.primary}10, ${theme.colors.secondary}10)`
-                }}
-              >
-                <div 
-                  className="border-b px-6 py-4"
-                  style={{
-                    borderColor: `${theme.colors.primary}20`,
-                    backgroundColor: `${theme.colors.primary}05`
-                  }}
-                >
-                  <p className="flex items-center gap-2 font-semibold text-white">
-                    <svg className={`h-5 w-5 ${theme.colors.text}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    {t('publicPage.howToFinalize')}
-                  </p>
-                </div>
-                <div className="p-6">
-                  <ol className="space-y-4 text-sm text-white/80">
-                    <li className="flex gap-4">
-                      <span 
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold ${theme.colors.bg} ${theme.colors.text}`}
-                      >
-                        1
-                      </span>
-                      <div>
-                        <p className="font-medium text-white">{t('publicPage.steps.step1.title')}</p>
-                        <p className="text-white/60">{t('publicPage.steps.step1.description')}</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-4">
-                      <span 
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold ${theme.colors.bg} ${theme.colors.text}`}
-                      >
-                        2
-                      </span>
-                      <div>
-                        <p className="font-medium text-white">{t('publicPage.steps.step2.title')}</p>
-                        <p className="text-white/60">{t('publicPage.steps.step2.description')}</p>
-                      </div>
-                    </li>
-                    <li className="flex gap-4">
-                      <span 
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold ${theme.colors.bg} ${theme.colors.text}`}
-                      >
-                        3
-                      </span>
-                      <div>
-                        <p className="font-medium text-white">{t('publicPage.steps.step3.title')}</p>
-                        <p className="text-white/60">
-                          <strong className={theme.colors.text}>{feeBreakdown.total} XRP</strong> {t('publicPage.steps.step3.description')}
-                        </p>
-                      </div>
-                    </li>
-                    <li className="flex gap-4">
-                      <span 
-                        className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full font-bold text-white ${theme.colors.gradient}`}
-                        style={{
-                          background: `linear-gradient(135deg, ${theme.colors.primary}, ${theme.colors.secondary})`
-                        }}
-                      >
-                        ✓
-                      </span>
-                      <div>
-                        <p className="font-medium text-white">{t('publicPage.steps.step4.title')}</p>
-                        <p className="text-white/60">{t('publicPage.steps.step4.description')}</p>
-                      </div>
-                    </li>
-                  </ol>
-                </div>
-              </div>
-            )}
           </div>
         </div>
 

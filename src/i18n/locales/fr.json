@@ -294,26 +294,6 @@
             "totalToPay": "Total à payer",
             "hint": "💡 Les frais permettent de maintenir et améliorer la plateforme."
         },
-        "howToFinalize": "Comment finaliser ton tip ?",
-        "steps": {
-            "step1": {
-                "title": "Ouvre ton wallet XRP",
-                "description": "Compatible: Xaman/XUMM, Crossmark, etc."
-            },
-            "step2": {
-                "title": "Colle l'adresse du créateur",
-                "description": "Utilise le bouton copier ci-dessus"
-            },
-            "step3": {
-                "title": "Entre le montant",
-                "description": " dans ton wallet"
-            },
-            "step4": {
-                "title": "Confirme la transaction",
-                "description": "C'est tout ! Le tip sera envoyé en quelques secondes"
-            }
-        },
-        "comingSoon": "Prochainement : QR code et deep link direct vers ton wallet pour une expérience encore plus rapide !",
         "notFound": {
             "title": "Créateur non trouvé",
             "description": "Le créateur @{{username}} n'existe pas ou a été supprimé.",
@@ -334,8 +314,7 @@
         "destinationTag": "Destination Tag",
         "destinationTagImportant": "⚠️ Le Destination Tag est important pour identifier le créateur",
         "download": "Télécharger",
-        "close": "Fermer",
-        "warning": "Vérifie toujours l'adresse de destination avant de confirmer la transaction. Les transactions XRP sont irréversibles."
+        "close": "Fermer"
     },
     "footer": {
         "builtOn": "Built on XRPL · Tips instantanés pour créateurs",
