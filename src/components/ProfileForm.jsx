@@ -45,7 +45,6 @@ export const ProfileForm = ({ onUsernameChange }) => {
       
       // Profil trouvé - pré-remplir le formulaire
       const creator = response.data;
-      console.log(creator)
       setTheme(creator.theme || {name: 'blue', customColor: null});
       setExistingCreator(creator);
       setWalletType(creator.walletType || 'personal');
