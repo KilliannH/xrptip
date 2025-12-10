@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 import { creatorsAPI } from "../api";
 import { useAuth } from "../contexts/AuthContext";
 import { ImageUpload } from "./ImageUpload";
+import { ThemeSelector } from "./ThemeSelector";
 
 export const ProfileForm = ({ onUsernameChange }) => {
   const { t } = useTranslation();
@@ -30,6 +31,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
   const [walletType, setWalletType] = useState('personal');
   const [userDestinationTag, setUserDestinationTag] = useState('');
   const [uploadError, setUploadError] = useState("");
+  const [theme, setTheme] = useState({ name: 'blue', customColor: null });
 
   // Charger le profil créateur existant au montage
   useEffect(() => {
@@ -43,6 +45,8 @@ export const ProfileForm = ({ onUsernameChange }) => {
       
       // Profil trouvé - pré-remplir le formulaire
       const creator = response.data;
+      console.log(creator)
+      setTheme(creator.theme || {name: 'blue', customColor: null});
       setExistingCreator(creator);
       setWalletType(creator.walletType || 'personal');
       setUserDestinationTag(creator.userDestinationTag || '');
@@ -146,6 +150,7 @@ export const ProfileForm = ({ onUsernameChange }) => {
           youtube: formData.youtubeUrl,
           tiktok: formData.tiktokUrl,
         },
+        theme
       };
 
       if (walletType === 'exchange') {
@@ -574,6 +579,13 @@ export const ProfileForm = ({ onUsernameChange }) => {
             />
           </div>
         </div>
+      </div>
+
+      <div className="space-y-2">
+        <ThemeSelector
+          value={theme}
+          onChange={setTheme}
+        />
       </div>
 
       {/* Submit Button */}

@@ -198,6 +198,15 @@
         },
         "settings": {
             "comingSoon": "Settings section coming soon: notifications, security, integrations, etc."
+        },
+        "theme": {
+            "title": "Theme Color",
+            "description": "Choose a color theme for your public page",
+            "customColor": "Custom Color",
+            "customColorHint": "Enter a hex color code (#RRGGBB)",
+            "preview": "Preview",
+            "previewButton": "Send Tip",
+            "previewBadge": "Verified"
         }
     },
     "creator": {

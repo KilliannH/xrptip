@@ -198,6 +198,15 @@
         },
         "settings": {
             "comingSoon": "Section paramètres à venir : notifications, sécurité, intégrations, etc."
+        },
+        "theme": {
+            "title": "Couleur du thème",
+            "description": "Choisissez un thème de couleurs pour votre page publique",
+            "customColor": "Couleur personnalisée",
+            "customColorHint": "Saisissez un code couleur hexadécimal (#RRGGBB)",
+            "preview": "Aperçu",
+            "previewButton": "Envoyer un Tip",
+            "previewBadge": "Vérifié"
         }
     },
     "creator": {
